@@ -1,17 +1,16 @@
 package com.createsend;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
-import com.createsend.models.clients.BasicClient;
+import com.createsend.models.clients.Client;
 import com.createsend.util.BaseClient;
-import com.createsend.util.CreateSendException;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+import exceptions.CreateSendException;
 
 public class General extends BaseClient {
     
@@ -35,11 +34,13 @@ public class General extends BaseClient {
     }
     
     /**
-     * @return An array of active clients in the create send account
+     * @return An array of active clients in the create send account. 
+     * This method will only set the {@link com.createsend.models.clients.Client#ClientID} 
+     * and {@link com.createsend.models.clients.Client#Name} properties of the client
      * @throws CreateSendException
      */
-    public BasicClient[] getClients() throws CreateSendException {
-        return get(BasicClient[].class, "clients.json");
+    public Client[] getClients() throws CreateSendException {
+        return get(Client[].class, "clients.json");
     }
     
     /**
@@ -63,14 +64,6 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public Date getSystemDate() throws CreateSendException {
-        SystemDate date = get(SystemDate.class, "systemdate.json");
-        
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        
-        try {
-            return df.parse(date.SystemDate);
-        } catch (ParseException e) { 
-            throw new CreateSendException("Failed to parse the provided system date: " + date.SystemDate + 
-                ". Has the API format changed?");
-        }
+        return get(SystemDate.class, "systemdate.json").SystemDate;
     }
 }

@@ -2,7 +2,7 @@ package com.createsend.models.clients;
 
 public class AllClientDetails {
     public String ApiKey;
-    public DetailedClientWithID BasicDetails;
+    public Client BasicDetails;
     public AccessDetails AccessDetails;
     public BillingDetails BillingDetails;
     

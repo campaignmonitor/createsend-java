@@ -1,5 +1,7 @@
 package com.createsend.models;
 
+import java.util.Date;
+
 public class SystemDate {
-    public String SystemDate;
+    public Date SystemDate;
 }

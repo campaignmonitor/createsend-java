@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import com.createsend.Clients;
 import com.createsend.General;
-import com.createsend.models.clients.BasicClient;
-import com.createsend.models.clients.DetailedClient;
-import com.createsend.util.CreateSendException;
+import com.createsend.models.clients.Client;
+
+import exceptions.CreateSendException;
 
 public class SampleRunner {
 
@@ -25,7 +25,7 @@ public class SampleRunner {
     private static void runClientMethods() throws CreateSendException {
         Clients clientAPI = new Clients();
         
-        DetailedClient newClient = new DetailedClient();
+        Client newClient = new Client();
         newClient.CompanyName = "Client Company Name";
         newClient.ContactName = "Client Contact Name";
         newClient.Country = "Client Country";
@@ -36,6 +36,15 @@ public class SampleRunner {
         System.out.printf("Result of client create: %s\n", clientID);
         
         System.out.printf("Result of client details: %s\n", clientAPI.details(clientID));
+        
+        System.out.printf("Result of get sent campaigns: %s\n", 
+                Arrays.deepToString(clientAPI.sentCampaigns("Client ID")));
+        
+        System.out.printf("Result of get draft campaigns: %s\n", 
+                Arrays.deepToString(clientAPI.draftCampaigns("Client ID")));
+        
+        System.out.printf("Result of get lists: %s\n", 
+                Arrays.deepToString(clientAPI.lists("Client ID")));
     }
     
     private static void runGeneralMethods() throws CreateSendException {
@@ -44,7 +53,7 @@ public class SampleRunner {
         System.out.printf("Result of get apikey: %s\n", 
             client.getAPIKey("Site URL", "Username", "Password"));
         
-        BasicClient[] clients = client.getClients();
+        Client[] clients = client.getClients();
         System.out.printf("Result of get clients: %s\n", Arrays.deepToString(clients));
         
         String[] countries = client.getCountries();

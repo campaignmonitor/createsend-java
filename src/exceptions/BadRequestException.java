@@ -1,4 +1,5 @@
-package com.createsend.util;
+package exceptions;
+
 
 public class BadRequestException extends CreateSendHttpException {    
     private static final long serialVersionUID = -2724621705342365927L;

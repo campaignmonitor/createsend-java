@@ -1,4 +1,5 @@
-package com.createsend.util;
+package exceptions;
+
 
 public class UnauthorisedException extends CreateSendHttpException {
     private static final long serialVersionUID = 4596052166026262638L;

@@ -1,4 +1,4 @@
-package com.createsend.util;
+package exceptions;
 
 public class CreateSendException extends Exception {
     private static final long serialVersionUID = 1695317869199799783L;

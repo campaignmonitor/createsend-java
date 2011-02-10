@@ -1,7 +1,8 @@
-package com.createsend.util;
+package exceptions;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.ClientResponse.Status;
+
 
 public class CreateSendHttpException extends CreateSendException {
     private static final long serialVersionUID = 6026680795882633621L;

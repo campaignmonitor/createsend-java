@@ -1,4 +1,5 @@
-package com.createsend.util;
+package exceptions;
+
 
 public class ServerErrorException extends CreateSendHttpException {    
     private static final long serialVersionUID = 7077800306811546975L;

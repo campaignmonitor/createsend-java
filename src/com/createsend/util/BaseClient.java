@@ -4,7 +4,8 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import jersey.JsonProvider;
+import jersey.UserAgentFilter;
 
 import com.createsend.models.ApiErrorResponse;
 import com.sun.jersey.api.client.Client;
@@ -15,6 +16,13 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
+
+import exceptions.BadRequestException;
+import exceptions.CreateSendException;
+import exceptions.CreateSendHttpException;
+import exceptions.NotFoundException;
+import exceptions.ServerErrorException;
+import exceptions.UnauthorisedException;
 
 public abstract class BaseClient {
     private static Client client;
@@ -69,7 +77,7 @@ public abstract class BaseClient {
     protected WebResource getAPIResource() {
         if(client == null) {
             ClientConfig cc = new DefaultClientConfig(); 
-            cc.getClasses().add(JacksonJsonProvider.class); 
+            cc.getClasses().add(JsonProvider.class); 
             
             Map<String, Object> properties = cc.getProperties();
             properties.put(ClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 64 * 1024);

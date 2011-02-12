@@ -47,7 +47,10 @@ public class SampleRunner {
                 Arrays.deepToString(clientAPI.lists("Client ID")));
         
         System.out.printf("Result of get segments: %s\n", 
-                clientAPI.segments("Client ID"));
+                Arrays.deepToString(clientAPI.segments("Client ID")));
+         
+        System.out.printf("Result of get suppression: %s\n", 
+            clientAPI.suppressionList("Client ID"));
     }
     
     private static void runGeneralMethods() throws CreateSendException {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.createsend.Clients;
 import com.createsend.General;
 import com.createsend.models.clients.AccessDetails;
+import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.util.exceptions.CreateSendException;
 
@@ -45,7 +46,16 @@ public class SampleRunner {
         access.AccessLevel = 23;
         clientAPI.setAccess(newClient.ClientID, access);
         
+        BillingDetails billing = new BillingDetails();
+        billing.ClientPays = true;
+        billing.CanPurchaseCredits = true;
+        billing.MarkupOnDelivery = 5.5;
+        billing.MarkupPerRecipient = 6.1;
+        billing.Currency = "AUD";
+        clientAPI.setPaygBilling(newClient.ClientID, billing);
+        
         System.out.printf("Result of client details: %s\n", clientAPI.details(newClient.ClientID));
+        clientAPI.delete(newClient.ClientID);
         
         System.out.printf("Result of get sent campaigns: %s\n", 
                 Arrays.deepToString(clientAPI.sentCampaigns("Client ID")));

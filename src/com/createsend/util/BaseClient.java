@@ -101,6 +101,15 @@ public abstract class BaseClient {
             throw handleErrorResponse(ue);
         }
     }
+    
+    protected void delete(String... pathElements) throws CreateSendException {
+        WebResource resource = getAPIResourceWithAuth(pathElements);
+        try { 
+            resource.delete();
+        } catch (UniformInterfaceException ue) {
+            throw handleErrorResponse(ue);
+        }
+    }
         
     protected CreateSendException handleErrorResponse(UniformInterfaceException ue) {
         ClientResponse response = ue.getResponse();

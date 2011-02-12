@@ -2,14 +2,18 @@ package com.createsend.models.clients;
 
 public class BillingDetails {
     public boolean CanPurchaseCredits;
-    public double MarkupOnDesignSpamTest;
     public boolean ClientPays;
-    public double BaseRatePerRecipient;
-    public double MarkupPerRecipient;
-    public double MarkupOnDelivery;
-    public double BaseDeliveryRate;
+    
     public String Currency;
-    public double BaseDesignSpamTestRate;
+    
+    public Integer MarkupPercentage;
+    
+    public Double MarkupOnDesignSpamTest;
+    public Double BaseRatePerRecipient;
+    public Double MarkupPerRecipient;
+    public Double MarkupOnDelivery;
+    public Double BaseDeliveryRate;
+    public Double BaseDesignSpamTestRate;
     
     @Override
     public String toString() {

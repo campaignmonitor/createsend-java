@@ -5,6 +5,7 @@ import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.AllClientDetails;
+import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
 import com.createsend.models.lists.List;
@@ -54,5 +55,22 @@ public class Clients extends BaseClient {
    
    public void setAccess(String clientID, AccessDetails access) throws CreateSendException {
        put(access, "clients", clientID, "setaccess.json");
+   }
+   
+   public void setPaygBilling(String clientID, BillingDetails billing) throws CreateSendException {
+       put(billing, "clients", clientID, "setpaygbilling.json");
+   }
+   
+   public void setMonthlyBilling(String clientID, BillingDetails billing) throws CreateSendException {
+       billing.MarkupOnDelivery = null;
+       billing.MarkupOnDesignSpamTest = null;
+       billing.MarkupPerRecipient = null;
+       billing.CanPurchaseCredits = false;
+       
+       put(billing, "clients", clientID, "setmonthlybilling.json");
+   }
+   
+   public void delete(String clientID) throws CreateSendException {
+       delete("clients", clientID + ".json");
    }
 }

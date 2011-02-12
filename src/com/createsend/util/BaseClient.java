@@ -90,6 +90,18 @@ public abstract class BaseClient {
         }
     }
         
+    protected void put(Object entity, String... pathElements) throws CreateSendException {
+        WebResource resource = getAPIResourceWithAuth(pathElements);
+        
+        try { 
+            resource.
+                type(MediaType.APPLICATION_JSON_TYPE).
+                put(entity);
+        } catch (UniformInterfaceException ue) {
+            throw handleErrorResponse(ue);
+        }
+    }
+        
     protected CreateSendException handleErrorResponse(UniformInterfaceException ue) {
         ClientResponse response = ue.getResponse();
         ApiErrorResponse apiResponse;

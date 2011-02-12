@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.createsend.Clients;
 import com.createsend.General;
+import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.util.exceptions.CreateSendException;
 
@@ -32,10 +33,19 @@ public class SampleRunner {
         newClient.EmailAddress = "Client Email Address";
         newClient.TimeZone = "Client Timezone";
         
-        String clientID = clientAPI.create(newClient);
-        System.out.printf("Result of client create: %s\n", clientID);
+        newClient.ClientID = clientAPI.create(newClient);
+        System.out.printf("Result of client create: %s\n", newClient.ClientID);
+
+        newClient.CompanyName = "Edited Company Name";
+        clientAPI.setBasics(newClient);
         
-        System.out.printf("Result of client details: %s\n", clientAPI.details(clientID));
+        AccessDetails access = new AccessDetails();
+        access.Username = "Username";
+        access.Password = "Password";
+        access.AccessLevel = 23;
+        clientAPI.setAccess(newClient.ClientID, access);
+        
+        System.out.printf("Result of client details: %s\n", clientAPI.details(newClient.ClientID));
         
         System.out.printf("Result of get sent campaigns: %s\n", 
                 Arrays.deepToString(clientAPI.sentCampaigns("Client ID")));

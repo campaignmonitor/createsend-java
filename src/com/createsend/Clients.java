@@ -3,6 +3,7 @@ package com.createsend;
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.SentCampaign;
+import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
@@ -45,5 +46,13 @@ public class Clients extends BaseClient {
    
    public Template[] templates(String clientID) throws CreateSendException {
        return get(Template[].class, "clients", clientID, "templates.json");
+   }
+   
+   public void setBasics(Client client) throws CreateSendException {
+       put(client, "clients", client.ClientID, "setbasics.json");
+   }
+   
+   public void setAccess(String clientID, AccessDetails access) throws CreateSendException {
+       put(access, "clients", clientID, "setaccess.json");
    }
 }

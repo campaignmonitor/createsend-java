@@ -1,4 +1,4 @@
-package jersey;
+package com.createsend.util.jersey;
 
 import com.createsend.util.Configuration;
 import com.sun.jersey.api.client.ClientHandlerException;

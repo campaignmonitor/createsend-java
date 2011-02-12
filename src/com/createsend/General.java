@@ -6,11 +6,11 @@ import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
 import com.createsend.models.clients.Client;
 import com.createsend.util.BaseClient;
+import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-import exceptions.CreateSendException;
 
 public class General extends BaseClient {
     

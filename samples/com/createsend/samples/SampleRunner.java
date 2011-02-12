@@ -5,8 +5,8 @@ import java.util.Arrays;
 import com.createsend.Clients;
 import com.createsend.General;
 import com.createsend.models.clients.Client;
+import com.createsend.util.exceptions.CreateSendException;
 
-import exceptions.CreateSendException;
 
 public class SampleRunner {
 
@@ -45,6 +45,9 @@ public class SampleRunner {
         
         System.out.printf("Result of get lists: %s\n", 
                 Arrays.deepToString(clientAPI.lists("Client ID")));
+        
+        System.out.printf("Result of get segments: %s\n", 
+                clientAPI.segments("Client ID"));
     }
     
     private static void runGeneralMethods() throws CreateSendException {

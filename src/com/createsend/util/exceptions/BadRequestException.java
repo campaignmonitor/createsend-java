@@ -1,4 +1,4 @@
-package exceptions;
+package com.createsend.util.exceptions;
 
 
 public class BadRequestException extends CreateSendHttpException {    

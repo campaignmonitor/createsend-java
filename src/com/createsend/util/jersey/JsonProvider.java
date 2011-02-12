@@ -1,4 +1,4 @@
-package jersey;
+package com.createsend.util.jersey;
 
 import java.io.IOException;
 import java.io.InputStream;

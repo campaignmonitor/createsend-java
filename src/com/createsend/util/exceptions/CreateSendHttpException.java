@@ -1,4 +1,4 @@
-package exceptions;
+package com.createsend.util.exceptions;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.ClientResponse.Status;

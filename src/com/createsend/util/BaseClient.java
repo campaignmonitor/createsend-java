@@ -1,15 +1,24 @@
 package com.createsend.util;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 
-import jersey.JsonProvider;
-import jersey.UserAgentFilter;
-
 import com.createsend.models.ApiErrorResponse;
+import com.createsend.models.PagedResult;
+import com.createsend.util.exceptions.BadRequestException;
+import com.createsend.util.exceptions.CreateSendException;
+import com.createsend.util.exceptions.CreateSendHttpException;
+import com.createsend.util.exceptions.NotFoundException;
+import com.createsend.util.exceptions.ServerErrorException;
+import com.createsend.util.exceptions.UnauthorisedException;
+import com.createsend.util.jersey.JsonProvider;
+import com.createsend.util.jersey.UserAgentFilter;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -17,14 +26,9 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
-import exceptions.BadRequestException;
-import exceptions.CreateSendException;
-import exceptions.CreateSendHttpException;
-import exceptions.NotFoundException;
-import exceptions.ServerErrorException;
-import exceptions.UnauthorisedException;
 
 public abstract class BaseClient {
+    
     private static Client client;
         
     protected <T> T get(Class<T> klass, String... pathElements) throws CreateSendException {
@@ -35,6 +39,42 @@ public abstract class BaseClient {
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
         }
+    }
+    /*
+    @SuppressWarnings("unchecked")
+    protected <T> Collection<T> getCollection(String... pathElements) throws CreateSendException {
+        WebResource resource = getAPIResourceWithAuth(pathElements);
+        
+        try { 
+            return Collections.unmodifiableCollection(
+                (Collection<T>) resource.get(new GenericType<T>(Collection.class)));
+        } catch (UniformInterfaceException ue) {
+            throw handleErrorResponse(ue);
+        }
+    }*/
+    
+    protected <T> PagedResult<T> getPagedResult(String... pathElements) throws CreateSendException {
+        WebResource resource = getAPIResourceWithAuth(pathElements);
+        
+        try {            
+            String callingMethodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+            ParameterizedType genericReturnType = null;
+            
+            for(Method method : this.getClass().getMethods()) {
+                if(method.getName().equals(callingMethodName)) {
+                    genericReturnType = (ParameterizedType)method.getGenericReturnType();
+                    break;
+                }
+            }            
+            
+            return resource.get(new GenericType<PagedResult<T>>(genericReturnType));
+        } catch (UniformInterfaceException ue) {
+            throw handleErrorResponse(ue);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
     }
         
     protected <T> T post(Class<T> klass, Object entity, String... pathElements) throws CreateSendException {

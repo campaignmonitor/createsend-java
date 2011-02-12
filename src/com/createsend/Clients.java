@@ -1,13 +1,16 @@
 package com.createsend;
 
+import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.lists.List;
+import com.createsend.models.segments.Segment;
+import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.BaseClient;
+import com.createsend.util.exceptions.CreateSendException;
 
-import exceptions.CreateSendException;
 
 public class Clients extends BaseClient {
     
@@ -29,5 +32,13 @@ public class Clients extends BaseClient {
    
    public List[] lists(String clientID) throws CreateSendException {
        return get(List[].class, "clients", clientID, "lists.json");
+   }
+   
+   public Segment[] segments(String clientID) throws CreateSendException {
+       return get(Segment[].class, "clients", clientID, "segments.json");
+   }
+   
+   public PagedResult<Subscriber> suppressionList(String clientID) throws CreateSendException {
+       return getPagedResult("clients", clientID, "suppressionlist.json");
    }
 }

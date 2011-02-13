@@ -17,7 +17,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 public class JsonProvider extends JacksonJsonProvider {
-    private static DateFormat apiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final DateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     @Override
     public void writeTo(Object value, Class<?> type, Type genericType,
@@ -37,7 +37,7 @@ public class JsonProvider extends JacksonJsonProvider {
             MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
             throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
-        mapper.getDeserializationConfig().setDateFormat(apiDateFormat);
+        mapper.getDeserializationConfig().setDateFormat(ApiDateFormat);
         mapper.getDeserializationConfig().set(
                 DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         
@@ -45,5 +45,4 @@ public class JsonProvider extends JacksonJsonProvider {
         return super.readFrom(type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);
     }
-
 }

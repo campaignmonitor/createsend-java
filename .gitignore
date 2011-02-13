@@ -3,6 +3,7 @@
 .project
 .gradle
 .settings
+javadoc.xml
 workingsamples
 bin
 dist

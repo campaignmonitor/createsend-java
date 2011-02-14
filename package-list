@@ -1,10 +1,1 @@
 com.createsend
-com.createsend.models
-com.createsend.models.campaigns
-com.createsend.models.clients
-com.createsend.models.lists
-com.createsend.models.segments
-com.createsend.models.subscribers
-com.createsend.util
-com.createsend.util.exceptions
-com.createsend.util.jersey

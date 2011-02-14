@@ -26,6 +26,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.ApiErrorResponse;
 import com.createsend.models.PagedResult;
@@ -46,6 +47,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * An abstract base class for API calls. This class provides a basic facade to the Jersey API,
@@ -98,7 +100,8 @@ public abstract class BaseClient {
      * @return The model returned from the API call
      * @throws CreateSendException If the API call results in a HTTP status code >= 400
      */
-    protected <T> PagedResult<T> getPagedResult(String... pathElements) throws CreateSendException {
+    protected <T> PagedResult<T> getPagedResult(MultivaluedMap<String, String> queryString,
+        String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         
         try {            
@@ -112,7 +115,7 @@ public abstract class BaseClient {
                 }
             }            
             
-            return resource.get(new GenericType<PagedResult<T>>(genericReturnType));
+            return resource.queryParams(queryString).get(new GenericType<PagedResult<T>>(genericReturnType));
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
         } catch (SecurityException e) {
@@ -154,6 +157,29 @@ public abstract class BaseClient {
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
         }
+    }
+    
+    protected MultivaluedMap<String, String> getPagingParams(Integer page, 
+        Integer pageSize, String orderField, String orderDirection) {
+        MultivaluedMap<String, String> query = new MultivaluedMapImpl();
+        
+        if(page != null) {
+            query.add("page", page.toString());
+        }
+        
+        if(pageSize != null) {
+            query.add("pagesize", pageSize.toString());
+        }
+        
+        if(orderField != null) {
+            query.add("orderfield", orderField); 
+        }
+        
+        if(orderDirection != null) {
+            query.add("orderdirection", orderDirection);
+        }
+        
+        return query.isEmpty() ? null : query;
     }
         
     protected CreateSendException handleErrorResponse(UniformInterfaceException ue) {

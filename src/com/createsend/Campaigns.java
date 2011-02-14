@@ -23,14 +23,21 @@ package com.createsend;
 
 import java.util.Date;
 
+import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.CampaignSummary;
+import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
+import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.BaseClient;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 
+/**
+ * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/campaigns/" target="_blank">
+ * Campaign</a> resources in the Campaign Monitor API
+ */
 public class Campaigns extends BaseClient {
     /**
      * Creates a new campaign for the specified client based on the provided campaign data.
@@ -83,5 +90,118 @@ public class Campaigns extends BaseClient {
      */
     public CampaignSummary summary(String campaignID) throws CreateSendException {
         return get(CampaignSummary.class, "campaigns", campaignID, "summary.json");
+    }
+    
+    /**
+     * Gets the lists and segments that a campaign is to be, or has been sent to.
+     * @param campaignID The ID of the campaign to get the lists and segments for
+     * @return The lists and segments that the campaign is to be, or has been sent to
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_listsandsegments" target="_blank">
+     * Getting lists and segments</a>
+     */
+    public ListsAndSegments listsandsegments(String campaignID) throws CreateSendException {
+        return get(ListsAndSegments.class, "campaigns", campaignID, "summary.json");
+    }
+    
+    /**
+     * Gets a paged list of recipients for the specified campaign
+     * @param campaignID The ID of the campaign to get the recipients for
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged recipients returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_recipients" target="_blank">
+     * Getting campaign recipients</a>
+     */
+    public PagedResult<Subscriber> recipients(String campaignID,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+            "campaigns", campaignID, "recipients.json");
+    }
+    
+    /**
+     * Gets a paged list of bounces for the specified campaign
+     * @param campaignID The ID of the campaign to get the bounces for
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged bounces returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
+     * Getting campaign bounces</a>
+     */
+    public PagedResult<Subscriber> bounces(String campaignID,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+            "campaigns", campaignID, "bounces.json");
+    }
+    
+    /**
+     * Gets a paged list of opens for the specified campaign
+     * @param campaignID The ID of the campaign to get the opens for
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged opens returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_openslist" target="_blank">
+     * Getting campaign bounces</a>
+     */
+    public PagedResult<Subscriber> opens(String campaignID,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+            "campaigns", campaignID, "opens.json");
+    }
+    
+    /**
+     * Gets a paged list of clicks for the specified campaign
+     * @param campaignID The ID of the campaign to get the clicks for
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged clicks returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_clickslist" target="_blank">
+     * Getting campaign bounces</a>
+     */
+    public PagedResult<Subscriber> clicks(String campaignID,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+            "campaigns", campaignID, "clicks.json");
+    }
+    
+    /**
+     * Gets a paged list of unsubscribes for the specified campaign
+     * @param campaignID The ID of the campaign to get the unsubscribes for
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged unsubscribes returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_unsubscribeslist" target="_blank">
+     * Getting campaign bounces</a>
+     */
+    public PagedResult<Subscriber> unsubscribes(String campaignID,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+            "campaigns", campaignID, "unsubscribes.json");
+    }
+    
+    /**
+     * Deletes the specified draft campaign
+     * @param campaignID The ID of the draft to delete
+     * @throws CreateSendException Raised when the API responds with a HTTP status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#deleting_a_campaign" target="_blank">
+     * Deleting a campaign</a>
+     */
+    public void delete(String campaignID) throws CreateSendException {
+        delete("campaigns", campaignID + ".json");
     }
 }

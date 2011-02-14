@@ -91,7 +91,7 @@ public class SampleRunner {
                 Arrays.deepToString(clientAPI.segments("Client ID")));
          
         System.out.printf("Result of get suppression: %s\n", 
-            clientAPI.suppressionList("Client ID"));
+            clientAPI.suppressionList("Client ID", null, null, null, null));
     }
     
     private static void runGeneralMethods() throws CreateSendException {

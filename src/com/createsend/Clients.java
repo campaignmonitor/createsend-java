@@ -62,8 +62,11 @@ public class Clients extends BaseClient {
        return get(Segment[].class, "clients", clientID, "segments.json");
    }
    
-   public PagedResult<Subscriber> suppressionList(String clientID) throws CreateSendException {
-       return getPagedResult("clients", clientID, "suppressionlist.json");
+   public PagedResult<Subscriber> suppressionList(String clientID,
+       Integer page, Integer pageSize, String orderField, String orderDirection) 
+       throws CreateSendException {
+       return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection),
+           "clients", clientID, "suppressionlist.json");
    }
    
    public Template[] templates(String clientID) throws CreateSendException {

@@ -21,7 +21,9 @@
  */
 package com.createsend.util.exceptions;
 
-
+/**
+ * An exception raised when the API responds with a 401 Unauthorized
+ */
 public class UnauthorisedException extends CreateSendHttpException {
     private static final long serialVersionUID = 4596052166026262638L;
     

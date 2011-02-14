@@ -25,7 +25,6 @@ import java.util.Date;
 
 import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
-import com.createsend.models.clients.Client;
 import com.createsend.models.clients.ClientBasics;
 import com.createsend.util.BaseClient;
 import com.createsend.util.exceptions.CreateSendException;
@@ -34,8 +33,9 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 /**
- * 
- * @author tobio
+ * Provides methods for accessing all  
+ * <a href="http://www.campaignmonitor.com/api/account/" target="_blank">Account</a>
+ * methods in the Campaign Monitor API
  *
  */
 public class General extends BaseClient {
@@ -46,6 +46,8 @@ public class General extends BaseClient {
      * @param username The username used to login
      * @param password The password of the account
      * @return The API key for the specified authentication data
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_your_api_key" target="_blank">
+     * Getting you API Key</a>
      * @throws CreateSendException
      */
     public String getAPIKey(String siteAddress, String username, String password) throws CreateSendException {
@@ -61,6 +63,8 @@ public class General extends BaseClient {
     
     /**
      * @return An array of active clients in the create send account. 
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_your_clients" target="_blank">
+     * Getting your clients</a>
      * @throws CreateSendException
      */
     public ClientBasics[] getClients() throws CreateSendException {
@@ -69,6 +73,8 @@ public class General extends BaseClient {
     
     /**
      * @return An array of valid countries for use in the Create Send API
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_countries" target="_blank">
+     * Getting valid countries</a>
      * @throws CreateSendException
      */
     public String[] getCountries() throws CreateSendException {
@@ -77,6 +83,8 @@ public class General extends BaseClient {
     
     /**
      * @return An array of valid timezones for use in the Create Send API
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_timezones" target="_blank">
+     * Getting valid timezones</a>
      * @throws CreateSendException
      */
     public String[] getTimezones() throws CreateSendException {
@@ -85,6 +93,8 @@ public class General extends BaseClient {
     
     /**
      * @return The current date in the timezone of the authorised account
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_systemdate" target="_blank">
+     * Getting the current date</a>
      * @throws CreateSendException
      */
     public Date getSystemDate() throws CreateSendException {

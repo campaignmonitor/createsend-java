@@ -21,7 +21,9 @@
  */
 package com.createsend.util.exceptions;
 
-
+/**
+ * An exception raised when the API responds with a 500 Server Error
+ */
 public class ServerErrorException extends CreateSendHttpException {    
     private static final long serialVersionUID = 7077800306811546975L;
 

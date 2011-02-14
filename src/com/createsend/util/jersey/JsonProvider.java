@@ -37,6 +37,10 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+/**
+ * An extension of the Jersey JacksonJsonProvider used to set Jackson 
+ * serialisation/deserialisation properties
+ */
 public class JsonProvider extends JacksonJsonProvider {
     public static final DateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     

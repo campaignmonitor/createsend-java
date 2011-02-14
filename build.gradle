@@ -30,6 +30,11 @@ sourceSets {
             srcDir 'src'
         }
     }
+    samples {
+        java {
+            srcDir 'samples'
+        }
+    }
     test {
         java {
             srcDir 'test'

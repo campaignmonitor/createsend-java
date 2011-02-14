@@ -24,7 +24,9 @@ package com.createsend.util.exceptions;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.ClientResponse.Status;
 
-
+/**
+ * An exception raised on any HTTP based error. i.e Status code >= 400
+ */
 public class CreateSendHttpException extends CreateSendException {
     private static final long serialVersionUID = 6026680795882633621L;
     

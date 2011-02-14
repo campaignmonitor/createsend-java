@@ -21,7 +21,9 @@
  */
 package com.createsend.util.exceptions;
 
-
+/**
+ * An exception raised when the API responds with a 404 Not Found
+ */
 public class NotFoundException extends CreateSendHttpException {
     private static final long serialVersionUID = -7730164870627844838L;
 

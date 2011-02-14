@@ -47,11 +47,26 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
-
+/**
+ * An abstract base class for API calls. This class provides a basic facade to the Jersey API,
+ * simplifying the creation of WebResources and standard access to the Campaign Monitor API
+ */
 public abstract class BaseClient {
     
+    /**
+     * As per Jersey docs the creation of a Client is expensive. We cache the client
+     */
     private static Client client;
         
+    /**
+     * Performs a HTTP GET on the route specified by the pathElements deserialising the 
+     * result to an instance of klass.
+     * @param <T> The type of model expected from the API call.
+     * @param klass The class of the model to deserialise. 
+     * @param pathElements The path of the API resource to access
+     * @return The model returned from the API call
+     * @throws CreateSendException If the API call results in a HTTP status code >= 400
+     */
     protected <T> T get(Class<T> klass, String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         
@@ -73,7 +88,16 @@ public abstract class BaseClient {
             throw handleErrorResponse(ue);
         }
     }*/
+
     
+    /**
+     * Performs a HTTP GET on the route specified attempting to deserialise the
+     * result to a paged result of the given type.
+     * @param <T> The type of paged result data expected from the API call. 
+     * @param pathElements The path of the API resource to access
+     * @return The model returned from the API call
+     * @throws CreateSendException If the API call results in a HTTP status code >= 400
+     */
     protected <T> PagedResult<T> getPagedResult(String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         

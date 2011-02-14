@@ -27,6 +27,9 @@ import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.ClientFilter;
 
+/**
+ * A ClientFilter to set the Java wrappers User-Agent
+ */
 public class UserAgentFilter extends ClientFilter {
     
     private static String userAgent;
@@ -47,5 +50,4 @@ public class UserAgentFilter extends ClientFilter {
         cr.getHeaders().add("User-Agent", userAgent);
         return getNext().handle(cr);
     }
-
 }

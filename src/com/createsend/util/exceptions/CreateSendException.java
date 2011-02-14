@@ -21,6 +21,9 @@
  */
 package com.createsend.util.exceptions;
 
+/**
+ * A base exception for the Java wrapper
+ */
 public class CreateSendException extends Exception {
     private static final long serialVersionUID = 1695317869199799783L;
     

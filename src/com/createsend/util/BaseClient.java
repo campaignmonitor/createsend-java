@@ -78,24 +78,12 @@ public abstract class BaseClient {
             throw handleErrorResponse(ue);
         }
     }
-    /*
-    @SuppressWarnings("unchecked")
-    protected <T> Collection<T> getCollection(String... pathElements) throws CreateSendException {
-        WebResource resource = getAPIResourceWithAuth(pathElements);
-        
-        try { 
-            return Collections.unmodifiableCollection(
-                (Collection<T>) resource.get(new GenericType<T>(Collection.class)));
-        } catch (UniformInterfaceException ue) {
-            throw handleErrorResponse(ue);
-        }
-    }*/
-
     
     /**
      * Performs a HTTP GET on the route specified attempting to deserialise the
      * result to a paged result of the given type.
      * @param <T> The type of paged result data expected from the API call. 
+     * @param queryString The query string values to use for the request.
      * @param pathElements The path of the API resource to access
      * @return The model returned from the API call
      * @throws CreateSendException If the API call results in a HTTP status code >= 400
@@ -115,7 +103,11 @@ public abstract class BaseClient {
                 }
             }            
             
-            return resource.queryParams(queryString).get(new GenericType<PagedResult<T>>(genericReturnType));
+            if(queryString != null) {
+                resource = resource.queryParams(queryString);
+            }
+            
+            return resource.get(new GenericType<PagedResult<T>>(genericReturnType));
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
         } catch (SecurityException e) {
@@ -125,19 +117,35 @@ public abstract class BaseClient {
         return null;
     }
         
+    /**
+     * Posts the provided entity to the url specified by the provided path elements. 
+     * The result of the call will be deserialised to an instance of the specified class.
+     * @param <T> The class to use for model deserialisation
+     * @param klass The class to use for model deserialisation
+     * @param entity The entity to use as the body of the post request
+     * @param pathElements The path to send the post request to
+     * @return An instance of klass returned by the api call
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     */
     protected <T> T post(Class<T> klass, Object entity, String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         
         try { 
             return fixStringResult(klass, resource.
                 type(MediaType.APPLICATION_JSON_TYPE).
-                entity(entity).
-                post(klass));
+                post(klass, entity));
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
         }
     }
         
+    /**
+     * Makes a HTTP PUT request to the path specified, using the provided entity as the 
+     * request body.
+     * @param entity The entity to use as the request body
+     * @param pathElements The path to make the request to.
+     * @throws CreateSendException Raised when the API responds with a HTTP Status >= 400
+     */
     protected void put(Object entity, String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         
@@ -150,6 +158,11 @@ public abstract class BaseClient {
         }
     }
     
+    /**
+     * Makes a HTTP DELETE request to the specified path
+     * @param pathElements The path of the resource to delete
+     * @throws CreateSendException Raised when the API responds with a HTTP Status >= 400
+     */
     protected void delete(String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
         try { 
@@ -158,7 +171,7 @@ public abstract class BaseClient {
             throw handleErrorResponse(ue);
         }
     }
-    
+        
     protected MultivaluedMap<String, String> getPagingParams(Integer page, 
         Integer pageSize, String orderField, String orderDirection) {
         MultivaluedMap<String, String> query = new MultivaluedMapImpl();
@@ -179,9 +192,15 @@ public abstract class BaseClient {
             query.add("orderdirection", orderDirection);
         }
         
-        return query.isEmpty() ? null : query;
+        return query;
     }
-        
+       
+    /**
+     * Creates an exception, inheriting from {@link com.createsend.exceptions.CreateSendException} 
+     * to represent the API error resulting in the raised {@link com.sun.jersey.api.client.UniformInterfaceException}
+     * @param ue The error raised during the failed API request
+     * @return An exception representing the API error
+     */
     protected CreateSendException handleErrorResponse(UniformInterfaceException ue) {
         ClientResponse response = ue.getResponse();
         ApiErrorResponse apiResponse;
@@ -206,6 +225,9 @@ public abstract class BaseClient {
         }
     }
     
+    /**
+     * @return A WebResource configured for use against the Campaign Monitor API.
+     */
     protected WebResource getAPIResource() {
         if(client == null) {
             ClientConfig cc = new DefaultClientConfig(); 
@@ -231,6 +253,13 @@ public abstract class BaseClient {
         return resource;
     }
     
+    /**
+     * Creates a WebResource instance configured for the Campaign Monitor API, including an 
+     * Authorization header with the API Key values specified in the current 
+     * {@link com.createsend.util.Configuration}
+     * @param pathElements The path to use when configuring the WebResource
+     * @return A configured WebResource
+     */
     protected WebResource getAPIResourceWithAuth(String... pathElements) {
         WebResource resource = getAPIResource();
         resource.addFilter(new HTTPBasicAuthFilter(Configuration.Current.getApiKey(), "x"));
@@ -242,6 +271,17 @@ public abstract class BaseClient {
         return resource;
     }
     
+    /**
+     * Jersey is awesome in that even though we specify a JSON response and to use 
+     * the {@link com.createsend.util.jersey.JsonProvider} it sees that we want a 
+     * String result and that the response is already a String so just use that. 
+     * This method strips any enclosing quotes required as per the JSON spec. 
+     * @param <T> The type of result we are expecting
+     * @param klass The class of the provided result
+     * @param result The result as deserialised by Jersey
+     * @return If the result if anything but a String just return the result. 
+     * If the result is a String then strip any enclosing quotes ("). 
+     */
     @SuppressWarnings("unchecked")
     protected <T> T fixStringResult(Class<T> klass, T result) {
         if(klass == String.class) { 

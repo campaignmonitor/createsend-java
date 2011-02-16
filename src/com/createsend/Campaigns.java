@@ -23,6 +23,8 @@ package com.createsend;
 
 import java.util.Date;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.CampaignSummary;
@@ -143,6 +145,7 @@ public class Campaigns extends BaseClient {
     /**
      * Gets a paged list of opens for the specified campaign
      * @param campaignID The ID of the campaign to get the opens for
+     * @param opensFrom The date to start getting open results from. This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
@@ -152,15 +155,19 @@ public class Campaigns extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_openslist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> opens(String campaignID,
+    public PagedResult<Subscriber> opens(String campaignID, Date opensFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
-            "campaigns", campaignID, "opens.json");
+        MultivaluedMap<String, String> queryString = 
+            getPagingParams(page, pageSize, orderField, orderDirection);
+        queryString.add("date", JsonProvider.ApiDateFormat.format(opensFrom));
+        
+        return getPagedResult(queryString, "campaigns", campaignID, "opens.json");
     }
     
     /**
      * Gets a paged list of clicks for the specified campaign
      * @param campaignID The ID of the campaign to get the clicks for
+     * @param clicksFrom The date to start getting click results from. This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
@@ -170,15 +177,19 @@ public class Campaigns extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_clickslist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> clicks(String campaignID,
+    public PagedResult<Subscriber> clicks(String campaignID, Date clicksFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
-            "campaigns", campaignID, "clicks.json");
+        MultivaluedMap<String, String> queryString = 
+            getPagingParams(page, pageSize, orderField, orderDirection);
+        queryString.add("date", JsonProvider.ApiDateFormat.format(clicksFrom));
+        
+        return getPagedResult(queryString, "campaigns", campaignID, "clicks.json");
     }
     
     /**
      * Gets a paged list of unsubscribes for the specified campaign
      * @param campaignID The ID of the campaign to get the unsubscribes for
+     * @param unsubscribesFrom The date to start getting unsubscribe results from. This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
@@ -188,10 +199,13 @@ public class Campaigns extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_unsubscribeslist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> unsubscribes(String campaignID,
+    public PagedResult<Subscriber> unsubscribes(String campaignID, Date unsubscribesFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
-            "campaigns", campaignID, "unsubscribes.json");
+        MultivaluedMap<String, String> queryString = 
+            getPagingParams(page, pageSize, orderField, orderDirection);
+        queryString.add("date", JsonProvider.ApiDateFormat.format(unsubscribesFrom));
+        
+        return getPagedResult(queryString, "campaigns", campaignID, "unsubscribes.json");
     }
     
     /**

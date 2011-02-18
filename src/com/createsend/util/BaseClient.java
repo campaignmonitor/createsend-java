@@ -196,7 +196,7 @@ public abstract class BaseClient {
     }
        
     /**
-     * Creates an exception, inheriting from {@link com.createsend.exceptions.CreateSendException} 
+     * Creates an exception, inheriting from @{link com.createsend.util.exceptions.CreateSendException} 
      * to represent the API error resulting in the raised {@link com.sun.jersey.api.client.UniformInterfaceException}
      * @param ue The error raised during the failed API request
      * @return An exception representing the API error

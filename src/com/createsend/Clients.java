@@ -29,7 +29,7 @@ import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
-import com.createsend.models.lists.List;
+import com.createsend.models.lists.ListBasics;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.BaseClient;
@@ -54,8 +54,8 @@ public class Clients extends BaseClient {
        return get(DraftCampaign[].class, "clients", clientID, "drafts.json");
    }
    
-   public List[] lists(String clientID) throws CreateSendException {
-       return get(List[].class, "clients", clientID, "lists.json");
+   public ListBasics[] lists(String clientID) throws CreateSendException {
+       return get(ListBasics[].class, "clients", clientID, "lists.json");
    }
    
    public Segment[] segments(String clientID) throws CreateSendException {
@@ -65,7 +65,7 @@ public class Clients extends BaseClient {
    public PagedResult<Subscriber> suppressionList(String clientID,
        Integer page, Integer pageSize, String orderField, String orderDirection) 
        throws CreateSendException {
-       return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection),
+       return getPagedResult(page, pageSize, orderField, orderDirection, null,
            "clients", clientID, "suppressionlist.json");
    }
    

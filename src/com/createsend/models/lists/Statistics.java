@@ -19,21 +19,31 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package com.createsend.models.segments;
+package com.createsend.models.lists;
 
-import java.util.Arrays;
-
-public class Segment {
-    public String ListID;
-    public String SegmentID;
-    public String Title; 
-    
-    public Integer ActiveSubscribers;
-    public Rule[] Rules;
-    
-    @Override
-    public String toString() {
-        return String.format("{ ListID: %s, SegmentID: %s, Title: %s, Active: %d, Rules: %s }", ListID,
-                SegmentID, Title, ActiveSubscribers, Arrays.deepToString(Rules));
-    }
+public class Statistics {  
+    public int TotalActiveSubscribers;
+    public int NewActiveSubscribersToday;
+    public int NewActiveSubscribersYesterday;
+    public int NewActiveSubscribersThisWeek;
+    public int NewActiveSubscribersThisMonth;
+    public int NewActiveSubscribersThisYear;
+    public int TotalUnsubscribes;
+    public int UnsubscribesToday;
+    public int UnsubscribesYesterday;
+    public int UnsubscribesThisWeek;
+    public int UnsubscribesThisMonth;
+    public int UnsubscribesThisYear;
+    public int TotalDeleted;
+    public int DeletedToday;
+    public int DeletedYesterday;
+    public int DeletedThisWeek;
+    public int DeletedThisMonth;
+    public int DeletedThisYear;
+    public int TotalBounces;
+    public int BouncesToday;
+    public int BouncesYesterday;
+    public int BouncesThisWeek;
+    public int BouncesThisMonth;
+    public int BouncesThisYear;
 }

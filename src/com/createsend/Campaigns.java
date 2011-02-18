@@ -35,6 +35,7 @@ import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.BaseClient;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/campaigns/" target="_blank">
@@ -103,7 +104,7 @@ public class Campaigns extends BaseClient {
      * Getting lists and segments</a>
      */
     public ListsAndSegments listsandsegments(String campaignID) throws CreateSendException {
-        return get(ListsAndSegments.class, "campaigns", campaignID, "summary.json");
+        return get(ListsAndSegments.class, "campaigns", campaignID, "listsandsegments.json");
     }
     
     /**
@@ -120,7 +121,7 @@ public class Campaigns extends BaseClient {
      */
     public PagedResult<Subscriber> recipients(String campaignID,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+        return getPagedResult(page, pageSize, orderField, orderDirection, null, 
             "campaigns", campaignID, "recipients.json");
     }
     
@@ -138,7 +139,7 @@ public class Campaigns extends BaseClient {
      */
     public PagedResult<Subscriber> bounces(String campaignID,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(getPagingParams(page, pageSize, orderField, orderDirection), 
+        return getPagedResult(page, pageSize, orderField, orderDirection, null, 
             "campaigns", campaignID, "bounces.json");
     }
     
@@ -153,15 +154,15 @@ public class Campaigns extends BaseClient {
      * @return The paged opens returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_openslist" target="_blank">
-     * Getting campaign bounces</a>
+     * Getting campaign opens</a>
      */
     public PagedResult<Subscriber> opens(String campaignID, Date opensFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        MultivaluedMap<String, String> queryString = 
-            getPagingParams(page, pageSize, orderField, orderDirection);
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(opensFrom));
         
-        return getPagedResult(queryString, "campaigns", campaignID, "opens.json");
+        return getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "campaigns", campaignID, "opens.json");
     }
     
     /**
@@ -175,15 +176,15 @@ public class Campaigns extends BaseClient {
      * @return The paged clicks returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_clickslist" target="_blank">
-     * Getting campaign bounces</a>
+     * Getting campaign clicks</a>
      */
     public PagedResult<Subscriber> clicks(String campaignID, Date clicksFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        MultivaluedMap<String, String> queryString = 
-            getPagingParams(page, pageSize, orderField, orderDirection);
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(clicksFrom));
         
-        return getPagedResult(queryString, "campaigns", campaignID, "clicks.json");
+        return getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "campaigns", campaignID, "clicks.json");
     }
     
     /**
@@ -197,15 +198,15 @@ public class Campaigns extends BaseClient {
      * @return The paged unsubscribes returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_unsubscribeslist" target="_blank">
-     * Getting campaign bounces</a>
+     * Getting campaign unsubscribes</a>
      */
     public PagedResult<Subscriber> unsubscribes(String campaignID, Date unsubscribesFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        MultivaluedMap<String, String> queryString = 
-            getPagingParams(page, pageSize, orderField, orderDirection);
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(unsubscribesFrom));
         
-        return getPagedResult(queryString, "campaigns", campaignID, "unsubscribes.json");
+        return getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "campaigns", campaignID, "unsubscribes.json");
     }
     
     /**

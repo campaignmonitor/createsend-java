@@ -19,21 +19,14 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package com.createsend.models.segments;
+package com.createsend.models.lists;
 
-import java.util.Arrays;
-
-public class Segment {
+public class ListBasics {
     public String ListID;
-    public String SegmentID;
-    public String Title; 
-    
-    public Integer ActiveSubscribers;
-    public Rule[] Rules;
+    public String Name;
     
     @Override
     public String toString() {
-        return String.format("{ ListID: %s, SegmentID: %s, Title: %s, Active: %d, Rules: %s }", ListID,
-                SegmentID, Title, ActiveSubscribers, Arrays.deepToString(Rules));
+        return String.format("{ ListID: %s, Name: %s } ", ListID, Name);
     }
 }

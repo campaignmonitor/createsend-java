@@ -88,9 +88,13 @@ public abstract class BaseClient {
      * @return The model returned from the API call
      * @throws CreateSendException If the API call results in a HTTP status code >= 400
      */
-    protected <T> PagedResult<T> getPagedResult(MultivaluedMap<String, String> queryString,
-        String... pathElements) throws CreateSendException {
+    protected <T> PagedResult<T> getPagedResult(Integer page, Integer pageSize, String orderField, 
+        String orderDirection, MultivaluedMap<String, String> queryString, String... pathElements) 
+        throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
+        if(queryString == null) queryString = new MultivaluedMapImpl();
+        
+        addPagingParams(queryString, page, pageSize, orderField, orderDirection);
         
         try {            
             String callingMethodName = Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -172,27 +176,23 @@ public abstract class BaseClient {
         }
     }
         
-    protected MultivaluedMap<String, String> getPagingParams(Integer page, 
-        Integer pageSize, String orderField, String orderDirection) {
-        MultivaluedMap<String, String> query = new MultivaluedMapImpl();
-        
+    protected void addPagingParams(MultivaluedMap<String, String> queryString,  
+        Integer page, Integer pageSize, String orderField, String orderDirection) {        
         if(page != null) {
-            query.add("page", page.toString());
+            queryString.add("page", page.toString());
         }
         
         if(pageSize != null) {
-            query.add("pagesize", pageSize.toString());
+            queryString.add("pagesize", pageSize.toString());
         }
         
         if(orderField != null) {
-            query.add("orderfield", orderField); 
+            queryString.add("orderfield", orderField); 
         }
         
         if(orderDirection != null) {
-            query.add("orderdirection", orderDirection);
+            queryString.add("orderdirection", orderDirection);
         }
-        
-        return query;
     }
        
     /**

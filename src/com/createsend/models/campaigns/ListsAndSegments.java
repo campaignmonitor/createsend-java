@@ -23,11 +23,11 @@ package com.createsend.models.campaigns;
 
 import java.util.Arrays;
 
-import com.createsend.models.lists.List;
+import com.createsend.models.lists.ListBasics;
 import com.createsend.models.segments.Segment;
 
 public class ListsAndSegments {
-    public List[] Lists;
+    public ListBasics[] Lists;
     public Segment[] Segments;
     
     @Override

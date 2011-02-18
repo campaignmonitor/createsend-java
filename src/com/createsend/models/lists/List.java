@@ -21,12 +21,11 @@
  */
 package com.createsend.models.lists;
 
+import java.net.URI;
+
 public class List {
-    public String ListID;
-    public String Name;
-    
-    @Override
-    public String toString() {
-        return String.format("{ ListID: %s, Name: %s } ", ListID, Name);
-    }
+    public String Title;
+    public URI UnsubscribePage;
+    public boolean ConfirmedOptIn;
+    public URI ConfirmationSuccessPage;
 }

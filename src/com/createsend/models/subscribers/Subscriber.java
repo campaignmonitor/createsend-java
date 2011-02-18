@@ -26,12 +26,14 @@ import java.util.Date;
 public class Subscriber {
     public String ListID;
     public String EmailAddress;
+    public String Name;
     public Date Date;
-    public String State; // TODO: Probably want to move this to an enum
+    public String State; // TODO: Probably want to move this to an enum      "EmailAddress": "subs+7t8787Y@example.com",
+    public CustomField[] CustomFields;    
     
     @Override
     public String toString() {
-        return String.format("{ ListID: %s EmailAddress: %s, Date: %s, State: %s }",
+        return String.format("{ ListID: %s, EmailAddress: %s, Name: %s, Date: %s, State: %s }",
             ListID, EmailAddress, Date, State);
     }
 }

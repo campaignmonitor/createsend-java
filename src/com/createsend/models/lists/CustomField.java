@@ -19,21 +19,11 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package com.createsend.models.segments;
+package com.createsend.models.lists;
 
-import java.util.Arrays;
-
-public class Segment {
-    public String ListID;
-    public String SegmentID;
-    public String Title; 
-    
-    public Integer ActiveSubscribers;
-    public Rule[] Rules;
-    
-    @Override
-    public String toString() {
-        return String.format("{ ListID: %s, SegmentID: %s, Title: %s, Active: %d, Rules: %s }", ListID,
-                SegmentID, Title, ActiveSubscribers, Arrays.deepToString(Rules));
-    }
+public class CustomField {
+    public String FieldName;
+    public String Key;
+    public String DataType; // TODO: Probably want to move this to an enum
+    public String[] FieldOptions;
 }

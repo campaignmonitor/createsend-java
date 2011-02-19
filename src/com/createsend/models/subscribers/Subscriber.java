@@ -34,6 +34,6 @@ public class Subscriber {
     @Override
     public String toString() {
         return String.format("{ ListID: %s, EmailAddress: %s, Name: %s, Date: %s, State: %s }",
-            ListID, EmailAddress, Date, State);
+            ListID, EmailAddress, Name, Date, State);
     }
 }

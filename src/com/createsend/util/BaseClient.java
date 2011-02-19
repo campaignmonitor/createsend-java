@@ -70,13 +70,34 @@ public abstract class BaseClient {
      * @throws CreateSendException If the API call results in a HTTP status code >= 400
      */
     protected <T> T get(Class<T> klass, String... pathElements) throws CreateSendException {
+        return get(klass, null, pathElements);
+    }
+
+    
+    /**
+     * Performs a HTTP GET on the route specified by the pathElements deserialising the 
+     * result to an instance of klass.
+     * @param <T> The type of model expected from the API call.
+     * @param klass The class of the model to deserialise. 
+     * @param queryString The query string params to use for the request. 
+     * Use <code>null</code> when no query string is required.
+     * @param pathElements The path of the API resource to access
+     * @return The model returned from the API call
+     * @throws CreateSendException If the API call results in a HTTP status code >= 400
+     */
+    protected <T> T get(Class<T> klass, MultivaluedMap<String, String> queryString,
+        String... pathElements) throws CreateSendException {
         WebResource resource = getAPIResourceWithAuth(pathElements);
+        
+        if(queryString != null) {
+            resource = resource.queryParams(queryString);
+        }
         
         try {
             return fixStringResult(klass, resource.get(klass));
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue);
-        }
+        }   
     }
     
     /**

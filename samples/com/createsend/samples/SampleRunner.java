@@ -56,7 +56,7 @@ public class SampleRunner {
         newClient.TimeZone = "Client Timezone";
         
         newClient.ClientID = clientAPI.create(newClient);
-        System.out.printf("Result of client create: %s\n", newClient.ClientID);
+        System.out.printf("Result of client create: %s\n", clientAPI.getClientID());
 
         newClient.CompanyName = "Edited Company Name";
         clientAPI.setBasics(newClient);
@@ -65,7 +65,7 @@ public class SampleRunner {
         access.Username = "Username";
         access.Password = "Password";
         access.AccessLevel = 23;
-        clientAPI.setAccess(newClient.ClientID, access);
+        clientAPI.setAccess(access);
         
         BillingDetails billing = new BillingDetails();
         billing.ClientPays = true;
@@ -73,25 +73,26 @@ public class SampleRunner {
         billing.MarkupOnDelivery = 5.5;
         billing.MarkupPerRecipient = 6.1;
         billing.Currency = "AUD";
-        clientAPI.setPaygBilling(newClient.ClientID, billing);
+        clientAPI.setPaygBilling(billing);
         
-        System.out.printf("Result of client details: %s\n", clientAPI.details(newClient.ClientID));
-        clientAPI.delete(newClient.ClientID);
+        System.out.printf("Result of client details: %s\n", clientAPI.details());
+        clientAPI.delete();
         
+        clientAPI.setClientID("Other Client ID");
         System.out.printf("Result of get sent campaigns: %s\n", 
-                Arrays.deepToString(clientAPI.sentCampaigns("Client ID")));
+                Arrays.deepToString(clientAPI.sentCampaigns()));
         
         System.out.printf("Result of get draft campaigns: %s\n", 
-                Arrays.deepToString(clientAPI.draftCampaigns("Client ID")));
+                Arrays.deepToString(clientAPI.draftCampaigns()));
         
         System.out.printf("Result of get lists: %s\n", 
-                Arrays.deepToString(clientAPI.lists("Client ID")));
+                Arrays.deepToString(clientAPI.lists()));
         
         System.out.printf("Result of get segments: %s\n", 
-                Arrays.deepToString(clientAPI.segments("Client ID")));
+                Arrays.deepToString(clientAPI.segments()));
          
         System.out.printf("Result of get suppression: %s\n", 
-            clientAPI.suppressionList("Client ID", null, null, null, null));
+            clientAPI.suppressionList(null, null, null, null));
     }
     
     private static void runGeneralMethods() throws CreateSendException {

@@ -13,9 +13,48 @@ import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+/**
+ * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/segments/" target="_blank">
+ * Segment</a> resources in the Campaign Monitor API
+ */
 public class Segments extends BaseClient {
+    private String segmentID;
+    
     /**
-     * Creates a new segment on the specified list
+     * Constructor.
+     * Use this parameterless constructor for creating new segments.
+     */
+    public Segments() {}
+    
+    /**
+     * Constructor. 
+     * Use this constructor when the ID of the segment is known.
+     * @param segmentID The ID of the segment to apply calls to
+     */
+    public Segments(String segmentID) {
+        setSegmentID(segmentID);
+    }
+    
+    /**
+     * Sets the current segment ID
+     * @param segmentID The ID of the segment to apply calls to.
+     */
+    public void setSegmentID(String segmentID) {
+        this.segmentID = segmentID;
+    }
+    
+    /**
+     * Gets the current segment ID.
+     * @return The current segment ID.
+     */
+    public String getSegmentID() {
+        return segmentID;
+    }
+    
+    /**
+     * Creates a new segment on the specified list. 
+     * A successful call to this method will set the current segment ID to that of 
+     * the newly created segment.
      * @param listID The ID of the list to segment
      * @param segment The segment details
      * @return The ID of the newly created segment
@@ -24,7 +63,8 @@ public class Segments extends BaseClient {
      * Creating a segment</a>
      */
     public String create(String listID, Segment segment) throws CreateSendException {
-        return post(String.class, segment, "segments", listID + ".json");
+        segmentID = post(String.class, segment, "segments", listID + ".json");
+        return segmentID;
     }
     
     /**
@@ -36,38 +76,35 @@ public class Segments extends BaseClient {
      * Updating a segment</a>
      */
     public void update(Segment segment) throws CreateSendException {
-        put(segment, "segments", segment.SegmentID + ".json");
+        put(segment, "segments", segmentID + ".json");
     }
     
     /**
      * Adds a new rule to an existing list segment
-     * @param segmentID The ID of the segment to add the rule to
      * @param rule The rule specification
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#adding_a_segment_rule" target="_blank">
      * Adding a segment rule</a>
      */
-    public void addRule(String segmentID, Rule rule) throws CreateSendException {
+    public void addRule(Rule rule) throws CreateSendException {
         post(String.class, rule, "segments", segmentID, "rules.json");
     }
     
     /**
      * Gets the details of the specified segment, including all rules and the current number of
-     * active subscribers
-     * @param segmentID The ID of the segment to get the details of.
+     * active subscribers.
      * @return The details of the specified segment.
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_a_segment" target="_blank">
      * Getting a segment</a>
      */
-    public Segment details(String segmentID) throws CreateSendException {
+    public Segment details() throws CreateSendException {
         return get(Segment.class, "segments", segmentID + ".json");
     }
     
     /**
      * Gets a paged collection of active subscribers within the specified segment
      * since the provided date.
-     * @param segmentID The ID of the segment to get the subcribers from.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date. 
      *     This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
@@ -79,7 +116,7 @@ public class Segments extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(String segmentID, Date subscribedFrom,
+    public PagedResult<Subscriber> active(Date subscribedFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
@@ -89,13 +126,12 @@ public class Segments extends BaseClient {
     }
     
     /**
-     * Deletes the specified segment
-     * @param segmentID The ID of the segment to delete
+     * Deletes the specified segment.
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#deleting_a_segment" target="_blank">
      * Deleting a segment</a>
      */
-    public void delete(String segmentID) throws CreateSendException {
+    public void delete() throws CreateSendException {
         delete("segments", segmentID + ".json");
     }
     

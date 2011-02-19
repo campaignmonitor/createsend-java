@@ -39,8 +39,43 @@ import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class Lists extends BaseClient {
+    private String listID;
+    
+    /**
+     * Constructor.
+     * Use this constructor for creating new lists.
+     */
+    public Lists() {}
+    
+    /**
+     * Constructor.
+     * Use this constructor when the list ID is already known
+     * @param listID The ID of the list to apply any calls to
+     */
+    public Lists(String listID) {
+        setListID(listID);
+    }
+    
+    /**
+     * Sets the current list ID. 
+     * @param listID The ID of the list to apply any calls to.
+     */
+    public void setListID(String listID) {
+        this.listID = listID;
+    }
+    
+    /**
+     * Gets the current list ID.
+     * @return The current list ID.
+     */
+    public String getListID() {
+        return listID;
+    }
+    
     /**
      * Creates a new empty subscriber list.
+     * After a successful call, the current list id property will be set the ID of the 
+     * newly created list.
      * @param clientID The ID of the client owning the new list
      * @param list The details of the new list
      * @return The ID of the newly created list
@@ -49,84 +84,78 @@ public class Lists extends BaseClient {
      * Creating a list</a>
      */
     public String create(String clientID, List list) throws CreateSendException {
-        return post(String.class, list, "lists", clientID + ".json");
+        listID = post(String.class, list, "lists", clientID + ".json");
+        return listID;
     }
     
     /**
      * Updates the basic list details for an existing subscriber list
-     * @param listID The ID of the list to update
      * @param list The new basic details for the list
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_a_list" target="_blank">
      * Updating a list</a>
      */
-    public void update(String listID, List list) throws CreateSendException {
+    public void update(List list) throws CreateSendException {
         put(list, "lists", listID + ".json");
     }
     
     /**
      * Deletes the list with the specified ID
-     * @param listID The ID of the list to delete
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_list" target="_blank">
      * Deleting a list</a>
      */
-    public void delete(String listID) throws CreateSendException {
+    public void delete() throws CreateSendException {
         delete("lists", listID + ".json");
     }
     
     /**
      * Gets the details of the list with the given ID
-     * @param listID The ID of the list to get the details of
      * @return The details of the list with the given ID
      * @throws CreateSendException Raised when the API returns a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_details" target="_blank">
      * Getting list details</a>
      */
-    public List details(String listID) throws CreateSendException {
+    public List details() throws CreateSendException {
         return get(List.class, "lists", listID + ".json");
     }
     
     /**
      * Gets subscriber statistics for the list with the specified ID
-     * @param listID The ID of the list to get subscriber statistics for
      * @return Subscriber statistics for the list with the specified ID
      * @throws CreateSendException Raised when the API responds with HTTP status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_stats" target="_blank">
      * Getting list stats</a>
      */
-    public Statistics stats(String listID) throws CreateSendException {
+    public Statistics stats() throws CreateSendException {
         return get(Statistics.class, "lists", listID, "stats.json");
     }
     
     /**
      * Gets the custom fields available for the list with the specified ID
-     * @param listID The ID of the list to get the custom fields for
      * @return The custom fields available for the specified list
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_custom_fields" target="_blank">
      * Getting list custom fields</a>
      */
-    public CustomField[] customFields(String listID) throws CreateSendException {
+    public CustomField[] customFields() throws CreateSendException {
         return get(CustomField[].class, "lists", listID, "customfields.json");
     }
     
     /**
      * Gets the segments available in the list with the specified ID
-     * @param listID The ID of the list to get the segments for.
      * @return The segments available in the specified list
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_segments" target="_blank">
      * Getting list segments</a>
      */
-    public Segment[] segments(String listID) throws CreateSendException {
+    public Segment[] segments() throws CreateSendException {
         return get(Segment[].class, "lists", listID, "segments.json");
     }
     
     /**
      * Gets a paged collection of active subscribers who have subscribed to the list 
      * since the provided date.
-     * @param listID The ID of the list to get the subcribers from.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date. 
      *     This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
@@ -138,7 +167,7 @@ public class Lists extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_active_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(String listID, Date subscribedFrom,
+    public PagedResult<Subscriber> active(Date subscribedFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
@@ -150,7 +179,6 @@ public class Lists extends BaseClient {
     /**
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list 
      * since the provided date.
-     * @param listID The ID of the list to get the subcribers from.
      * @param subscribedFrom The API will only return subscribers who unsubscribed on or after this date. 
      *     This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
@@ -162,7 +190,7 @@ public class Lists extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_unsubscribed_subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
-    public PagedResult<Subscriber> unsubscribed(String listID, Date subscribedFrom,
+    public PagedResult<Subscriber> unsubscribed(Date subscribedFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
@@ -174,7 +202,6 @@ public class Lists extends BaseClient {
     /**
      * Gets a paged collection of bounced subscribers who have bounced out of the list 
      * since the provided date.
-     * @param listID The ID of the list to get the subcribers from.
      * @param subscribedFrom The API will only return subscribers who bounced out on or after this date. 
      *     This field is required
      * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
@@ -186,7 +213,7 @@ public class Lists extends BaseClient {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_bounced_subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
-    public PagedResult<Subscriber> bounced(String listID, Date subscribedFrom,
+    public PagedResult<Subscriber> bounced(Date subscribedFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
@@ -197,104 +224,93 @@ public class Lists extends BaseClient {
     
     /**
      * Creates a new custom field with the specified data
-     * @param listID The ID of the list to create the custom field on
      * @param customField The custom field options
      * @return The Key of the newly created custom field
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_custom_field" target="_blank">
      * Creating a custom field</a>
      */
-    public String createCustomField(String listID, CustomField customField) throws CreateSendException {
+    public String createCustomField(CustomField customField) throws CreateSendException {
         return post(String.class, customField, "lists", listID, "customfields.json");
     }
     
     /**
      * Updates the available options for a Multi-Valued custom field.
-     * @param listID The ID of the list owning the custom field
      * @param fieldKey The <em>Key</em> of the custom field to update. This must be surrounded by [].
      * @param options The new options to use for the field. 
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_custom_field_options" target="_blank">
      * Updating custom field options</a>
      */
-    public void updateCustomFieldOptions(String listID, String fieldKey, UpdateFieldOptions options) 
+    public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options) 
         throws CreateSendException {
         put(options, "lists", listID, "customFields", fieldKey, "options.json");
     }
     
     /**
      * Deletes the custom field with the specified key
-     * @param listID The ID of the list owning the custom field
      * @param fieldKey The <em>Key</em> of the custom field to delete. This must be surrounded by [].
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_custom_field" target="_blank">
      * Deleting a custom field</a>
      */
-    public void deleteCustomField(String listID, String fieldKey) throws CreateSendException {
+    public void deleteCustomField(String fieldKey) throws CreateSendException {
         delete("lists", listID, "customFields", fieldKey + ".json");
     }
     
     /**
      * Gets all webhooks which have been attached to events on the specified list
-     * @param listID The ID of the list to get webhooks for.
      * @return The webhooks which have been attached to events for the specified list
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_webhooks" target="_blank">
      * Getting list webhooks</a>
      */
-    public Webhook[] webhooks(String listID) throws CreateSendException {
+    public Webhook[] webhooks() throws CreateSendException {
         return get(Webhook[].class, "lists", listID, "webhooks.json");
     }
     
     /**
      * Creates a new webhook on the specified list.
-     * @param listID The ID of the list to attach the webhook to.
      * @param webhook The webhook details
      * @return The ID of the newly created webhook
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_webhook" target="_blank">
      * Creating a webhook</a>
      */
-    public String createWebhook(String listID, Webhook webhook) throws CreateSendException {
-        webhook.Status = null;
-        webhook.WebhookID = null;
-        
+    public String createWebhook(Webhook webhook) throws CreateSendException {
         return post(String.class, webhook, "lists", listID, "webhooks.json");
     }
     
     /**
      * Tests the specified webhook
-     * @param listID The ID of the list on which the webhook is attached
      * @param webhookID The ID of the webhook
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400. I.e the test fails
      * @see <a href="http://www.campaignmonitor.com/api/lists/#testing_a_webhook" target="_blank">
      * Testing a webhook</a>
      */
-    public void testWebhook(String listID, String webhookID) throws CreateSendException {
+    public void testWebhook(String webhookID) throws CreateSendException {
         get(String.class, "lists", listID, "webhooks", webhookID, "test.json");
     }
     
     /**
      * Deletes the specified webhook
-     * @param listID The ID of the list to which the webhook is attached
      * @param webhookID The ID of the webhook to delete
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_webhook" target="_blank">
      * Deleting a webhook</a>
      */
-    public void deleteWebhook(String listID, String webhookID) throws CreateSendException {
+    public void deleteWebhook(String webhookID) throws CreateSendException {
         delete("lists", listID, "webhooks", webhookID + ".json");
     }
     
     /**
      * Activates the specified webhook.
-     * @param listID The ID of the list to which the webhook is attached
      * @param webhookID The ID of the webhook to activate
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/lists/#activating_a_webhook" target="_blank">
      * Activating a webhook</a>
      */
-    public void activateWebhook(String listID, String webhookID) throws CreateSendException {
+    public void activateWebhook(String webhookID) throws CreateSendException {
         put("lists", listID, "webhooks", webhookID, "activate.json");
     }
 }

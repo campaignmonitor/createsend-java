@@ -40,6 +40,17 @@ public class Statistics {
     public int DeletedThisWeek;
     public int DeletedThisMonth;
     public int DeletedThisYear;
+
+    @Override
+    public String toString() {
+        return String.format("TotalActiveSubscribers: %s, NewActiveSubscribersToday: %s, NewActiveSubscribersYesterday: %s, NewActiveSubscribersThisWeek: %s, NewActiveSubscribersThisMonth: %s, NewActiveSubscribersThisYear: %s, TotalUnsubscribes: %s, UnsubscribesToday: %s, UnsubscribesYesterday: %s, UnsubscribesThisWeek: %s, UnsubscribesThisMonth: %s, UnsubscribesThisYear: %s, TotalDeleted: %s, DeletedToday: %s, DeletedYesterday: %s, DeletedThisWeek: %s, DeletedThisMonth: %s, DeletedThisYear: %s, TotalBounces: %s, BouncesToday: %s, BouncesYesterday: %s, BouncesThisWeek: %s, BouncesThisMonth: %s, BouncesThisYear: %s",
+            TotalActiveSubscribers, NewActiveSubscribersToday, NewActiveSubscribersYesterday,
+            NewActiveSubscribersThisWeek, NewActiveSubscribersThisMonth, NewActiveSubscribersThisYear, 
+            TotalUnsubscribes, UnsubscribesToday, UnsubscribesYesterday, UnsubscribesThisWeek, 
+            UnsubscribesThisMonth, UnsubscribesThisYear, TotalDeleted, DeletedToday,
+            DeletedYesterday, DeletedThisWeek, DeletedThisMonth, DeletedThisYear, TotalBounces, 
+            BouncesToday, BouncesYesterday, BouncesThisWeek, BouncesThisMonth, BouncesThisYear);
+    }
     public int TotalBounces;
     public int BouncesToday;
     public int BouncesYesterday;

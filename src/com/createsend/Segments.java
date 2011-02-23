@@ -151,12 +151,11 @@ public class Segments {
     
     /**
      * Deletes <em>all</em> rules from the specifed segment
-     * @param segmentID The ID of the segment to delete the rules from
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#deleting_segment_rules" target="_blank">
      * Deleting a segments rules</a>
      */
-    public void deleteRules(String segmentID) throws CreateSendException {
+    public void deleteRules() throws CreateSendException {
         client.delete("segments", segmentID, "rules.json");
     }
 }

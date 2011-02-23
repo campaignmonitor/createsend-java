@@ -28,11 +28,28 @@ import java.util.Date;
 import com.createsend.Campaigns;
 import com.createsend.Clients;
 import com.createsend.General;
+import com.createsend.Lists;
+import com.createsend.Segments;
+import com.createsend.Subscribers;
+import com.createsend.Templates;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
+import com.createsend.models.lists.CustomFieldForCreate;
+import com.createsend.models.lists.List;
+import com.createsend.models.lists.UpdateFieldOptions;
+import com.createsend.models.lists.Webhook;
+import com.createsend.models.lists.WebhookTestFailureDetails;
+import com.createsend.models.segments.Rule;
+import com.createsend.models.segments.Segment;
+import com.createsend.models.subscribers.CustomField;
+import com.createsend.models.subscribers.Subscriber;
+import com.createsend.models.subscribers.SubscriberToAdd;
+import com.createsend.models.subscribers.SubscribersToAdd;
+import com.createsend.models.templates.TemplateForCreate;
+import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
 
 
@@ -43,15 +60,211 @@ public class SampleRunner {
      */
     public static void main(String[] args) {        
         try { 
+            String clientID = "Client ID";
             runGeneralMethods();
             runClientMethods();
-            runCampaignMethods();
+            runCampaignMethods(clientID);
+            runListMethods(clientID);
+            runSegmentMethods(clientID);
+            runSubscriberMethods(clientID);
+            runTemplateMethods(clientID);
+        } catch (BadRequestException e) {
+            e.printStackTrace();
+            
+            if(e.getResultData() != null) {
+                System.err.printf("Exception result data: %s\n", e.getResultData());
+            }
         } catch (CreateSendException e) {
             e.printStackTrace();
         }
     }
     
-    private static void runCampaignMethods() throws CreateSendException {
+    private static void runTemplateMethods(String clientID) throws CreateSendException {
+        Templates templateAPI = new Templates();
+        
+        TemplateForCreate template = new TemplateForCreate();
+        template.Name = "Java Test Template";
+        template.HtmlPageURL = URI.create("Template HTML");
+        template.ZipFileURL = URI.create("Template ZIP");
+        template.ScreenshotURL = URI.create("Template Screenshot");
+        templateAPI.create(clientID, template);
+        
+        System.out.printf("Result of get template details: %s\n", templateAPI.get());
+        
+        template.Name = "Edited Java Template";
+        templateAPI.update(template);
+
+        System.out.printf("Result of get template details: %s\n", templateAPI.get());
+        templateAPI.delete();
+    }
+    
+    @SuppressWarnings("deprecation")
+    private static void runSubscriberMethods(String clientID) throws CreateSendException { 
+        Lists listAPI = new Lists();
+        Date subscribersFrom = new Date();
+        subscribersFrom.setHours(0);
+        
+        List list = new List();
+        list.Title = "Java API Test List";
+        list.ConfirmedOptIn = false;
+        listAPI.create(clientID, list);        
+        
+        CustomFieldForCreate customField = new CustomFieldForCreate();
+        customField.DataType = "Text";
+        customField.FieldName = "Website";
+        
+        String key = listAPI.createCustomField(customField);
+        
+        Subscribers subscriberAPI = new Subscribers(listAPI.getListID());
+        
+        SubscriberToAdd subscriber = new SubscriberToAdd();
+        subscriber.Resubscribe = true;
+        subscriber.EmailAddress = "Subscriber Email 1";
+        subscriber.Name = "Java Test Sub 1";
+        subscriber.CustomFields = new CustomField[] {
+            new CustomField()
+        };
+        subscriber.CustomFields[0].Key = key;
+        subscriber.CustomFields[0].Value = "http://www.example.com";
+        
+        System.out.printf("Result of subscriber add: %s\n", subscriberAPI.add(subscriber));
+        
+        SubscribersToAdd subscribers = new SubscribersToAdd();
+        subscribers.Resubscribe = true;
+        subscribers.Subscribers = new Subscriber[] {
+            new Subscriber(), new Subscriber()
+        };
+        
+        subscribers.Subscribers[0].EmailAddress = "Subscriber Email 2";
+        subscribers.Subscribers[1].EmailAddress = "Subscriber Email 3";
+        subscribers.Subscribers[1].CustomFields = new CustomField[] { new CustomField() };
+        subscribers.Subscribers[1].CustomFields[0].Key = key;
+        subscribers.Subscribers[1].CustomFields[0].Value = "http://www.google.com";
+        subscriberAPI.addMany(subscribers);
+        
+        System.out.printf("Result of subscriber details: %s\n", subscriberAPI.details(subscriber.EmailAddress));
+        System.out.printf("Result of subscriber history: %s\n", 
+            Arrays.deepToString(subscriberAPI.history(subscriber.EmailAddress)));
+        subscriberAPI.unsubscribe(subscriber.EmailAddress);
+        
+        System.out.printf("Result of list active: %s\n", 
+                listAPI.active(subscribersFrom, null, null, null, null));
+                    
+        listAPI.delete();
+    }
+    
+    private static void runSegmentMethods(String clientID) throws CreateSendException {
+        Lists listAPI = new Lists();
+        Date subscribersFrom = new Date();
+        
+        List list = new List();
+        list.Title = "Java API Test List";
+        list.ConfirmedOptIn = false;
+        listAPI.create(clientID, list);
+        
+        Segments segmentAPI = new Segments();
+        
+        Segment segment = new Segment();
+        segment.Title = "Java Test Segment";
+        segment.Rules = new Rule[] {
+            new Rule()
+        };
+        segment.Rules[0].Subject = "EmailAddress";
+        segment.Rules[0].Clauses = new String[] {
+            "CONTAINS gmail.com"
+        };
+        
+        segmentAPI.create(listAPI.getListID(), segment);
+        System.out.printf("Result of create segment: %s\n", segmentAPI.getSegmentID());
+        
+        System.out.printf("Result of segment details: %s\n", segmentAPI.details());
+        System.out.printf("Result of segment active: %s\n", 
+            segmentAPI.active(subscribersFrom, null, null, null, null));
+        
+        segment.Title = "New Java Test Segment";
+        segment.Rules[0].Clauses[0] = "CONTAINS hotmail.com";
+        segmentAPI.update(segment);
+        
+        segmentAPI.deleteRules();
+        
+        segment.Rules[0].Subject = "DateSubscribed";
+        segment.Rules[0].Clauses[0] = "AFTER 2009-01-01";
+        segmentAPI.addRule(segment.Rules[0]);
+        
+        segmentAPI.delete();        
+        listAPI.delete();
+    }
+    
+    private static void runListMethods(String clientID) throws CreateSendException {
+        Lists listAPI = new Lists();
+        Date subscribersFrom = new Date();
+        
+        List list = new List();
+        list.Title = "Java API Test List";
+        list.ConfirmedOptIn = false;
+        listAPI.create(clientID, list);
+        
+        System.out.printf("Result of list create: %s\n", listAPI.getListID());
+        System.out.printf("Result of list details: %s\n", listAPI.details());
+        
+        list.Title = "Edited Java List";
+        listAPI.update(list);
+        
+        System.out.printf("Result of list details: %s\n", listAPI.details());
+        System.out.printf("Result of list stats: %s\n", listAPI.stats());
+        System.out.printf("Result of list segments: %s\n", 
+            Arrays.deepToString(listAPI.segments()));
+                
+        System.out.printf("Result of list active: %s\n", 
+            listAPI.active(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list unsubscribed: %s\n", 
+                listAPI.unsubscribed(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list bounced: %s\n", 
+                listAPI.bounced(subscribersFrom, null, null, null, null));
+        
+        CustomFieldForCreate customField = new CustomFieldForCreate();
+        customField.DataType = "MultiSelectOne";
+        customField.FieldName = "Java Wrapper Field";
+        customField.Options = new String[] { "Option 1", "Option 2" };
+
+        String key = listAPI.createCustomField(customField);
+        System.out.printf("Result of create custom field: %s\n", key);
+        System.out.printf("Result of list custom fields: %s\n", 
+            Arrays.deepToString(listAPI.customFields()));
+        
+        UpdateFieldOptions options = new UpdateFieldOptions();
+        options.KeepExistingOptions = true;
+        options.Options = new String[] { "Option 3" };
+        listAPI.updateCustomFieldOptions(key, options);
+        
+        listAPI.deleteCustomField(key);
+        
+        Webhook webhook = new Webhook();
+        webhook.Events = new String[] { "Subscribe" };
+        webhook.PayloadFormat = "json";
+        webhook.Url = URI.create("Webhook URL");
+        webhook.WebhookID = listAPI.createWebhook(webhook);
+        
+        System.out.printf("Result of create webhook: %s\n", webhook.WebhookID);
+        //listAPI.activateWebhook(webhook.WebhookID); Looks like the API is returning 404's at the moment??
+        
+        try {
+            listAPI.testWebhook(webhook.WebhookID);
+        } catch (BadRequestException e) {
+            e.printStackTrace();
+            if(e.getResultData() != null) {
+                WebhookTestFailureDetails testDetails = (WebhookTestFailureDetails)e.getResultData();
+                System.out.printf("Webhook failure details: %s\n", testDetails);
+            }
+        }
+        
+        listAPI.deleteWebhook(webhook.WebhookID);
+        
+        listAPI.delete();
+    }
+
+    
+    private static void runCampaignMethods(String clientID) throws CreateSendException {
         Campaigns campaignAPI = new Campaigns();
         Date resultsAfter = new Date();
         
@@ -68,11 +281,11 @@ public class SampleRunner {
         newCampaign.SegmentIDs = new String[0];
         newCampaign.Subject = "Java Wrapper Test: " + new Date();
 
-        campaignAPI.create("Client ID", newCampaign);
+        campaignAPI.create(clientID, newCampaign);
         System.out.printf("Result of campaign create: %s\n", campaignAPI.getCampaignID());
         campaignAPI.delete();
 
-        campaignAPI.create("Client ID", newCampaign);
+        campaignAPI.create(clientID, newCampaign);
         System.out.printf("Result of campaign create: %s\n", campaignAPI.getCampaignID());
         
         PreviewData data = new PreviewData();

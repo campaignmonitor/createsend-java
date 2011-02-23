@@ -27,6 +27,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.PagedResult;
 import com.createsend.models.lists.CustomField;
+import com.createsend.models.lists.CustomFieldForCreate;
 import com.createsend.models.lists.List;
 import com.createsend.models.lists.Statistics;
 import com.createsend.models.lists.UpdateFieldOptions;
@@ -241,7 +242,7 @@ public class Lists {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_custom_field" target="_blank">
      * Creating a custom field</a>
      */
-    public String createCustomField(CustomField customField) throws CreateSendException {
+    public String createCustomField(CustomFieldForCreate customField) throws CreateSendException {
         return client.post(String.class, customField, "lists", listID, "customfields.json");
     }
     

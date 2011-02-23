@@ -21,17 +21,13 @@
  */
 package com.createsend.models.lists;
 
-import java.net.URI;
+class BaseCustomField {
+    public String FieldName;
+    public String DataType; // TODO: Probably want to move this to an enum
 
-public class List {
-    public String Title;
-    public URI UnsubscribePage;
-    public boolean ConfirmedOptIn;
-    public URI ConfirmationSuccessPage;
-    
     @Override
     public String toString() {
-        return String.format("{ Title: %s, UnsubscribePage: %s, ConfirmedOptIn: %s, ConfirmationSuccessPage: %s }",
-            Title, UnsubscribePage, ConfirmedOptIn, ConfirmationSuccessPage);
+        return String.format("FieldName: %s, DataType: %s",
+            FieldName, DataType);
     }
 }

@@ -31,21 +31,27 @@ import com.createsend.models.lists.List;
 import com.createsend.models.lists.Statistics;
 import com.createsend.models.lists.UpdateFieldOptions;
 import com.createsend.models.lists.Webhook;
+import com.createsend.models.lists.WebhookTestFailureDetails;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
-import com.createsend.util.BaseClient;
+import com.createsend.util.ErrorDeserialiser;
+import com.createsend.util.JerseyClient;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class Lists extends BaseClient {
+public class Lists {
     private String listID;
+    private JerseyClient client;
     
     /**
      * Constructor.
      * Use this constructor for creating new lists.
      */
-    public Lists() {}
+    public Lists() {
+        this(null);
+    }
     
     /**
      * Constructor.
@@ -53,7 +59,12 @@ public class Lists extends BaseClient {
      * @param listID The ID of the list to apply any calls to
      */
     public Lists(String listID) {
+        this(listID, new JerseyClientImpl());
+    }
+    
+    public Lists(String listID, JerseyClient client) {
         setListID(listID);
+        this.client = client;
     }
     
     /**
@@ -84,7 +95,7 @@ public class Lists extends BaseClient {
      * Creating a list</a>
      */
     public String create(String clientID, List list) throws CreateSendException {
-        listID = post(String.class, list, "lists", clientID + ".json");
+        listID = client.post(String.class, list, "lists", clientID + ".json");
         return listID;
     }
     
@@ -96,7 +107,7 @@ public class Lists extends BaseClient {
      * Updating a list</a>
      */
     public void update(List list) throws CreateSendException {
-        put(list, "lists", listID + ".json");
+        client.put(list, "lists", listID + ".json");
     }
     
     /**
@@ -106,7 +117,7 @@ public class Lists extends BaseClient {
      * Deleting a list</a>
      */
     public void delete() throws CreateSendException {
-        delete("lists", listID + ".json");
+        client.delete("lists", listID + ".json");
     }
     
     /**
@@ -117,7 +128,7 @@ public class Lists extends BaseClient {
      * Getting list details</a>
      */
     public List details() throws CreateSendException {
-        return get(List.class, "lists", listID + ".json");
+        return client.get(List.class, "lists", listID + ".json");
     }
     
     /**
@@ -128,7 +139,7 @@ public class Lists extends BaseClient {
      * Getting list stats</a>
      */
     public Statistics stats() throws CreateSendException {
-        return get(Statistics.class, "lists", listID, "stats.json");
+        return client.get(Statistics.class, "lists", listID, "stats.json");
     }
     
     /**
@@ -139,7 +150,7 @@ public class Lists extends BaseClient {
      * Getting list custom fields</a>
      */
     public CustomField[] customFields() throws CreateSendException {
-        return get(CustomField[].class, "lists", listID, "customfields.json");
+        return client.get(CustomField[].class, "lists", listID, "customfields.json");
     }
     
     /**
@@ -150,7 +161,7 @@ public class Lists extends BaseClient {
      * Getting list segments</a>
      */
     public Segment[] segments() throws CreateSendException {
-        return get(Segment[].class, "lists", listID, "segments.json");
+        return client.get(Segment[].class, "lists", listID, "segments.json");
     }
     
     /**
@@ -172,7 +183,7 @@ public class Lists extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "active.json");
     }
     
@@ -195,7 +206,7 @@ public class Lists extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "unsubscribed.json");
     }
     
@@ -218,7 +229,7 @@ public class Lists extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "bounced.json");
     }
     
@@ -231,7 +242,7 @@ public class Lists extends BaseClient {
      * Creating a custom field</a>
      */
     public String createCustomField(CustomField customField) throws CreateSendException {
-        return post(String.class, customField, "lists", listID, "customfields.json");
+        return client.post(String.class, customField, "lists", listID, "customfields.json");
     }
     
     /**
@@ -244,7 +255,7 @@ public class Lists extends BaseClient {
      */
     public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options) 
         throws CreateSendException {
-        put(options, "lists", listID, "customFields", fieldKey, "options.json");
+        client.put(options, "lists", listID, "customFields", fieldKey, "options.json");
     }
     
     /**
@@ -255,7 +266,7 @@ public class Lists extends BaseClient {
      * Deleting a custom field</a>
      */
     public void deleteCustomField(String fieldKey) throws CreateSendException {
-        delete("lists", listID, "customFields", fieldKey + ".json");
+        client.delete("lists", listID, "customFields", fieldKey + ".json");
     }
     
     /**
@@ -266,7 +277,7 @@ public class Lists extends BaseClient {
      * Getting list webhooks</a>
      */
     public Webhook[] webhooks() throws CreateSendException {
-        return get(Webhook[].class, "lists", listID, "webhooks.json");
+        return client.get(Webhook[].class, "lists", listID, "webhooks.json");
     }
     
     /**
@@ -278,7 +289,7 @@ public class Lists extends BaseClient {
      * Creating a webhook</a>
      */
     public String createWebhook(Webhook webhook) throws CreateSendException {
-        return post(String.class, webhook, "lists", listID, "webhooks.json");
+        return client.post(String.class, webhook, "lists", listID, "webhooks.json");
     }
     
     /**
@@ -289,7 +300,8 @@ public class Lists extends BaseClient {
      * Testing a webhook</a>
      */
     public void testWebhook(String webhookID) throws CreateSendException {
-        get(String.class, "lists", listID, "webhooks", webhookID, "test.json");
+        client.get(String.class, new ErrorDeserialiser<WebhookTestFailureDetails>(), 
+            "lists", listID, "webhooks", webhookID, "test.json");
     }
     
     /**
@@ -300,7 +312,7 @@ public class Lists extends BaseClient {
      * Deleting a webhook</a>
      */
     public void deleteWebhook(String webhookID) throws CreateSendException {
-        delete("lists", listID, "webhooks", webhookID + ".json");
+        client.delete("lists", listID, "webhooks", webhookID + ".json");
     }
     
     /**
@@ -311,6 +323,6 @@ public class Lists extends BaseClient {
      * Activating a webhook</a>
      */
     public void activateWebhook(String webhookID) throws CreateSendException {
-        put("lists", listID, "webhooks", webhookID, "activate.json");
+        client.put("lists", listID, "webhooks", webhookID, "activate.json");
     }
 }

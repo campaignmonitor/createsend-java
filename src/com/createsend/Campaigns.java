@@ -32,7 +32,9 @@ import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
 import com.createsend.models.subscribers.Subscriber;
-import com.createsend.util.BaseClient;
+import com.createsend.util.ErrorDeserialiser;
+import com.createsend.util.JerseyClientImpl;
+import com.createsend.util.JerseyClient;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -41,21 +43,34 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/campaigns/" target="_blank">
  * Campaign</a> resources in the Campaign Monitor API
  */
-public class Campaigns extends BaseClient {
+public class Campaigns {
     private String campaignID;
+    public JerseyClient client;
     
     /**
      * Constructor.
      * Use this to create new campaigns.
      */
-    public Campaigns() {}
+    public Campaigns() {
+        this(null);
+    }
     
     /**
      * Constructor.
      * @param campaignID The ID of the campaign to apply api calls to.
      */
     public Campaigns(String campaignID) {
+        this(campaignID, new JerseyClientImpl());
+    }
+
+    /**
+     * Constructor.
+     * @param campaignID The ID of the campaign to apply api calls to.
+     * @param client The {@link com.createsend.util.JerseyClient} to use to make API calls
+     */
+    public Campaigns(String campaignID, JerseyClient client) {
         setCampaignID(campaignID);
+        this.client = client;
     }
     
     /**
@@ -84,7 +99,7 @@ public class Campaigns extends BaseClient {
      * Creating a campaign</a>
      */
     public String create(String clientID, CampaignForCreation campaign) throws CreateSendException {
-        campaignID = post(String.class, campaign, "campaigns", clientID + ".json");
+        campaignID = client.post(String.class, campaign, "campaigns", clientID + ".json");
         return campaignID;
     }
     
@@ -102,7 +117,7 @@ public class Campaigns extends BaseClient {
         sched.ConfirmationEmail = confirmationEmail;
         sched.SendDate = sendDate == null ? "Immediately" : JsonProvider.ApiDateFormat.format(sendDate);
         
-        post(String.class, sched, "campaigns", campaignID, "send.json");
+        client.post(String.class, sched, "campaigns", campaignID, "send.json");
     }
     
     /**
@@ -113,7 +128,8 @@ public class Campaigns extends BaseClient {
      * Sending a campaign preview</a>
      */
     public void test(PreviewData data) throws CreateSendException {
-        post(String.class, data, "campaigns", campaignID, "sendpreview.json");
+        client.post(String.class, data, new ErrorDeserialiser<String[]>(), 
+            "campaigns", campaignID, "sendpreview.json");
     }
     
     /**
@@ -122,7 +138,7 @@ public class Campaigns extends BaseClient {
      * @throws CreateSendException Raised if the API responds with a HTTP Status >= 400
      */
     public CampaignSummary summary() throws CreateSendException {
-        return get(CampaignSummary.class, "campaigns", campaignID, "summary.json");
+        return client.get(CampaignSummary.class, "campaigns", campaignID, "summary.json");
     }
     
     /**
@@ -133,7 +149,7 @@ public class Campaigns extends BaseClient {
      * Getting lists and segments</a>
      */
     public ListsAndSegments listsAndSegments() throws CreateSendException {
-        return get(ListsAndSegments.class, "campaigns", campaignID, "listsandsegments.json");
+        return client.get(ListsAndSegments.class, "campaigns", campaignID, "listsandsegments.json");
     }
     
     /**
@@ -149,7 +165,7 @@ public class Campaigns extends BaseClient {
      */
     public PagedResult<Subscriber> recipients(
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(page, pageSize, orderField, orderDirection, null, 
+        return client.getPagedResult(page, pageSize, orderField, orderDirection, null, 
             "campaigns", campaignID, "recipients.json");
     }
     
@@ -166,7 +182,7 @@ public class Campaigns extends BaseClient {
      */
     public PagedResult<Subscriber> bounces(
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return getPagedResult(page, pageSize, orderField, orderDirection, null, 
+        return client.getPagedResult(page, pageSize, orderField, orderDirection, null, 
             "campaigns", campaignID, "bounces.json");
     }
     
@@ -187,7 +203,7 @@ public class Campaigns extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(opensFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "campaigns", campaignID, "opens.json");
     }
     
@@ -208,7 +224,7 @@ public class Campaigns extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(clicksFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "campaigns", campaignID, "clicks.json");
     }
     
@@ -229,7 +245,7 @@ public class Campaigns extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(unsubscribesFrom));
         
-        return getPagedResult(page, pageSize, orderField, orderDirection,
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "campaigns", campaignID, "unsubscribes.json");
     }
     
@@ -240,6 +256,6 @@ public class Campaigns extends BaseClient {
      * Deleting a campaign</a>
      */
     public void delete() throws CreateSendException {
-        delete("campaigns", campaignID + ".json");
+        client.delete("campaigns", campaignID + ".json");
     }
 }

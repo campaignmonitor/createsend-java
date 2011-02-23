@@ -32,25 +32,39 @@ import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
-import com.createsend.util.BaseClient;
+import com.createsend.util.JerseyClient;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 
 
-public class Clients extends BaseClient {
+public class Clients {
     private String clientID;
+    private JerseyClient jerseyClient;
     
     /**
      * Constructor.
      * Use this for creating new clients.
      */
-    public Clients() {}
+    public Clients() {
+        this(null);
+    }
     
     /**
      * Constructor.
      * @param clientID The ID of the client to apply calls to.
      */
     public Clients(String clientID) {
+        this(clientID, new JerseyClientImpl());
+    }
+    
+    /**
+     * Constructor.
+     * @param clientID The ID of the client to apply calls to.
+     * @param client The {@link com.createsend.util.JerseyClient} to use to make API calls
+     */
+    public Clients(String clientID, JerseyClient client) {
         setClientID(clientID);
+        this.jerseyClient = client;
     }
     
     /**
@@ -71,51 +85,51 @@ public class Clients extends BaseClient {
     
     
     public String create(Client client) throws CreateSendException {
-        clientID = post(String.class, client, "clients.json");
+        clientID = jerseyClient.post(String.class, client, "clients.json");
         return clientID;
     }
    
     public AllClientDetails details() throws CreateSendException {
-        return get(AllClientDetails.class, "clients", clientID + ".json");
+        return jerseyClient.get(AllClientDetails.class, "clients", clientID + ".json");
     }
    
     public SentCampaign[] sentCampaigns() throws CreateSendException {
-        return get(SentCampaign[].class, "clients", clientID, "campaigns.json");
+        return jerseyClient.get(SentCampaign[].class, "clients", clientID, "campaigns.json");
     }
    
     public DraftCampaign[] draftCampaigns() throws CreateSendException {
-        return get(DraftCampaign[].class, "clients", clientID, "drafts.json");
+        return jerseyClient.get(DraftCampaign[].class, "clients", clientID, "drafts.json");
     }
    
     public ListBasics[] lists() throws CreateSendException {
-        return get(ListBasics[].class, "clients", clientID, "lists.json");
+        return jerseyClient.get(ListBasics[].class, "clients", clientID, "lists.json");
     }
    
     public Segment[] segments() throws CreateSendException {
-        return get(Segment[].class, "clients", clientID, "segments.json");
+        return jerseyClient.get(Segment[].class, "clients", clientID, "segments.json");
     }
    
     public PagedResult<Subscriber> suppressionList(
         Integer page, Integer pageSize, String orderField, String orderDirection) 
         throws CreateSendException {
-        return getPagedResult(page, pageSize, orderField, orderDirection, null,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection, null,
             "clients", clientID, "suppressionlist.json");
     }
    
     public Template[] templates() throws CreateSendException {
-        return get(Template[].class, "clients", clientID, "templates.json");
+        return jerseyClient.get(Template[].class, "clients", clientID, "templates.json");
     }
    
     public void setBasics(Client client) throws CreateSendException {
-        put(client, "clients", clientID, "setbasics.json");
+        jerseyClient.put(client, "clients", clientID, "setbasics.json");
     }
    
     public void setAccess(AccessDetails access) throws CreateSendException {
-        put(access, "clients", clientID, "setaccess.json");
+        jerseyClient.put(access, "clients", clientID, "setaccess.json");
     }
    
     public void setPaygBilling(BillingDetails billing) throws CreateSendException {
-        put(billing, "clients", clientID, "setpaygbilling.json");
+        jerseyClient.put(billing, "clients", clientID, "setpaygbilling.json");
     }
    
     public void setMonthlyBilling(BillingDetails billing) throws CreateSendException {
@@ -124,10 +138,10 @@ public class Clients extends BaseClient {
         billing.MarkupPerRecipient = null;
         billing.CanPurchaseCredits = false;
        
-        put(billing, "clients", clientID, "setmonthlybilling.json");
+        jerseyClient.put(billing, "clients", clientID, "setmonthlybilling.json");
     }
    
     public void delete() throws CreateSendException {
-        delete("clients", clientID + ".json");
+        jerseyClient.delete("clients", clientID + ".json");
     }
 }

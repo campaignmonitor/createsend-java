@@ -1,7 +1,7 @@
 package com.createsend.models.subscribers;
 
 public class ImportResult {
-    public String[] FailureDetails; // TODO: Complete this model
+    public FailedImportSubscriber[] FailureDetails; 
     public int TotalUniqueEmailsSubmitted;
     public int TotalExistingSubscribers;
     public int TotalNewSubscribers;

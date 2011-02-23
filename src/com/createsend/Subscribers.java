@@ -29,7 +29,9 @@ import com.createsend.models.subscribers.ImportResult;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SubscriberToAdd;
 import com.createsend.models.subscribers.SubscribersToAdd;
-import com.createsend.util.BaseClient;
+import com.createsend.util.ErrorDeserialiser;
+import com.createsend.util.JerseyClient;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
@@ -37,15 +39,21 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/subscribers/" target="_blank">
  * Subscriber</a> resources in the Campaign Monitor API
  */
-public class Subscribers extends BaseClient {
+public class Subscribers {
     private String listID;
+    private JerseyClient client;
     
     /**
      * Constructor
      * @param listID The ID of the list to apply any calls to
      */
     public Subscribers(String listID) {
+        this(listID, new JerseyClientImpl());
+    }
+    
+    public Subscribers(String listID, JerseyClient client) {
         setListID(listID);
+        this.client = client;
     }
     
     /**
@@ -73,7 +81,7 @@ public class Subscribers extends BaseClient {
      * Adding a subscriber</a>
      */
     public String add(SubscriberToAdd subscriber) throws CreateSendException {
-        return post(String.class, subscriber, "subscribers", listID + ".json");
+        return client.post(String.class, subscriber, "subscribers", listID + ".json");
     }
     
     /**
@@ -87,7 +95,8 @@ public class Subscribers extends BaseClient {
      * Importing subscribers</a>
      */
     public ImportResult addMany(SubscribersToAdd subscribers) throws CreateSendException {
-        return post(ImportResult.class, subscribers, "subscribers", listID, "import.json");
+        return client.post(ImportResult.class, subscribers, 
+            new ErrorDeserialiser<ImportResult>(), "subscribers", listID, "import.json");
     }
     
     /**
@@ -102,7 +111,7 @@ public class Subscribers extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        return get(Subscriber.class, queryString, "subscribers", listID + ".json");
+        return client.get(Subscriber.class, queryString, "subscribers", listID + ".json");
     }
     
     /**
@@ -117,7 +126,7 @@ public class Subscribers extends BaseClient {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        return get(HistoryItem[].class, queryString, "subscribers", listID, "history.json");
+        return client.get(HistoryItem[].class, queryString, "subscribers", listID, "history.json");
     }
     
     /**
@@ -128,7 +137,7 @@ public class Subscribers extends BaseClient {
      * Unsubscribing a subscriber</a>
      */
     public void unsubscribe(String emailAddress) throws CreateSendException {
-        post(String.class, EmailToUnsubscribe.fromString(emailAddress), 
+        client.post(String.class, EmailToUnsubscribe.fromString(emailAddress), 
             "subscribers", listID, "unsubscribe.json");
     }
 }

@@ -21,7 +21,8 @@
  */
 package com.createsend.models;
 
-public class ApiErrorResponse {     
+public class ApiErrorResponse<T> {     
     public int Code;
     public String Message;
+    public T ResultData;
 }

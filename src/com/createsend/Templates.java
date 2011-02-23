@@ -2,24 +2,33 @@ package com.createsend;
 
 import com.createsend.models.templates.TemplateDetails;
 import com.createsend.models.templates.TemplateForCreate;
-import com.createsend.util.BaseClient;
+import com.createsend.util.JerseyClient;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 
-public class Templates extends BaseClient {
+public class Templates {
     private String templateID;
+    private JerseyClient client;
     
     /**
      * Constructor.
      * Use this for creating new templates.
      */
-    public Templates() {}
+    public Templates() {
+        this(null);
+    }
     
     /**
      * Constructor.
      * @param templateID The ID of the template to apply calls to.
      */
     public Templates(String templateID) {
+        this(templateID, new JerseyClientImpl());
+    }
+    
+    public Templates(String templateID, JerseyClient client) {
         setTemplateID(templateID);
+        this.client = client;
     }
     
     /**
@@ -50,7 +59,7 @@ public class Templates extends BaseClient {
      * Creating a template</a>
      */
     public String create(String clientID, TemplateForCreate template) throws CreateSendException {
-        templateID = post(String.class, template, "templates", clientID + ".json");
+        templateID = client.post(String.class, template, "templates", clientID + ".json");
         return templateID;
     }
     
@@ -62,7 +71,7 @@ public class Templates extends BaseClient {
      * Getting a template</a>
      */
     public TemplateDetails get() throws CreateSendException {
-        return get(TemplateDetails.class, "templates", templateID + ".json");
+        return client.get(TemplateDetails.class, "templates", templateID + ".json");
     }
     
     /**
@@ -73,7 +82,7 @@ public class Templates extends BaseClient {
      * Updating a template</a>
      */
     public void update(TemplateForCreate template) throws CreateSendException {
-        put(template, "templates", templateID + ".json");
+        client.put(template, "templates", templateID + ".json");
     }
     
     /**
@@ -83,6 +92,6 @@ public class Templates extends BaseClient {
      * Deleting a template</a>
      */
     public void delete() throws CreateSendException {
-        delete("templates", templateID + ".json");
+        client.delete("templates", templateID + ".json");
     }
 }

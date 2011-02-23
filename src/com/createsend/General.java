@@ -23,14 +23,16 @@ package com.createsend;
 
 import java.util.Date;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
 import com.createsend.models.clients.ClientBasics;
-import com.createsend.util.BaseClient;
+import com.createsend.util.JerseyClient;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.createsend.util.jersey.AuthorisedResourceFactory;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Provides methods for accessing all  
@@ -38,7 +40,16 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
  * methods in the Campaign Monitor API
  *
  */
-public class General extends BaseClient {
+public class General {
+    private JerseyClient client;
+    
+    public General() {
+        this(new JerseyClientImpl());
+    }
+    
+    public General(JerseyClient client) {
+        this.client = client;
+    }
     
     /**
      * Gets the API Key to use with the given authentication data
@@ -51,14 +62,11 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public String getAPIKey(String siteAddress, String username, String password) throws CreateSendException {
-        WebResource r = getAPIResource().path("apikey.json").queryParam("siteurl", siteAddress);
-        r.addFilter(new HTTPBasicAuthFilter(username, password));
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("siteurl", siteAddress);
         
-        try { 
-            return r.get(ApiKey.class).ApiKey;   
-        } catch (UniformInterfaceException ue) {
-            throw handleErrorResponse(ue);
-        }
+        return client.get(ApiKey.class, queryString, 
+            new AuthorisedResourceFactory(username, password), "apikey.json").ApiKey;
     }
     
     /**
@@ -68,7 +76,7 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public ClientBasics[] getClients() throws CreateSendException {
-        return get(ClientBasics[].class, "clients.json");
+        return client.get(ClientBasics[].class, "clients.json");
     }
     
     /**
@@ -78,7 +86,7 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public String[] getCountries() throws CreateSendException {
-        return get(String[].class, "countries.json");
+        return client.get(String[].class, "countries.json");
     }
     
     /**
@@ -88,7 +96,7 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public String[] getTimezones() throws CreateSendException {
-        return get(String[].class, "timezones.json");
+        return client.get(String[].class, "timezones.json");
     }
     
     /**
@@ -98,6 +106,6 @@ public class General extends BaseClient {
      * @throws CreateSendException
      */
     public Date getSystemDate() throws CreateSendException {
-        return get(SystemDate.class, "systemdate.json").SystemDate;
+        return client.get(SystemDate.class, "systemdate.json").SystemDate;
     }
 }

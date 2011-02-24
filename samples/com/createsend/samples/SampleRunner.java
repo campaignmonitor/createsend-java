@@ -246,7 +246,8 @@ public class SampleRunner {
         webhook.WebhookID = listAPI.createWebhook(webhook);
         
         System.out.printf("Result of create webhook: %s\n", webhook.WebhookID);
-        //listAPI.activateWebhook(webhook.WebhookID); Looks like the API is returning 404's at the moment??
+        listAPI.deactivateWebhook(webhook.WebhookID); 
+        listAPI.activateWebhook(webhook.WebhookID); 
         
         try {
             listAPI.testWebhook(webhook.WebhookID);

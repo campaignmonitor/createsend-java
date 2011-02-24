@@ -324,6 +324,17 @@ public class Lists {
      * Activating a webhook</a>
      */
     public void activateWebhook(String webhookID) throws CreateSendException {
-        client.put("lists", listID, "webhooks", webhookID, "activate.json");
+        client.put("", "lists", listID, "webhooks", webhookID, "activate.json");
+    }
+    
+    /**
+     * Deactivates the specified webhook.
+     * @param webhookID The ID of the webhook to deactivate
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#deactivating_a_webhook" target="_blank">
+     * Activating a webhook</a>
+     */
+    public void deactivateWebhook(String webhookID) throws CreateSendException {
+        client.put("", "lists", listID, "webhooks", webhookID, "activate.json");
     }
 }

@@ -3,7 +3,7 @@
 A Java library which implements the complete functionality of v3 of the CreateSend API.
 
 ## Javadoc
-Full javadoc for the wrapper is hosted by Github Pages at http://campaignmonitor.github.com/createsend-java/
+Full javadoc for the wrapper is hosted by [Github Pages](http://campaignmonitor.github.com/createsend-java/)
 
 ## Building
 

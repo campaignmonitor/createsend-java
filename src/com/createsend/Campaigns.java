@@ -45,7 +45,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  */
 public class Campaigns {
     private String campaignID;
-    public JerseyClient client;
+    private JerseyClient client;
     
     /**
      * Constructor.

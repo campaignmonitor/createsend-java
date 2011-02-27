@@ -42,6 +42,10 @@ import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+/**
+ * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/lists/" target="_blank">
+ * List</a> resources in the Campaign Monitor API *
+ */
 public class Lists {
     private String listID;
     private JerseyClient client;
@@ -63,6 +67,11 @@ public class Lists {
         this(listID, new JerseyClientImpl());
     }
     
+    /**
+     * Constructor.
+     * @param listID The ID of the list to apply any calls to
+     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
+     */
     public Lists(String listID, JerseyClient client) {
         setListID(listID);
         this.client = client;

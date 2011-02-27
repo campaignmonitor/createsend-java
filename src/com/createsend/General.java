@@ -43,10 +43,17 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class General {
     private JerseyClient client;
     
+    /**
+     * Constructor
+     */
     public General() {
         this(new JerseyClientImpl());
     }
     
+    /**
+     * Constructor
+     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
+     */
     public General(JerseyClient client) {
         this.client = client;
     }

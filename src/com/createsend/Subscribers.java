@@ -51,6 +51,11 @@ public class Subscribers {
         this(listID, new JerseyClientImpl());
     }
     
+    /**
+     * Constructor
+     * @param listID The ID of the list to apply any calls to
+     * @param client The {@link com.createsend.util.JerseyClient} to use for any API requests
+     */
     public Subscribers(String listID, JerseyClient client) {
         setListID(listID);
         this.client = client;

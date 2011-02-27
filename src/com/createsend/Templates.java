@@ -27,6 +27,10 @@ import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 
+/**
+ * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/templates/" target="_blank">
+ * Template</a> resources in the Campaign Monitor API *
+ */
 public class Templates {
     private String templateID;
     private JerseyClient client;
@@ -47,6 +51,11 @@ public class Templates {
         this(templateID, new JerseyClientImpl());
     }
     
+    /**
+     * Constructor.
+     * @param templateID The ID of the template to apply any calls to.
+     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
+     */
     public Templates(String templateID, JerseyClient client) {
         setTemplateID(templateID);
         this.client = client;

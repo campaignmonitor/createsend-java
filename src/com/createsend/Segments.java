@@ -62,6 +62,11 @@ public class Segments {
         this(segmentID, new JerseyClientImpl());
     }
     
+    /**
+     * Constructor.
+     * @param segmentID The ID of the segment to apply calls to
+     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
+     */
     public Segments(String segmentID, JerseyClient client) {
         setSegmentID(segmentID);
         this.client = client;

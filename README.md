@@ -15,3 +15,8 @@ Developing with eclipse:
 Gradle can create the .classpath and .project files to import the project into eclipse. 
 Run the following command from the repositories root directory.
         gradle eclipse
+        
+Developing with IDEA
+Gradle can be used to create IDEA project and module files. 
+Run the following command from the repositories root directory.
+        gradle idea

@@ -3,6 +3,7 @@
 .project
 .gradle
 .settings
+createsend-java.i*
 javadoc.xml
 workingsamples
 bin

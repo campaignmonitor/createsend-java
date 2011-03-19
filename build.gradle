@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 install.dependsOn ':build'
 defaultTasks 'clean', 'install'
@@ -41,8 +42,7 @@ task copyToLib(type: Copy) {
     into "$buildDir/libs"
     from configurations.runtime
 }
-/*
+                 /*
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-}
-*/
+}                  */

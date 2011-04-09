@@ -314,11 +314,18 @@ public class JerseyClientImpl implements JerseyClient {
     }
     
     private ParameterizedType getGenericReturnType() {
-        return getGenericReturnType(this.getClass(), 3);
+        return getGenericReturnType(null, 4);
     }
     
-    public static ParameterizedType getGenericReturnType(Class<?> klass, int stackFrame) {        
-        String callingMethodName = Thread.currentThread().getStackTrace()[stackFrame].getMethodName();
+    public static ParameterizedType getGenericReturnType(Class<?> klass, int stackFrame) {   
+        StackTraceElement element = Thread.currentThread().getStackTrace()[stackFrame];
+        String callingMethodName = element.getMethodName();
+        
+        if(klass == null) {
+            try { 
+                klass = Class.forName(element.getClassName());
+            } catch (ClassNotFoundException e) { }
+        }
         
         for(Method method : klass.getMethods()) {
             if(method.getName().equals(callingMethodName)) {

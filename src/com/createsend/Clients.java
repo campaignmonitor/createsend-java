@@ -32,6 +32,7 @@ import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
+import com.createsend.models.subscribers.SuppressedSubscriber;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -167,7 +168,7 @@ public class Clients {
      * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_suppressionlist" target="_blank">
      * Getting client suppression list</a>
      */
-    public PagedResult<Subscriber> suppressionList(
+    public PagedResult<SuppressedSubscriber> suppressionList(
         Integer page, Integer pageSize, String orderField, String orderDirection) 
         throws CreateSendException {
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection, null,

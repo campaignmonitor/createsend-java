@@ -47,6 +47,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.ClientResponse.Status;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -72,6 +73,7 @@ public class JerseyClientImpl implements JerseyClient {
             client.addFilter(new LoggingFilter(System.out));
         }
 
+        client.addFilter(new GZIPContentEncodingFilter(false));
         client.addFilter(new UserAgentFilter());
     }
     

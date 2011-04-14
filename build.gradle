@@ -30,6 +30,9 @@ sourceSets {
         java {
             srcDir 'src'
         }
+        resources {
+            srcDir 'src'
+        }
     }
     samples {
         java {
@@ -42,7 +45,7 @@ task copyToLib(type: Copy) {
     into "$buildDir/libs"
     from configurations.runtime
 }
-                 /*
+/*
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-}                  */
+} */

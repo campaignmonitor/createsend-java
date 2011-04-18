@@ -31,7 +31,6 @@ import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.segments.Segment;
-import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SuppressedSubscriber;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;

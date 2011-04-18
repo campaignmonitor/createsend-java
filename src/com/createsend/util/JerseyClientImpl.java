@@ -203,12 +203,25 @@ public class JerseyClientImpl implements JerseyClient {
      * @throws CreateSendException Raised when the API responds with a HTTP Status >= 400
      */
     public void put(Object entity, String... pathElements) throws CreateSendException {
-        put(entity, defaultDeserialiser, pathElements);
+        put(entity, null, defaultDeserialiser, pathElements);
+    }
+    
+    public void put(Object entity, MultivaluedMap<String, String> queryString, String... pathElements) throws CreateSendException {
+        put(entity, queryString, defaultDeserialiser, pathElements);
+    }
+    
+    public void put(Object entity, ErrorDeserialiser<?> errorDeserialiser,
+            String... pathElements) throws CreateSendException {
+        put(entity, null, errorDeserialiser, pathElements);
     }
 
-    public void put(Object entity, ErrorDeserialiser<?> errorDeserialiser,
+    private void put(Object entity, MultivaluedMap<String, String> queryString, ErrorDeserialiser<?> errorDeserialiser,
         String... pathElements) throws CreateSendException {
         WebResource resource = authorisedResourceFactory.getResource(client, pathElements);
+        
+        if(queryString != null) {
+            resource = resource.queryParams(queryString);
+        }
         
         try { 
             resource.

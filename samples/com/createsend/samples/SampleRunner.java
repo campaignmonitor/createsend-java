@@ -129,6 +129,17 @@ public class SampleRunner {
         
         System.out.printf("Result of subscriber add: %s\n", subscriberAPI.add(subscriber));
         
+        String originalEmail = subscriber.EmailAddress;
+        subscriber.EmailAddress = "New Subscriber Email Address";
+        subscriber.CustomFields = null; // We don't want to update any custom fields
+        subscriber.Name = "New Subscriber Name";
+        subscriberAPI.update(originalEmail, subscriber);  
+        
+        System.out.printf("Result of subscriber details: %s\n", subscriberAPI.details(subscriber.EmailAddress));
+        System.out.printf("Result of subscriber history: %s\n", 
+            Arrays.deepToString(subscriberAPI.history(subscriber.EmailAddress)));
+        subscriberAPI.unsubscribe(subscriber.EmailAddress);      
+        
         SubscribersToAdd subscribers = new SubscribersToAdd();
         subscribers.Resubscribe = true;
         subscribers.Subscribers = new Subscriber[] {
@@ -141,11 +152,6 @@ public class SampleRunner {
         subscribers.Subscribers[1].CustomFields[0].Key = key;
         subscribers.Subscribers[1].CustomFields[0].Value = "http://www.google.com";
         subscriberAPI.addMany(subscribers);
-        
-        System.out.printf("Result of subscriber details: %s\n", subscriberAPI.details(subscriber.EmailAddress));
-        System.out.printf("Result of subscriber history: %s\n", 
-            Arrays.deepToString(subscriberAPI.history(subscriber.EmailAddress)));
-        subscriberAPI.unsubscribe(subscriber.EmailAddress);
         
         System.out.printf("Result of list active: %s\n", 
                 listAPI.active(subscribersFrom, null, null, null, null));

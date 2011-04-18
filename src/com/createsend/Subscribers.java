@@ -145,4 +145,20 @@ public class Subscribers {
         client.post(String.class, EmailToUnsubscribe.fromString(emailAddress), 
             "subscribers", listID, "unsubscribe.json");
     }
+    
+    /**
+     * Updates any provided information for an existing subscriber
+     * @param originalEmailAddress The current email address of the existing subscriber
+     * @param newDetails The new details for the subscriber. Any details included here will be used in the updated. 
+     *     Any details omitted will not be changed.  
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#updating_a_subscriber" target="_blank">
+     * Updating a subscriber</a>
+     */
+    public void update(String originalEmailAddress, SubscriberToAdd newDetails) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("email", originalEmailAddress);
+        
+        client.put(newDetails, queryString, "subscribers", listID + ".json");
+    }
 }

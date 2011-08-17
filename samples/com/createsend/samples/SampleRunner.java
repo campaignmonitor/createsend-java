@@ -86,7 +86,6 @@ public class SampleRunner {
         template.Name = "Java Test Template";
         template.HtmlPageURL = URI.create("Template HTML");
         template.ZipFileURL = URI.create("Template ZIP");
-        template.ScreenshotURL = URI.create("Template Screenshot");
         templateAPI.create(clientID, template);
         
         System.out.printf("Result of get template details: %s\n", templateAPI.get());

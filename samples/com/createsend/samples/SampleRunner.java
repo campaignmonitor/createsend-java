@@ -364,6 +364,9 @@ public class SampleRunner {
         System.out.printf("Result of get draft campaigns: %s\n", 
                 Arrays.deepToString(clientAPI.draftCampaigns()));
         
+        System.out.printf("Result of get scheduled campaigns: %s\n", 
+                Arrays.deepToString(clientAPI.scheduledCampaigns()));
+        
         System.out.printf("Result of get lists: %s\n", 
                 Arrays.deepToString(clientAPI.lists()));
         

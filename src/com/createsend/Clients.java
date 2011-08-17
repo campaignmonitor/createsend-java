@@ -23,6 +23,7 @@ package com.createsend;
 
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
+import com.createsend.models.campaigns.ScheduledCampaign;
 import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.AllClientDetails;
@@ -121,6 +122,17 @@ public class Clients {
      */
     public SentCampaign[] sentCampaigns() throws CreateSendException {
         return jerseyClient.get(SentCampaign[].class, "clients", clientID, "campaigns.json");
+    }
+   
+    /**
+     * Gets all campaigns scheduled to tbe sent by the current client
+     * @return All campaigns which are currently scheduled to send for the current client
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_scheduled_campaigns" target="_blank">
+     * Getting sent campaigns</a>
+     */
+    public ScheduledCampaign[] scheduledCampaigns() throws CreateSendException {
+        return jerseyClient.get(ScheduledCampaign[].class, "clients", clientID, "scheduled.json");
     }
    
     /**

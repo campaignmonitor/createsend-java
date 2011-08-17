@@ -306,7 +306,7 @@ public class SampleRunner {
             campaignAPI.summary());
 
         System.out.printf("Result of get campaign bounces: %s\n", 
-            campaignAPI.bounces(null, null, null, null));
+            campaignAPI.bounces(resultsAfter, null, null, null, null));
         
         System.out.printf("Result of get campaign clicks: %s\n", 
             campaignAPI.clicks(resultsAfter, null, null, null, null));

@@ -180,9 +180,12 @@ public class Campaigns {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> bounces(
+    public PagedResult<Subscriber> bounces(Date bouncesFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return client.getPagedResult(page, pageSize, orderField, orderDirection, null, 
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("date", JsonProvider.ApiDateFormat.format(bouncesFrom));        
+        
+        return client.getPagedResult(page, pageSize, orderField, orderDirection, queryString, 
             "campaigns", campaignID, "bounces.json");
     }
     

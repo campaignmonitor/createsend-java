@@ -33,9 +33,9 @@ public class Configuration {
         properties = new Properties();
 
         try {
-            properties.load(ClassLoader.getSystemResourceAsStream("com/createsend/util/config.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("com/createsend/util/config.properties"));
                         
-            InputStream createsendProperties = ClassLoader.getSystemResourceAsStream("createsend.properties");
+            InputStream createsendProperties = getClass().getClassLoader().getResourceAsStream("createsend.properties");
             if(createsendProperties != null) {
                 properties.load(createsendProperties);
             }   

@@ -147,6 +147,20 @@ public class Subscribers {
     }
     
     /**
+     * Moves the given email address into the deleted list
+     * @param emailAddress The email address to delete
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#deleting_a_subscriber" target="_blank">
+     * Deleting a subscriber</a>
+     */
+    public void delete(String emailAddress) throws CreateSendException {
+    	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("email", emailAddress);
+        
+        client.delete(queryString, "subscribers", listID + ".json");
+    }
+    
+    /**
      * Updates any provided information for an existing subscriber
      * @param originalEmailAddress The current email address of the existing subscriber
      * @param newDetails The new details for the subscriber. Any details included here will be used in the updated. 

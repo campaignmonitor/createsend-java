@@ -142,19 +142,27 @@ public class SampleRunner {
         SubscribersToAdd subscribers = new SubscribersToAdd();
         subscribers.Resubscribe = true;
         subscribers.Subscribers = new Subscriber[] {
-            new Subscriber(), new Subscriber()
+            new Subscriber(), new Subscriber(), new Subscriber()
         };
         
-        subscribers.Subscribers[0].EmailAddress = "Subscriber Email 2";
-        subscribers.Subscribers[1].EmailAddress = "Subscriber Email 3";
-        subscribers.Subscribers[1].CustomFields = new CustomField[] { new CustomField() };
-        subscribers.Subscribers[1].CustomFields[0].Key = key;
-        subscribers.Subscribers[1].CustomFields[0].Value = "http://www.google.com";
+        subscribers.Subscribers[0].EmailAddress = "Subscriber Email 1";
+        subscribers.Subscribers[0].CustomFields = new CustomField[] { new CustomField() };
+        subscribers.Subscribers[0].CustomFields[0].Key = key;
+        subscribers.Subscribers[0].CustomFields[0].Clear = true; // remove website from this existing subscriber
+        
+        subscribers.Subscribers[1].EmailAddress = "Subscriber Email 2";
+        
+        subscribers.Subscribers[2].EmailAddress = "Subscriber Email 3";
+        subscribers.Subscribers[2].CustomFields = new CustomField[] { new CustomField() };
+        subscribers.Subscribers[2].CustomFields[0].Key = key;
+        subscribers.Subscribers[2].CustomFields[0].Value = "http://www.google.com";
         subscriberAPI.addMany(subscribers);
         
         System.out.printf("Result of list active: %s\n", 
                 listAPI.active(subscribersFrom, null, null, null, null));
-                    
+        
+        subscriberAPI.delete("Subscriber Email 1");
+        
         listAPI.delete();
     }
     
@@ -226,6 +234,8 @@ public class SampleRunner {
                 listAPI.unsubscribed(subscribersFrom, null, null, null, null));
         System.out.printf("Result of list bounced: %s\n", 
                 listAPI.bounced(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list deleted: %s\n", 
+                listAPI.deleted(subscribersFrom, null, null, null, null));
         
         CustomFieldForCreate customField = new CustomFieldForCreate();
         customField.DataType = "MultiSelectOne";
@@ -299,7 +309,8 @@ public class SampleRunner {
         data.PreviewRecipients = new String[] { "Preview Recipient" };
         campaignAPI.test(data);
         
-        campaignAPI.send("Confirmation Email", null);
+        Date scheduledDate = new Date();
+        campaignAPI.send("Confirmation Email", scheduledDate);
 
         System.out.printf("Result of get campaign summary: %s\n", 
             campaignAPI.summary());
@@ -321,6 +332,8 @@ public class SampleRunner {
         
         System.out.printf("Result of get campaign lists and segments: %s\n", 
             campaignAPI.listsAndSegments());
+        
+        campaignAPI.unschedule();
     }
     
     private static void runClientMethods() throws CreateSendException {

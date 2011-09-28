@@ -221,6 +221,29 @@ public class Lists {
     }
     
     /**
+     * Gets a paged collection of subscribers who have been deleted from the list 
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who were deleted on or after this date. 
+     *     This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_deleted_subscribers" target="_blank">
+     * Getting deleted subscribers</a>
+     */
+    public PagedResult<Subscriber> deleted(Date subscribedFrom,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
+        queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
+        
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "lists", listID, "deleted.json");
+    }
+    
+    /**
      * Gets a paged collection of bounced subscribers who have bounced out of the list 
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who bounced out on or after this date. 

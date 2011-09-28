@@ -121,6 +121,17 @@ public class Campaigns {
     }
     
     /**
+     * Unschedules a campaign and moves it back to the drafts. If a campaign has already been sent or 
+     * is in the process of sending, this api request will fail.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#unscheduling_a_campaign" target="_blank">
+     * Sending a campaign</a>
+     */
+    public void unschedule() throws CreateSendException {
+        client.post(String.class, "", "campaigns", campaignID, "unschedule.json");
+    }
+    
+    /**
      * Sends a preview of an existing draft campaign to the recipients specified in the preview data.
      * @param data The recipients and personalisation scheme to use for the preview
      * @throws CreateSendException Raised when the API responds with a HTTP status >= 400

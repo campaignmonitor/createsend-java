@@ -238,7 +238,21 @@ public class JerseyClientImpl implements JerseyClient {
      * @throws CreateSendException Raised when the API responds with a HTTP Status >= 400
      */
     public void delete(String... pathElements) throws CreateSendException {
+        delete(null, pathElements);
+    }
+    
+    /**
+     * Makes a HTTP DELETE request to the specified path with the specified query string
+     * @param pathElements The path of the resource to delete
+     * @throws CreateSendException Raised when the API responds with a HTTP Status >= 400
+     */
+    @Override
+	public void delete(MultivaluedMap<String, String> queryString, String... pathElements) throws CreateSendException {
         WebResource resource = authorisedResourceFactory.getResource(client, pathElements);
+        
+        if( queryString != null )
+        	resource = resource.queryParams(queryString);
+        
         try { 
             resource.delete();
         } catch (UniformInterfaceException ue) {
@@ -314,7 +328,7 @@ public class JerseyClientImpl implements JerseyClient {
             } catch (Throwable t) { }                
         }
         
-        switch(response.getClientResponseStatus()) {
+        switch(responseStatus) {
             case BAD_REQUEST:
                 return new BadRequestException(apiResponse.Code, apiResponse.Message, apiResponse.ResultData);
             case INTERNAL_SERVER_ERROR:
@@ -324,7 +338,7 @@ public class JerseyClientImpl implements JerseyClient {
             case UNAUTHORIZED:
                 return new UnauthorisedException(apiResponse.Code, apiResponse.Message);
             default:
-                return new CreateSendHttpException(response.getClientResponseStatus());
+                return new CreateSendHttpException(responseStatus);
         }
     }
     

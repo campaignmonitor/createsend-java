@@ -7,7 +7,7 @@ install.dependsOn ':build'
 defaultTasks 'clean', 'install'
 
 sourceCompatibility = 1.6
-version = '1.0.4'
+version = '1.0.5'
 group = 'com.createsend'
 
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
@@ -23,6 +23,9 @@ dependencies {
       compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.5'
       compile group: 'com.sun.jersey.contribs', name: 'jersey-apache-client', version: '1.5'
       compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.5'
+      compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.5.5'
+      compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.5.5'
+      compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.5.5'      
 }
 
 sourceSets {
@@ -45,7 +48,7 @@ task copyToLib(type: Copy) {
     into "$buildDir/libs"
     from configurations.runtime
 }
-/*
+
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-} */
+} 

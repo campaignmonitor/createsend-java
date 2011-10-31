@@ -28,9 +28,9 @@ public class CampaignSummary {
     public int Unsubscribed;
     public int Bounced;
     public int UniqueOpened;
-    public int ForwardToAFriends;
-    public int TwitterTweets;
-    public int FacebookLikes;
+    public int Forwards;
+    public int Mentions;
+    public int Likes;
     
     public String WebVersionURL;
 
@@ -38,6 +38,6 @@ public class CampaignSummary {
     public String toString() {
         return String.format(
             "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s }",
-            Recipients, TotalOpened, Clicks, Unsubscribed, Bounced, UniqueOpened, ForwardToAFriends, TwitterTweets, FacebookLikes, WebVersionURL);
+            Recipients, TotalOpened, Clicks, Unsubscribed, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL);
     }
 }

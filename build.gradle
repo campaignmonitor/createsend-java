@@ -7,7 +7,7 @@ install.dependsOn ':build'
 defaultTasks 'clean', 'install'
 
 sourceCompatibility = 1.6
-version = '1.0.4'
+version = '1.0.5'
 group = 'com.createsend'
 
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
@@ -48,4 +48,5 @@ task copyToLib(type: Copy) {
 /*
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-} */
+} 
+*/

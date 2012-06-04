@@ -21,6 +21,8 @@
  */
 package com.createsend;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.ScheduledCampaign;
@@ -31,11 +33,14 @@ import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
+import com.createsend.models.people.Person;
+import com.createsend.models.people.PersonResult;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.SuppressedSubscriber;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/clients/" target="_blank">
@@ -255,5 +260,39 @@ public class Clients {
      */
     public void delete() throws CreateSendException {
         jerseyClient.delete("clients", clientID + ".json");
+    }
+    
+    /**
+     * returns a list of people associated with the client.
+     * @return all people associated with the client
+     * @throws CreateSendException
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_people" target="_blank">
+     * Getting people</a>
+     */
+    public Person[] people() throws CreateSendException {
+    	return jerseyClient.get(Person[].class, "clients", clientID, "people.json");
+    }
+    
+    /**
+     * looks up the primary contact for this client
+     * @return the email address of the primary contact for the client
+     * @throws CreateSendException
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_primary_contact" target="_blank">
+     * Getting primary contact</a>
+     */
+    public String getPrimaryContact() throws CreateSendException {
+    	return jerseyClient.get(PersonResult.class, "clients", clientID, "primarycontact.json").EmailAddress;
+    } 
+    
+    /**
+     * sets the primary contact for this client to the person with the specified email address
+     * @throws CreateSendException
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#setting_primary_contact" target="_blank">
+     * Setting primary contact</a>
+     */
+    public void setPrimaryContact(String emailAddress) throws CreateSendException {
+    	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("email", emailAddress);
+    	jerseyClient.put(PersonResult.class, queryString, "clients", clientID, "primarycontact.json");
     }
 }

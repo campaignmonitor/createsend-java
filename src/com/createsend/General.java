@@ -27,7 +27,9 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
+import com.createsend.models.administrators.Administrator;
 import com.createsend.models.clients.ClientBasics;
+import com.createsend.models.people.PersonResult;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -114,5 +116,19 @@ public class General {
      */
     public Date getSystemDate() throws CreateSendException {
         return client.get(SystemDate.class, "systemdate.json").SystemDate;
+    }
+    
+    public Administrator[] administrators() throws CreateSendException {
+    	return client.get(Administrator[].class, "admins.json");
+    }
+    
+    public String getPrimaryContact() throws CreateSendException {
+    	return client.get(PersonResult.class, "primarycontact.json").EmailAddress;
+    } 
+    
+    public void setPrimaryContact(String emailAddress) throws CreateSendException {
+    	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("email", emailAddress);
+        client.put(PersonResult.class, queryString, "primarycontact.json");
     }
 }

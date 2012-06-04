@@ -25,13 +25,16 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.createsend.Administrators;
 import com.createsend.Campaigns;
 import com.createsend.Clients;
 import com.createsend.General;
 import com.createsend.Lists;
+import com.createsend.People;
 import com.createsend.Segments;
 import com.createsend.Subscribers;
 import com.createsend.Templates;
+import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.clients.AccessDetails;
@@ -42,6 +45,8 @@ import com.createsend.models.lists.List;
 import com.createsend.models.lists.UpdateFieldOptions;
 import com.createsend.models.lists.Webhook;
 import com.createsend.models.lists.WebhookTestFailureDetails;
+import com.createsend.models.people.Person;
+import com.createsend.models.people.PersonToAdd;
 import com.createsend.models.segments.Rule;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.CustomField;
@@ -68,6 +73,8 @@ public class SampleRunner {
             runSegmentMethods(clientID);
             runSubscriberMethods(clientID);
             runTemplateMethods(clientID);
+            runPeopleMethods(clientID);
+            runAdminMethods();
         } catch (BadRequestException e) {
             e.printStackTrace();
             
@@ -404,5 +411,53 @@ public class SampleRunner {
         System.out.printf("Result of get countries: %s\n", Arrays.deepToString(timezones));
         
         System.out.printf("Result of get systemdate: %s\n", client.getSystemDate());
+                
     }
+    
+    private static void runPeopleMethods(String clientID) throws CreateSendException {
+    	People people = new People(clientID);
+    	PersonToAdd person = new PersonToAdd();
+    	person.EmailAddress = "this.is@notarealdomain.com";
+    	person.Password = "djfdjffdj123";
+    	person.AccessLevel = 1023;
+    	person.Name = "NotaReal Person";
+		people.add(person);
+		Clients client = new Clients(clientID);
+						
+		Person details = people.details(person.EmailAddress);
+		details.Name = "NotaReal PersonUpdated";
+		System.out.println("updated person: " +details.Name + " (" + details.EmailAddress + ")");
+		people.update(details.EmailAddress, details);
+				
+		for(Person p: client.people()) {
+			System.out.println("person: " + p.Name + " (" + p.EmailAddress + ")");
+		}
+		String currentPrimary = client.getPrimaryContact();
+		System.out.println("current primary contact: " + currentPrimary);
+		client.setPrimaryContact(person.EmailAddress);
+		System.out.println("new primary contact: " + client.getPrimaryContact());
+		client.setPrimaryContact(currentPrimary);
+		people.delete(person.EmailAddress);
+    }
+        
+    private static void runAdminMethods() throws CreateSendException {
+    	Administrators admins = new Administrators();
+    	Administrator admin = new Administrator();
+    	admin.EmailAddress = "this.is@notarealadmin.com";
+    	admin.Name = "NotaReal Admin";
+		admins.add(admin);
+		General general = new General();
+						
+		for(Administrator a: general.administrators()) {
+			System.out.println("admin: " + a.Name + " (" + a.EmailAddress + ")");
+		}
+		
+		admin.Name = "NotaReal AdminWithNewName";
+		admins.update(admin.EmailAddress, admin);
+		admin = admins.details(admin.EmailAddress);		
+		
+		String currentPrimary = general.getPrimaryContact();
+		System.out.println("current primary contact: " + currentPrimary);
+		admins.delete(admin.EmailAddress);
+    }    
 }

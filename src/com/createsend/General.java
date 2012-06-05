@@ -28,8 +28,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.createsend.models.ApiKey;
 import com.createsend.models.SystemDate;
 import com.createsend.models.administrators.Administrator;
+import com.createsend.models.administrators.AdministratorResult;
 import com.createsend.models.clients.ClientBasics;
-import com.createsend.models.people.PersonResult;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -123,12 +123,12 @@ public class General {
     }
     
     public String getPrimaryContact() throws CreateSendException {
-    	return client.get(PersonResult.class, "primarycontact.json").EmailAddress;
+    	return client.get(AdministratorResult.class, "primarycontact.json").EmailAddress;
     } 
     
     public void setPrimaryContact(String emailAddress) throws CreateSendException {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
-        client.put(PersonResult.class, queryString, "primarycontact.json");
+        client.put("", queryString, "primarycontact.json");
     }
 }

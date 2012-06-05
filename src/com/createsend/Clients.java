@@ -293,6 +293,6 @@ public class Clients {
     public void setPrimaryContact(String emailAddress) throws CreateSendException {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
-    	jerseyClient.put(PersonResult.class, queryString, "clients", clientID, "primarycontact.json");
+    	jerseyClient.put("", queryString, "clients", clientID, "primarycontact.json");
     }
 }

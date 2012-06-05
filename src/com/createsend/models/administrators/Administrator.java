@@ -22,7 +22,7 @@
 package com.createsend.models.administrators;
 
 public class Administrator {
-	public String ClientID;
 	public String EmailAddress;
 	public String Name;
+	public String Status;
 }

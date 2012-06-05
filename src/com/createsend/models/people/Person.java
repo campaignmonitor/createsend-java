@@ -25,5 +25,6 @@ public class Person {
 	public String EmailAddress;
 	public String Name;
 	public int AccessLevel;
+	public String Status;
 }
 	

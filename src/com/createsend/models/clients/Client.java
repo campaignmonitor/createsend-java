@@ -24,7 +24,21 @@ package com.createsend.models.clients;
 public class Client {
     public String ClientID;
     public String CompanyName;
+    
+    /**
+     * Legacy client contact name
+     *
+     * @ Instead, set the name of each of the Persons within a Client, not the Client itself
+     */
+    @Deprecated
     public String ContactName;
+    
+    /**
+     * Legacy client email address
+     *
+     * @ Instead, set the email address of each of the Persons within a Client, not the Client itself
+     */
+    @Deprecated
     public String EmailAddress;
     public String Country;
     public String TimeZone;

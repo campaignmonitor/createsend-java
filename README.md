@@ -1,4 +1,6 @@
-# createsend-java
+# createsend-java [![Build Status](https://secure.travis-ci.org/campaignmonitor/createsend-java.png)][travis]
+
+[travis]: http://travis-ci.org/campaignmonitor/createsend-java
 
 A Java library which implements the complete functionality of v3 of the CreateSend API.
 
@@ -10,16 +12,19 @@ Full javadoc for the wrapper is hosted by [Github Pages](http://campaignmonitor.
 
 ## Building
 
-With Gradle:
-Run the following command from the repositories root directory.
+###With Gradle:
+Run the following command from the repositories root directory:
+
         gradle -i
 
-Developing with eclipse:
+###Developing with Eclipse:
 Gradle can create the .classpath and .project files to import the project into eclipse. 
 Run the following command from the repositories root directory.
+
         gradle eclipse
         
-Developing with IDEA
+###Developing with IDEA
 Gradle can be used to create IDEA project and module files. 
 Run the following command from the repositories root directory.
+
         gradle idea

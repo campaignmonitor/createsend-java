@@ -25,4 +25,5 @@ public class SubscribersToAdd {
     public Subscriber[] Subscribers;
     public Boolean Resubscribe;
     public Boolean QueueSubscriptionBasedAutoResponders;
+    public boolean RestartSubscriptionBasedAutoresponders;
 }

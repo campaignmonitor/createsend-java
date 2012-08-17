@@ -42,6 +42,7 @@ import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.lists.CustomFieldForCreate;
 import com.createsend.models.lists.List;
+import com.createsend.models.lists.ListForUpdate;
 import com.createsend.models.lists.UpdateFieldOptions;
 import com.createsend.models.lists.Webhook;
 import com.createsend.models.lists.WebhookTestFailureDetails;
@@ -222,13 +223,19 @@ public class SampleRunner {
         List list = new List();
         list.Title = "Java API Test List";
         list.ConfirmedOptIn = false;
+        list.UnsubscribeSetting = "OnlyThisList";
         listAPI.create(clientID, list);
         
         System.out.printf("Result of list create: %s\n", listAPI.getListID());
         System.out.printf("Result of list details: %s\n", listAPI.details());
         
-        list.Title = "Edited Java List";
-        listAPI.update(list);
+        ListForUpdate listForUpdate = new ListForUpdate();
+        listForUpdate.Title = "Edited Java List";
+        listForUpdate.ConfirmedOptIn = list.ConfirmedOptIn;
+        listForUpdate.UnsubscribeSetting = "AllClientLists";
+        listForUpdate.AddUnsubscribesToSuppList = true;
+        listForUpdate.ScrubActiveWithSuppList = true;
+        listAPI.update(listForUpdate);
         
         System.out.printf("Result of list details: %s\n", listAPI.details());
         System.out.printf("Result of list stats: %s\n", listAPI.stats());

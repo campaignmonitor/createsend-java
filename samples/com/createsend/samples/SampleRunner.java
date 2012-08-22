@@ -395,6 +395,9 @@ public class SampleRunner {
         
         System.out.printf("Result of get lists: %s\n", 
                 Arrays.deepToString(clientAPI.lists()));
+
+        System.out.printf("Result of get lists for email address: %s\n", 
+                Arrays.deepToString(clientAPI.listsForEmailAddress("example@example.com")));
         
         System.out.printf("Result of get segments: %s\n", 
                 Arrays.deepToString(clientAPI.segments()));

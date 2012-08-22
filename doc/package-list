@@ -8,7 +8,6 @@ com.createsend.models.people
 com.createsend.models.segments
 com.createsend.models.subscribers
 com.createsend.models.templates
-com.createsend.samples
 com.createsend.util
 com.createsend.util.exceptions
 com.createsend.util.jersey

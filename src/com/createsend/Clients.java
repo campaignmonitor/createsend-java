@@ -27,7 +27,6 @@ import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.ScheduledCampaign;
 import com.createsend.models.campaigns.SentCampaign;
-import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
@@ -228,17 +227,6 @@ public class Clients {
      */
     public void setBasics(Client client) throws CreateSendException {
         jerseyClient.put(client, "clients", clientID, "setbasics.json");
-    }
-   
-    /**
-     * Sets which Campaign Monitor functionality a client may access, including login credentials.
-     * @param access The funtionality a client has access to and login credentials for the current client.
-     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/clients/#setting_access_details" target="_blank">
-     * Setting access details</a>
-     */
-    public void setAccess(AccessDetails access) throws CreateSendException {
-        jerseyClient.put(access, "clients", clientID, "setaccess.json");
     }
    
     /**

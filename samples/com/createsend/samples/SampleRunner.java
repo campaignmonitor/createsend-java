@@ -37,7 +37,6 @@ import com.createsend.Templates;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.PreviewData;
-import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.lists.CustomFieldForCreate;
@@ -355,9 +354,7 @@ public class SampleRunner {
         
         Client newClient = new Client();
         newClient.CompanyName = "Client Company Name";
-        newClient.ContactName = "Client Contact Name";
         newClient.Country = "Client Country";
-        newClient.EmailAddress = "Client Email Address";
         newClient.TimeZone = "Client Timezone";
         
         newClient.ClientID = clientAPI.create(newClient);
@@ -365,12 +362,6 @@ public class SampleRunner {
 
         newClient.CompanyName = "Edited Company Name";
         clientAPI.setBasics(newClient);
-        
-        AccessDetails access = new AccessDetails();
-        access.Username = "Username";
-        access.Password = "Password";
-        access.AccessLevel = 23;
-        clientAPI.setAccess(access);
         
         BillingDetails billing = new BillingDetails();
         billing.ClientPays = true;

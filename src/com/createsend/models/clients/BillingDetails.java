@@ -35,11 +35,12 @@ public class BillingDetails {
     public Double MarkupOnDelivery;
     public Double BaseDeliveryRate;
     public Double BaseDesignSpamTestRate;
+    public String MonthlyScheme; // Should be either null, 'Basic' or 'Unlimited'
     
     @Override
     public String toString() {
-        return String.format("{ CanPurchaseCredits: %s, MarkupOnDesignSpamTest: %s, ClientPays: %s, BaseRatePerRecipient: %s, MarkupPerRecipient: %s, MarkupOnDelivery: %s, BaseDeliveryRate: %s, Currency: %s, BaseDesignSpamTestRate: %s }",
+        return String.format("{ CanPurchaseCredits: %s, MarkupOnDesignSpamTest: %s, ClientPays: %s, BaseRatePerRecipient: %s, MarkupPerRecipient: %s, MarkupOnDelivery: %s, BaseDeliveryRate: %s, Currency: %s, BaseDesignSpamTestRate: %s, MonthlyScheme %s }",
             CanPurchaseCredits, MarkupOnDesignSpamTest, ClientPays, BaseRatePerRecipient, 
-            MarkupPerRecipient, MarkupOnDelivery, BaseDeliveryRate, Currency, BaseDesignSpamTestRate);
+            MarkupPerRecipient, MarkupOnDelivery, BaseDeliveryRate, Currency, BaseDesignSpamTestRate, MonthlyScheme);
     }
 }

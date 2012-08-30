@@ -37,6 +37,7 @@ import com.createsend.Templates;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.PreviewData;
+import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.lists.CustomFieldForCreate;
@@ -56,7 +57,7 @@ import com.createsend.models.subscribers.SubscribersToAdd;
 import com.createsend.models.templates.TemplateForCreate;
 import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
-
+import com.createsend.workingsamples.AssertException;
 
 public class SampleRunner {
 
@@ -82,6 +83,9 @@ public class SampleRunner {
                 System.err.printf("Exception result data: %s\n", e.getResultData());
             }
         } catch (CreateSendException e) {
+            e.printStackTrace();
+        }
+        catch (AssertException e) {
             e.printStackTrace();
         }
     }
@@ -349,7 +353,7 @@ public class SampleRunner {
         campaignAPI.unschedule();
     }
     
-    private static void runClientMethods() throws CreateSendException {
+    private static void runClientMethods() throws AssertException, CreateSendException {
         Clients clientAPI = new Clients();
         
         Client newClient = new Client();
@@ -371,7 +375,69 @@ public class SampleRunner {
         billing.Currency = "AUD";
         clientAPI.setPaygBilling(billing);
         
-        System.out.printf("Result of client details: %s\n", clientAPI.details());
+        AllClientDetails details = clientAPI.details();
+        
+        if (details.BillingDetails.MonthlyScheme != null)  {
+			throw new AssertException("Monthly Scheme set for PAYG when it shouldn't be");
+        }
+
+        String serialised = details.BillingDetails.toString();
+        
+        BillingDetails monthlyBilling = new BillingDetails();
+        monthlyBilling.Currency = "USD";
+        monthlyBilling.ClientPays = true;
+        monthlyBilling.MarkupPercentage = 100;
+        clientAPI.setMonthlyBilling(monthlyBilling);
+        AllClientDetails monthlyDetails = clientAPI.details();
+        
+        if (!("Basic".equals(monthlyDetails.BillingDetails.MonthlyScheme)))  {
+			throw new AssertException("Monthly Scheme is not Basic when expected");
+        }
+        
+        serialised = monthlyDetails.BillingDetails.toString();
+        
+        monthlyBilling.MonthlyScheme = "Unlimited";
+        clientAPI.setMonthlyBilling(monthlyBilling);
+        monthlyDetails = clientAPI.details();
+        
+        if (!("Unlimited".equals(monthlyDetails.BillingDetails.MonthlyScheme)))  {
+			throw new AssertException("Monthly Scheme is not Unlimited when expected");
+        }
+
+        monthlyBilling.MonthlyScheme = null;
+        clientAPI.setMonthlyBilling(monthlyBilling);
+        monthlyDetails = clientAPI.details();
+        
+        if (!("Unlimited".equals(monthlyDetails.BillingDetails.MonthlyScheme)))  {
+			throw new AssertException("Monthly Scheme is not Unlimited when expected");
+        }
+
+        monthlyBilling.MonthlyScheme = "Basic";
+        clientAPI.setMonthlyBilling(monthlyBilling);
+        monthlyDetails = clientAPI.details();
+        
+        if (!("Basic".equals(monthlyDetails.BillingDetails.MonthlyScheme)))  {
+			throw new AssertException("Monthly Scheme is not Basic when expected");
+        }
+
+        monthlyBilling.MonthlyScheme = null;
+        clientAPI.setMonthlyBilling(monthlyBilling);
+        monthlyDetails = clientAPI.details();
+        
+        if (!("Basic".equals(monthlyDetails.BillingDetails.MonthlyScheme)))  {
+			throw new AssertException("Monthly Scheme is not Basic when expected");
+        }
+        
+        clientAPI.setPaygBilling(billing);
+        
+        details = clientAPI.details();
+        
+        if (details.BillingDetails.MonthlyScheme != null)  {
+			throw new AssertException("Monthly Scheme set for PAYG when it shouldn't be");
+        }
+
+        
+    	System.out.printf("Result of client details: %s\n", details);
         clientAPI.delete();
         
         clientAPI.setClientID("Other Client ID");

@@ -37,11 +37,11 @@ import com.createsend.Templates;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.PreviewData;
-import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.lists.CustomFieldForCreate;
 import com.createsend.models.lists.List;
+import com.createsend.models.lists.ListForUpdate;
 import com.createsend.models.lists.UpdateFieldOptions;
 import com.createsend.models.lists.Webhook;
 import com.createsend.models.lists.WebhookTestFailureDetails;
@@ -222,13 +222,19 @@ public class SampleRunner {
         List list = new List();
         list.Title = "Java API Test List";
         list.ConfirmedOptIn = false;
+        list.UnsubscribeSetting = "OnlyThisList";
         listAPI.create(clientID, list);
         
         System.out.printf("Result of list create: %s\n", listAPI.getListID());
         System.out.printf("Result of list details: %s\n", listAPI.details());
         
-        list.Title = "Edited Java List";
-        listAPI.update(list);
+        ListForUpdate listForUpdate = new ListForUpdate();
+        listForUpdate.Title = "Edited Java List";
+        listForUpdate.ConfirmedOptIn = list.ConfirmedOptIn;
+        listForUpdate.UnsubscribeSetting = "AllClientLists";
+        listForUpdate.AddUnsubscribesToSuppList = true;
+        listForUpdate.ScrubActiveWithSuppList = true;
+        listAPI.update(listForUpdate);
         
         System.out.printf("Result of list details: %s\n", listAPI.details());
         System.out.printf("Result of list stats: %s\n", listAPI.stats());
@@ -348,9 +354,7 @@ public class SampleRunner {
         
         Client newClient = new Client();
         newClient.CompanyName = "Client Company Name";
-        newClient.ContactName = "Client Contact Name";
         newClient.Country = "Client Country";
-        newClient.EmailAddress = "Client Email Address";
         newClient.TimeZone = "Client Timezone";
         
         newClient.ClientID = clientAPI.create(newClient);
@@ -358,12 +362,6 @@ public class SampleRunner {
 
         newClient.CompanyName = "Edited Company Name";
         clientAPI.setBasics(newClient);
-        
-        AccessDetails access = new AccessDetails();
-        access.Username = "Username";
-        access.Password = "Password";
-        access.AccessLevel = 23;
-        clientAPI.setAccess(access);
         
         BillingDetails billing = new BillingDetails();
         billing.ClientPays = true;
@@ -388,6 +386,9 @@ public class SampleRunner {
         
         System.out.printf("Result of get lists: %s\n", 
                 Arrays.deepToString(clientAPI.lists()));
+
+        System.out.printf("Result of get lists for email address: %s\n", 
+                Arrays.deepToString(clientAPI.listsForEmailAddress("example@example.com")));
         
         System.out.printf("Result of get segments: %s\n", 
                 Arrays.deepToString(clientAPI.segments()));

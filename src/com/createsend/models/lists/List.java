@@ -28,10 +28,15 @@ public class List {
     public URI UnsubscribePage;
     public boolean ConfirmedOptIn;
     public URI ConfirmationSuccessPage;
+    // Must be either "AllClientLists" or "OnlyThisList"
+    // See http://www.campaignmonitor.com/api/lists/#creating_a_list
+    // for details.
+    public String UnsubscribeSetting;
     
     @Override
     public String toString() {
-        return String.format("{ Title: %s, UnsubscribePage: %s, ConfirmedOptIn: %s, ConfirmationSuccessPage: %s }",
-            Title, UnsubscribePage, ConfirmedOptIn, ConfirmationSuccessPage);
+        return String.format("{ Title: %s, UnsubscribePage: %s, ConfirmedOptIn: %s, ConfirmationSuccessPage: %s," +
+            "UnsubscribeSetting: %s }", Title, UnsubscribePage, ConfirmedOptIn, 
+            ConfirmationSuccessPage, UnsubscribeSetting);
     }
 }

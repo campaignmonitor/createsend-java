@@ -29,6 +29,7 @@ import com.createsend.models.PagedResult;
 import com.createsend.models.lists.CustomField;
 import com.createsend.models.lists.CustomFieldForCreate;
 import com.createsend.models.lists.List;
+import com.createsend.models.lists.ListForUpdate;
 import com.createsend.models.lists.Statistics;
 import com.createsend.models.lists.UpdateFieldOptions;
 import com.createsend.models.lists.Webhook;
@@ -116,7 +117,7 @@ public class Lists {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_a_list" target="_blank">
      * Updating a list</a>
      */
-    public void update(List list) throws CreateSendException {
+    public void update(ListForUpdate list) throws CreateSendException {
         client.put(list, "lists", listID + ".json");
     }
     

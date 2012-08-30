@@ -27,12 +27,12 @@ import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.ScheduledCampaign;
 import com.createsend.models.campaigns.SentCampaign;
-import com.createsend.models.clients.AccessDetails;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
+import com.createsend.models.lists.ListForEmail;
 import com.createsend.models.people.Person;
 import com.createsend.models.people.PersonResult;
 import com.createsend.models.segments.Segment;
@@ -155,13 +155,29 @@ public class Clients {
      * Gets all lists for the current client
      * @return All lists available to the current client.
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_lists" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#subscriber_lists" target="_blank">
      * Getting subscriber lists</a>
      */
     public ListBasics[] lists() throws CreateSendException {
         return jerseyClient.get(ListBasics[].class, "clients", clientID, "lists.json");
     }
-   
+
+    /**
+     * Gets the lists across a client, to which a subscriber with a particular
+     * email address belongs.
+     * @param emailAddress A subscriber's email address
+     * @return All client lists to which the email address is subscribed.
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#lists_for_email" target="_blank">
+     * Lists for an email address</a>
+     */
+    public ListForEmail[] listsForEmailAddress(String emailAddress) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("email", emailAddress);
+
+        return jerseyClient.get(ListForEmail[].class, queryString, "clients", clientID, "listsforemail.json");
+    }
+    
     /**
      * Gets all segments defined for the current client
      * @return All segments defined for the current client
@@ -211,17 +227,6 @@ public class Clients {
      */
     public void setBasics(Client client) throws CreateSendException {
         jerseyClient.put(client, "clients", clientID, "setbasics.json");
-    }
-   
-    /**
-     * Sets which Campaign Monitor functionality a client may access, including login credentials.
-     * @param access The funtionality a client has access to and login credentials for the current client.
-     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/clients/#setting_access_details" target="_blank">
-     * Setting access details</a>
-     */
-    public void setAccess(AccessDetails access) throws CreateSendException {
-        jerseyClient.put(access, "clients", clientID, "setaccess.json");
     }
    
     /**

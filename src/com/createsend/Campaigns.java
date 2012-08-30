@@ -26,7 +26,9 @@ import java.util.Date;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.PagedResult;
+import com.createsend.models.campaigns.CampaignClick;
 import com.createsend.models.campaigns.CampaignForCreation;
+import com.createsend.models.campaigns.CampaignOpen;
 import com.createsend.models.campaigns.CampaignSummary;
 import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
@@ -213,7 +215,7 @@ public class Campaigns {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_openslist" target="_blank">
      * Getting campaign opens</a>
      */
-    public PagedResult<Subscriber> opens(Date opensFrom,
+    public PagedResult<CampaignOpen> opens(Date opensFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(opensFrom));
@@ -234,7 +236,7 @@ public class Campaigns {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_clickslist" target="_blank">
      * Getting campaign clicks</a>
      */
-    public PagedResult<Subscriber> clicks(Date clicksFrom,
+    public PagedResult<CampaignClick> clicks(Date clicksFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", JsonProvider.ApiDateFormat.format(clicksFrom));

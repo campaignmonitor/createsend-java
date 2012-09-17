@@ -31,13 +31,13 @@ public class CampaignSummary {
     public int Forwards;
     public int Mentions;
     public int Likes;
-    
     public String WebVersionURL;
+    public String WorldviewURL;
 
     @Override
     public String toString() {
         return String.format(
-            "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s }",
-            Recipients, TotalOpened, Clicks, Unsubscribed, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL);
+            "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s, WorldviewURL: %s }",
+            Recipients, TotalOpened, Clicks, Unsubscribed, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL, WorldviewURL);
     }
 }

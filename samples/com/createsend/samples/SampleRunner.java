@@ -36,7 +36,12 @@ import com.createsend.Subscribers;
 import com.createsend.Templates;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
+import com.createsend.models.campaigns.CampaignForCreationFromTemplate;
+import com.createsend.models.campaigns.EditableField;
 import com.createsend.models.campaigns.PreviewData;
+import com.createsend.models.campaigns.Repeater;
+import com.createsend.models.campaigns.RepeaterItem;
+import com.createsend.models.campaigns.TemplateContent;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
@@ -57,7 +62,7 @@ import com.createsend.models.subscribers.SubscribersToAdd;
 import com.createsend.models.templates.TemplateForCreate;
 import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
-import com.createsend.workingsamples.AssertException;
+import com.createsend.samples.AssertException;
 
 public class SampleRunner {
 
@@ -65,7 +70,7 @@ public class SampleRunner {
      * @param args
      */
     public static void main(String[] args) {        
-        try { 
+        try {
             String clientID = "Client ID";
             runGeneralMethods();
             runClientMethods();
@@ -296,6 +301,79 @@ public class SampleRunner {
         listAPI.delete();
     }
 
+    private static void testCampaignCreationFromTemplate(
+    		String clientID) throws CreateSendException {
+    	Campaigns campaignAPI = new Campaigns();
+
+        // Prepare the template content
+        TemplateContent templateContent = new TemplateContent();
+
+        EditableField singleline = new EditableField();
+        singleline.Content = "This is a heading";
+        singleline.Alt = "This is alt text";
+        singleline.Href = "http://example.com/";
+        EditableField[] singlelines = new EditableField[] { singleline };
+        templateContent.Singlelines = singlelines;
+
+        EditableField multiline = new EditableField();
+        multiline.Content = "<p>This is example</p><p>multiline <a href=\"http://example.com\">content</a>...</p>";
+        EditableField[] multilines = new EditableField[] { multiline };
+        templateContent.Multilines = multilines;
+        
+        EditableField image = new EditableField();
+        image.Content = "http://example.com/image.png";
+        image.Alt = "This is alt text for an image";
+        image.Href = "http://example.com/";
+        EditableField[] images = new EditableField[] { image };
+        templateContent.Images = images;
+
+        RepeaterItem item = new RepeaterItem();
+        item.Layout = "My layout";
+        // Just using the same data for Singlelines, Multilines,
+        // and Images as above in this example.
+        item.Singlelines = singlelines;
+        item.Multilines = multilines;
+        item.Images = images;
+        RepeaterItem[] items = new RepeaterItem[] { item };
+        Repeater repeater = new Repeater();
+        repeater.Items = items;
+        Repeater[] repeaters = new Repeater[] { repeater };
+        templateContent.Repeaters = repeaters;
+
+        // templateContent as defined above would be used to fill the content of
+        // a template with markup similar to the following:
+        // <html>
+        // <head><title>My Template</title></head>
+        // <body>
+        //     <p><singleline>Enter heading...</singleline></p>
+        //     <div><multiline>Enter description...</multiline></div>
+        //     <img id="header-image" editable="true" width="500" />
+        //     <repeater>
+        //     <layout label="My layout">
+        //         <div class="repeater-item">
+        //         <p><singleline></singleline></p>
+        //         <div><multiline></multiline></div>
+        //         <img editable="true" width="500" />
+        //         </div>
+        //     </layout>
+        //     </repeater>
+        //     <p><unsubscribe>Unsubscribe</unsubscribe></p>
+        // </body>
+        // </html>
+		
+		CampaignForCreationFromTemplate campaign = new CampaignForCreationFromTemplate();
+		campaign.Name = "Campaign From Java Wrapper";
+		campaign.Subject = "Campaign From Java Wrapper";
+		campaign.FromName = "Example";
+		campaign.FromEmail = "example@example.com";
+		campaign.ReplyTo = "example@example.com";
+		campaign.ListIDs = new String[] { "List ID One" };
+		campaign.SegmentIDs = new String[0];
+		campaign.TemplateID = "Template ID";
+		campaign.TemplateContent = templateContent;
+		
+		campaignAPI.createFromTemplate(clientID, campaign);
+    }
     
     private static void runCampaignMethods(String clientID) throws CreateSendException {
         Campaigns campaignAPI = new Campaigns();

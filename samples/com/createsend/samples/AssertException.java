@@ -1,4 +1,4 @@
-package com.createsend.workingsamples;
+package com.createsend.samples;
 
 public class AssertException extends Exception {
 

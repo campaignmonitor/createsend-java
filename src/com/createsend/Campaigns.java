@@ -28,6 +28,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.CampaignClick;
 import com.createsend.models.campaigns.CampaignForCreation;
+import com.createsend.models.campaigns.CampaignForCreationFromTemplate;
 import com.createsend.models.campaigns.CampaignOpen;
 import com.createsend.models.campaigns.CampaignSummary;
 import com.createsend.models.campaigns.ListsAndSegments;
@@ -97,14 +98,29 @@ public class Campaigns {
      * @param campaign The campaign information used for the new campaign
      * @return The ID of the newly created campaign
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#creating_a_campaign" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#creating_a_draft_campaign" target="_blank">
      * Creating a campaign</a>
      */
     public String create(String clientID, CampaignForCreation campaign) throws CreateSendException {
         campaignID = client.post(String.class, campaign, "campaigns", clientID + ".json");
         return campaignID;
     }
-    
+
+    /**
+     * Creates a new campaign for the specified client, based on the template
+     * and campaign data specified.
+     * @param clientID The ID of the client to create the campaign for
+     * @param campaign The campaign information used for the new campaign
+     * @return The ID of the newly created campaign
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#creating_a_campaign_from_template" target="_blank">
+     * Creating a campaign</a>
+     */
+    public String createFromTemplate(String clientID, CampaignForCreationFromTemplate campaign) throws CreateSendException {
+        campaignID = client.post(String.class, campaign, "campaigns", clientID + "/fromtemplate.json");
+        return campaignID;
+    }
+
     /**
      * Sends an existing draft campaign using the provided confirmation email and send date.
      * To schedule a campaign for immediate delivery use a <code>null</code> sendDate.

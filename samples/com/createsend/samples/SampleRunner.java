@@ -445,6 +445,10 @@ public class SampleRunner {
         newClient.CompanyName = "Edited Company Name";
         clientAPI.setBasics(newClient);
         
+        String emailAddress = "example@example.com";
+        clientAPI.unsuppress(emailAddress);
+        System.out.printf("Unsuppressed email address: %s\n", emailAddress);
+
         BillingDetails billing = new BillingDetails();
         billing.ClientPays = true;
         billing.CanPurchaseCredits = true;

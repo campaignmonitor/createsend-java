@@ -206,7 +206,13 @@ public class Clients {
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection, null,
             "clients", clientID, "suppressionlist.json");
     }
-   
+
+    public void unsuppress(String email) throws CreateSendException {
+		MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+		queryString.add("email", email);
+		jerseyClient.put("", queryString, "clients", clientID, "unsuppress.json");
+    }
+
     /**
      * Gets all templates defined for the current client.
      * @return A collection of templates defined for the current client

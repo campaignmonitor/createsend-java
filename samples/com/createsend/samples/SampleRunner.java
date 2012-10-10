@@ -310,7 +310,6 @@ public class SampleRunner {
 
         EditableField singleline = new EditableField();
         singleline.Content = "This is a heading";
-        singleline.Alt = "This is alt text";
         singleline.Href = "http://example.com/";
         EditableField[] singlelines = new EditableField[] { singleline };
         templateContent.Singlelines = singlelines;

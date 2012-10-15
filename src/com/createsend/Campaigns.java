@@ -31,6 +31,7 @@ import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.CampaignForCreationFromTemplate;
 import com.createsend.models.campaigns.CampaignOpen;
 import com.createsend.models.campaigns.CampaignSummary;
+import com.createsend.models.campaigns.EmailClient;
 import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
@@ -169,7 +170,16 @@ public class Campaigns {
     public CampaignSummary summary() throws CreateSendException {
         return client.get(CampaignSummary.class, "campaigns", campaignID, "summary.json");
     }
-    
+
+    /**
+     * Gets the email clients that subscribers used to open the campaign
+     * @return Array of email clients used to open the specified campaign
+     * @throws CreateSendException Raised if the API responds with a HTTP Status >= 400
+     */
+    public EmailClient[] emailClientUsage() throws CreateSendException {
+        return client.get(EmailClient[].class, "campaigns", campaignID, "emailclientusage.json");
+    }
+
     /**
      * Gets the lists and segments that a campaign is to be, or has been sent to.
      * @return The lists and segments that the campaign is to be, or has been sent to

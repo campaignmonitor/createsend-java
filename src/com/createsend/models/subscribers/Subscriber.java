@@ -29,7 +29,8 @@ public class Subscriber {
     public String Name;
     public Date Date;
     public String State; // TODO: Probably want to move this to an enum
-    public CustomField[] CustomFields; 
+    public CustomField[] CustomFields;
+    public String ReadsEmailWith;
     
     @Override
     public String toString() {

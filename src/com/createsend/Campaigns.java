@@ -291,7 +291,28 @@ public class Campaigns {
         return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "campaigns", campaignID, "unsubscribes.json");
     }
-    
+
+    /**
+     * Gets a paged list of spam complaints for the specified campaign
+     * @param spamComplaintsFrom The date to start getting spam complaints from. This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged spam complaints returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_spam_complaints" target="_blank">
+     * Campaign spam complaints</a>
+     */
+    public PagedResult<Subscriber> spamComplaints(Date spamComplaintsFrom,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("date", JsonProvider.ApiDateFormat.format(spamComplaintsFrom));
+
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "campaigns", campaignID, "spam.json");
+    }
+
     /**
      * Deletes the specified draft campaign
      * @throws CreateSendException Raised when the API responds with a HTTP status >= 400

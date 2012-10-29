@@ -24,10 +24,11 @@ package com.createsend.models.lists;
 class BaseCustomField {
     public String FieldName;
     public String DataType; // TODO: Probably want to move this to an enum
+	public boolean VisibleInPreferenceCenter;
 
     @Override
     public String toString() {
-        return String.format("FieldName: %s, DataType: %s",
-            FieldName, DataType);
+        return String.format("FieldName: %s, DataType: %s, VisibleInPreferenceCenter: %s",
+            FieldName, DataType, VisibleInPreferenceCenter);
     }
 }

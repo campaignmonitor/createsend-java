@@ -44,6 +44,7 @@ public interface JerseyClient {
             String...pathElements) throws CreateSendException;
     
     public void put(Object entity, String... pathElements) throws CreateSendException;
+    public <T> T put(Class<T> klass, Object entity, String... pathElements) throws CreateSendException;
     public void put(Object entity, MultivaluedMap<String, String> queryString, String... pathElements) throws CreateSendException;
     public void put(Object entity, ErrorDeserialiser<?> errorDeserialiser, String... pathElements) throws CreateSendException;
     

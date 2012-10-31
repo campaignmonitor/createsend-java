@@ -28,6 +28,9 @@ public class CampaignForCreation extends Campaign {
     public String FromEmail;
     public String ReplyTo;
     public URI HtmlUrl;
+    // Note that TextUrl is optional and if provided as either null or an
+    // empty string, text content for the campaign will be generated from
+    // the HTML content.
     public URI TextUrl;
     public String[] ListIDs;
     public String[] SegmentIDs;

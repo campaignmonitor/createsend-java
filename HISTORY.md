@@ -1,5 +1,19 @@
 # createsend-java history
 
+## v2.4.0 - 5 Nov, 2012   (4c3cc6a1)
+
+* Added EmailClient class and Campaigns.emailClientUsage().
+* Added support for ReadsEmailWith field on subscriber objects.
+* Added support for retrieving unconfirmed subscribers for a list.
+* Added support for suppressing email addresses.
+* Added support for retrieving spam complaints for a campaign, as well as adding SpamComplaints field to campaign summary output.
+* Added VisibleInPreferenceCenter field to custom field output.
+* Added support for setting preference center visibility when creating custom
+fields.
+* Added the ability to update a custom field name and preference visibility.
+* Added documentation explaining that TextUrl may be provided as null or as an
+empty string when creating a campaign.
+
 ## v2.3.0 - 10 Oct, 2012   (2d5178e0)
 
 * Added support for creating campaigns from templates.

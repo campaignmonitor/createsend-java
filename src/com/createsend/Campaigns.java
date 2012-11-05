@@ -31,6 +31,7 @@ import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.CampaignForCreationFromTemplate;
 import com.createsend.models.campaigns.CampaignOpen;
 import com.createsend.models.campaigns.CampaignSummary;
+import com.createsend.models.campaigns.EmailClient;
 import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
@@ -169,7 +170,16 @@ public class Campaigns {
     public CampaignSummary summary() throws CreateSendException {
         return client.get(CampaignSummary.class, "campaigns", campaignID, "summary.json");
     }
-    
+
+    /**
+     * Gets the email clients that subscribers used to open the campaign
+     * @return Array of email clients used to open the specified campaign
+     * @throws CreateSendException Raised if the API responds with a HTTP Status >= 400
+     */
+    public EmailClient[] emailClientUsage() throws CreateSendException {
+        return client.get(EmailClient[].class, "campaigns", campaignID, "emailclientusage.json");
+    }
+
     /**
      * Gets the lists and segments that a campaign is to be, or has been sent to.
      * @return The lists and segments that the campaign is to be, or has been sent to
@@ -281,7 +291,28 @@ public class Campaigns {
         return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "campaigns", campaignID, "unsubscribes.json");
     }
-    
+
+    /**
+     * Gets a paged list of spam complaints for the specified campaign
+     * @param spamComplaintsFrom The date to start getting spam complaints from. This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged spam complaints returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_spam_complaints" target="_blank">
+     * Campaign spam complaints</a>
+     */
+    public PagedResult<Subscriber> spamComplaints(Date spamComplaintsFrom,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("date", JsonProvider.ApiDateFormat.format(spamComplaintsFrom));
+
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "campaigns", campaignID, "spam.json");
+    }
+
     /**
      * Deletes the specified draft campaign
      * @throws CreateSendException Raised when the API responds with a HTTP status >= 400

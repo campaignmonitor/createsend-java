@@ -28,6 +28,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.createsend.models.PagedResult;
 import com.createsend.models.lists.CustomField;
 import com.createsend.models.lists.CustomFieldForCreate;
+import com.createsend.models.lists.CustomFieldForUpdate;
 import com.createsend.models.lists.List;
 import com.createsend.models.lists.ListForUpdate;
 import com.createsend.models.lists.Statistics;
@@ -186,7 +187,7 @@ public class Lists {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_active_subscribers" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Date subscribedFrom,
@@ -197,7 +198,30 @@ public class Lists {
         return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "active.json");
     }
-    
+
+    /**
+     * Gets a paged collection of unconfirmed subscribers who have subscribed to the list 
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who subscribed on or after this date. 
+     *     This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> unconfirmed(Date subscribedFrom,
+        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
+        queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
+        
+        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+            queryString, "lists", listID, "unconfirmed.json");
+    }
+
     /**
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list 
      * since the provided date.
@@ -209,7 +233,7 @@ public class Lists {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_unsubscribed_subscribers" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(Date subscribedFrom,
@@ -232,7 +256,7 @@ public class Lists {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_deleted_subscribers" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(Date subscribedFrom,
@@ -255,7 +279,7 @@ public class Lists {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_bounced_subscribers" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(Date subscribedFrom,
@@ -278,7 +302,21 @@ public class Lists {
     public String createCustomField(CustomFieldForCreate customField) throws CreateSendException {
         return client.post(String.class, customField, "lists", listID, "customfields.json");
     }
-    
+
+    /**
+     * Updates a new custom field.
+     * @param fieldKey The <em>Key</em> of the custom field to update. This must be surrounded by [].
+     * @param customField The custom field options
+     * @return The Key of the updated custom field
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_a_custom_field" target="_blank">
+     * Creating a custom field</a>
+     */
+    public String updateCustomField(String fieldKey, CustomFieldForUpdate customField)
+		throws CreateSendException {
+        return client.put(String.class, customField, "lists", listID, "customfields", fieldKey + ".json");
+    }
+
     /**
      * Updates the available options for a Multi-Valued custom field.
      * @param fieldKey The <em>Key</em> of the custom field to update. This must be surrounded by [].
@@ -287,7 +325,7 @@ public class Lists {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_custom_field_options" target="_blank">
      * Updating custom field options</a>
      */
-    public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options) 
+    public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options)
         throws CreateSendException {
         client.put(options, "lists", listID, "customFields", fieldKey, "options.json");
     }

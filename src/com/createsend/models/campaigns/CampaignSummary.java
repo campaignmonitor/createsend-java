@@ -26,6 +26,7 @@ public class CampaignSummary {
     public int TotalOpened;
     public int Clicks;
     public int Unsubscribed;
+    public int SpamComplaints;
     public int Bounced;
     public int UniqueOpened;
     public int Forwards;
@@ -37,7 +38,7 @@ public class CampaignSummary {
     @Override
     public String toString() {
         return String.format(
-            "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s, WorldviewURL: %s }",
-            Recipients, TotalOpened, Clicks, Unsubscribed, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL, WorldviewURL);
+            "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, SpamComplaints: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s, WorldviewURL: %s }",
+            Recipients, TotalOpened, Clicks, Unsubscribed, SpamComplaints, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL, WorldviewURL);
     }
 }

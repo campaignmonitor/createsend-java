@@ -2,7 +2,7 @@
 
 [travis]: http://travis-ci.org/campaignmonitor/createsend-java
 
-A Java library which implements the complete functionality of v3 of the [CreateSend API](http://www.campaignmonitor.com/api/).
+A Java library which implements the complete functionality of the [Campaign Monitor API](http://www.campaignmonitor.com/api/).
 
 ## Downloads
 2 pre built jars are available, one with just the wrapper classes, the other with all dependencies.

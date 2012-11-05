@@ -206,6 +206,17 @@ public class JerseyClientImpl implements JerseyClient {
         put(entity, null, defaultDeserialiser, pathElements);
     }
     
+    public <T> T put(Class<T> klass, Object entity, String... pathElements) throws CreateSendException {
+        WebResource resource = authorisedResourceFactory.getResource(client, pathElements);
+        try { 
+            return fixStringResult(klass, resource.
+                type(MediaType.APPLICATION_JSON_TYPE).
+                put(klass, entity));
+        } catch (UniformInterfaceException ue) {
+            throw handleErrorResponse(ue, defaultDeserialiser);
+        }
+    }
+    
     public void put(Object entity, MultivaluedMap<String, String> queryString, String... pathElements) throws CreateSendException {
         put(entity, queryString, defaultDeserialiser, pathElements);
     }
@@ -231,7 +242,7 @@ public class JerseyClientImpl implements JerseyClient {
             throw handleErrorResponse(ue, errorDeserialiser);
         }
     }
-    
+
     /**
      * Makes a HTTP DELETE request to the specified path
      * @param pathElements The path of the resource to delete

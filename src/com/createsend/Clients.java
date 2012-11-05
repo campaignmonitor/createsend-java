@@ -30,6 +30,7 @@ import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
+import com.createsend.models.clients.SuppressionDetails;
 import com.createsend.models.clients.Template;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.lists.ListForEmail;
@@ -207,6 +208,10 @@ public class Clients {
             "clients", clientID, "suppressionlist.json");
     }
 
+    public void suppress(SuppressionDetails details) throws CreateSendException {
+    	jerseyClient.post(String.class, details, "clients", clientID, "suppress.json");
+    }
+    
     public void unsuppress(String email) throws CreateSendException {
 		MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 		queryString.add("email", email);

@@ -141,7 +141,34 @@ public class Segments {
     public Segment details() throws CreateSendException {
         return client.get(Segment.class, "segments", segmentID + ".json");
     }
-    
+
+    /**
+     * Gets a paged collection of active subscribers within the specified segment.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active() throws CreateSendException {
+    	return active(1, 1000, "email", "asc");
+    }
+
+    /**
+     * Gets a paged collection of active subscribers within the specified segment.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(
+            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    	return active("", page, pageSize, orderField, orderDirection);
+    }
+
     /**
      * Gets a paged collection of active subscribers within the specified segment
      * since the provided date.
@@ -157,9 +184,15 @@ public class Segments {
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Date subscribedFrom,
+            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    	return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
+    			page, pageSize, orderField, orderDirection);
+    }
+
+    private PagedResult<Subscriber> active(String subscribedFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", JsonProvider.ApiDateFormat.format(subscribedFrom));
+        queryString.add("date", subscribedFrom);
         
         return client.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "segments", segmentID, "active.json");

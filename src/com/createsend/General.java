@@ -87,7 +87,17 @@ public class General {
     public ClientBasics[] getClients() throws CreateSendException {
         return client.get(ClientBasics[].class, "clients.json");
     }
-    
+
+    /**
+     * @return Gets your billing details. 
+     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_your_billing_details" target="_blank">
+     * Getting your billing details</a>
+     * @throws CreateSendException
+     */
+    public com.createsend.models.BillingDetails getBillingDetails() throws CreateSendException {
+        return client.get(com.createsend.models.BillingDetails.class, "billingdetails.json");
+    }
+
     /**
      * @return An array of valid countries for use in the Create Send API
      * @see <a href="http://www.campaignmonitor.com/api/account/#getting_countries" target="_blank">

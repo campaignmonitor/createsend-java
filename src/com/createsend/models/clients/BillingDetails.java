@@ -23,6 +23,7 @@ package com.createsend.models.clients;
 
 public class BillingDetails {
     public boolean CanPurchaseCredits;
+    public int Credits;
     public boolean ClientPays;
     
     public String Currency;

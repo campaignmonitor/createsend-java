@@ -32,6 +32,8 @@ import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
 import com.createsend.models.clients.SuppressionDetails;
 import com.createsend.models.clients.Template;
+import com.createsend.models.clients.CreditsTransferDetails;
+import com.createsend.models.clients.CreditsTransferResult;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.lists.ListForEmail;
 import com.createsend.models.people.Person;
@@ -267,7 +269,17 @@ public class Clients {
        
         jerseyClient.put(billing, "clients", clientID, "setmonthlybilling.json");
     }
-   
+
+    /**
+     * Transfer credits to or from this client.
+     * @param details The credit transfer details.
+     * @return The result of the credits transfer.
+     * @throws CreateSendException
+     */
+    public CreditsTransferResult transferCredits(CreditsTransferDetails details) throws CreateSendException {
+    	return jerseyClient.post(CreditsTransferResult.class, details, "clients", clientID, "credits.json");
+    }
+
     /**
      * Deletes the current client
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400

@@ -33,6 +33,7 @@ public class CampaignSummary {
     public int Mentions;
     public int Likes;
     public String WebVersionURL;
+    public String WebVersionTextURL;
     public String WorldviewURL;
 
     @Override

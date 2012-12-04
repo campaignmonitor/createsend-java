@@ -25,6 +25,7 @@ import java.util.Date;
 
 public class SentCampaign extends Campaign {
     public String WebVersionURL;
+    public String WebVersionTextURL;
     public Date SentDate;
     public int TotalRecipients;
     

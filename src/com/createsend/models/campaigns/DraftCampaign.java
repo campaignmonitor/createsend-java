@@ -26,6 +26,7 @@ import java.util.Date;
 public class DraftCampaign extends Campaign {
     public Date DateCreated;
     public String PreviewURL;
+    public String PreviewTextURL;
     
     @Override
     public String toString() {

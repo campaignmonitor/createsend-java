@@ -25,9 +25,13 @@ public class Campaign {
     public String CampaignID;
     public String Subject;
     public String Name;
-    
+    public String FromName;
+    public String FromEmail;
+    public String ReplyTo;
+
     @Override
     public String toString() {
-        return String.format("CampaignID: %s, Subject: %s, Name: %s", CampaignID, Subject, Name);
+        return String.format("CampaignID: %s, Subject: %s, Name: %s, FromName: %s, FromEmail: %s, ReplyTo: %s",
+        		CampaignID, Subject, Name, FromName, FromEmail, ReplyTo);
     }
 }

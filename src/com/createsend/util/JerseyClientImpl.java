@@ -76,11 +76,24 @@ public class JerseyClientImpl implements JerseyClient {
         client.addFilter(new GZIPContentEncodingFilter(false));
         client.addFilter(new UserAgentFilter());
     }
-    
+
     private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>();
     private ResourceFactory authorisedResourceFactory = 
         new AuthorisedResourceFactory(Configuration.Current.getApiKey(), "x");
-        
+
+    /**
+     * Constructs a JerseyClientImpl instance.
+     */
+    public JerseyClientImpl() { }
+
+    /**
+     * Constructs a JerseyClientImpl instance, including a specific API key.
+     * @param apiKey The API key to use for requests made using this JerseyClientImpl.
+     */
+    public JerseyClientImpl(String apiKey) {
+    	authorisedResourceFactory = new AuthorisedResourceFactory(apiKey, "x");
+    }
+
     /**
      * Performs a HTTP GET on the route specified by the pathElements deserialising the 
      * result to an instance of klass.

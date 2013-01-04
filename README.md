@@ -8,7 +8,7 @@ A Java library which implements the complete functionality of the [Campaign Moni
 2 pre built jars are available, one with just the wrapper classes, the other with all dependencies.
 
 ## Javadoc
-Full javadoc for this library is available [here](http://campaignmonitor.github.com/createsend-java/docs/).
+Full javadoc for this library is available [here](http://campaignmonitor.github.com/createsend-java/doc/).
 
 ## Building
 

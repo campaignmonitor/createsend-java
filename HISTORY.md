@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v2.6.0 - 4 Jan, 2013  (f8cd13c)
+
+* Added support for instantiating JerseyClientImpl using a specific API key.
+
 ## v2.5.0 - 11 Dec, 2012  (5b16f78)
 
 * Added support for including from name, from email, and reply to email in

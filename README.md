@@ -4,25 +4,45 @@
 
 A Java library which implements the complete functionality of the [Campaign Monitor API](http://www.campaignmonitor.com/api/).
 
-## Downloads
-2 pre built jars are available, one with just the wrapper classes, the other with all dependencies.
+## Example
 
-## Javadoc
+Here's a super simple example to get you started. This code just lists the clients in your account:
+
+```java
+import com.createsend.General;
+import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.JerseyClientImpl;
+import com.createsend.util.exceptions.CreateSendException;
+
+public class Tester {
+	public static void main(String[] args) throws CreateSendException {
+		General client = new General(new JerseyClientImpl("Your API Key"));
+		ClientBasics[] clients = client.getClients();
+		for (ClientBasics c : clients) {
+			System.out.printf("%s (ID: %s)\n", c.Name, c.ClientID);
+		}
+	}
+}
+```
+
+See the [samples](https://github.com/campaignmonitor/createsend-java/blob/master/samples/com/createsend/samples/SampleRunner.java) directory for more example code.
+
+## Documentation
 Full javadoc for this library is available [here](http://campaignmonitor.github.com/createsend-java/doc/).
 
 ## Building
 
-###With Gradle:
+### Use Gradle:
 Run the following command from the root directory of the repository:
 
     gradle -i
 
-###Developing with Eclipse:
+### Developing with Eclipse:
 Gradle can be used to create the .classpath and .project files to import the project into Eclipse. Run the following command from the root directory of the repository:
 
     gradle eclipse
-        
-###Developing with IDEA
+
+### Developing with IDEA
 Gradle can be used to create an IDEA project and module files. Run the following command from the root directory of the repository:
 
     gradle idea

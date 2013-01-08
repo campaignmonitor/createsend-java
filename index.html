@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>createsend-java</h1>
-        <p>A Java wrapper for v3 of the Campaign Monitor API</p>
+        <p>A Java library for the Campaign Monitor API.</p>
 
         <p class="view"><a href="https://github.com/campaignmonitor/createsend-java">View the Project on GitHub <small>campaignmonitor/createsend-java</small></a></p>
 
@@ -31,19 +31,37 @@
         <h1>createsend-java <a href="http://travis-ci.org/campaignmonitor/createsend-java"><img src="https://secure.travis-ci.org/campaignmonitor/createsend-java.png" alt="Build Status"></a>
 </h1>
 
-<p>A Java library which implements the complete functionality of v3 of the <a href="http://www.campaignmonitor.com/api/">CreateSend API</a>.</p>
+<p>A Java library which implements the complete functionality of the <a href="http://www.campaignmonitor.com/api/">Campaign Monitor API</a>.</p>
 
-<h2>Downloads</h2>
+<h2>Example</h2>
 
-<p>2 pre built jars are available, one with just the wrapper classes, the other with all dependencies.</p>
+<p>Here's a super simple example to get you started. This code just lists the clients in your account:</p>
 
-<h2>Javadoc</h2>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.createsend.General</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.models.clients.ClientBasics</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.JerseyClientImpl</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.CreateSendException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tester</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CreateSendException</span> <span class="o">{</span>
+        <span class="n">General</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="k">new</span> <span class="n">JerseyClientImpl</span><span class="o">(</span><span class="s">"Your API Key"</span><span class="o">));</span>
+        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">ClientBasics</span> <span class="n">c</span> <span class="o">:</span> <span class="n">clients</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%s (ID: %s)\n"</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">Name</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">ClientID</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>See the <a href="https://github.com/campaignmonitor/createsend-java/blob/master/samples/com/createsend/samples/SampleRunner.java">samples</a> directory for more example code.</p>
+
+<h2>Documentation</h2>
 
 <p>Full javadoc for this library is available <a href="http://campaignmonitor.github.com/createsend-java/doc/">here</a>.</p>
 
 <h2>Building</h2>
 
-<h3>With Gradle:</h3>
+<h3>Use Gradle:</h3>
 
 <p>Run the following command from the root directory of the repository:</p>
 

@@ -53,6 +53,6 @@ task doc(type: Javadoc) {
 	source = sourceSets.main.allJava
 	title = "createsend-java $version"
 	classpath = sourceSets.main.compileClasspath
-	destinationDir = new File('doc')
+	destinationDir = new File(new File(buildDir, 'doc'), version)
 	options.version = true
 }

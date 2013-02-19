@@ -44,12 +44,31 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  */
 public class General {
     private JerseyClient client;
-    
+
     /**
-     * Constructor
+     * Constructor.
      */
     public General() {
         this(new JerseyClientImpl());
+    }
+
+    /**
+     * Constructor which specifies to use an OAuth access token when making 
+     * API requests, and a refresh token to use when the access token expires.
+     * @param accessToken The access token to use when making API requests.
+     * @param refreshToken The refresh token to use to refresh the access token
+     * when the access token expires.
+     */
+    public General(String accessToken, String refreshToken) {
+    	this(new JerseyClientImpl(accessToken, refreshToken));
+    }
+
+    /**
+     * Constructor which specifies to use an API key when making API requests.
+     * @param apiKey The API key to use for making API requests.
+     */
+    public General(String apiKey) {
+    	this(new JerseyClientImpl(apiKey));
     }
     
     /**

@@ -80,6 +80,7 @@ public class JerseyClientImpl implements JerseyClient {
     private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>();
     private ResourceFactory authorisedResourceFactory = 
         new AuthorisedResourceFactory(Configuration.Current.getApiKey(), "x");
+    private String refreshToken;
 
     /**
      * Constructs a JerseyClientImpl instance.
@@ -92,6 +93,16 @@ public class JerseyClientImpl implements JerseyClient {
      */
     public JerseyClientImpl(String apiKey) {
     	authorisedResourceFactory = new AuthorisedResourceFactory(apiKey, "x");
+    }
+
+    /**
+     * Constructs a JerseyClientImpl instance, including an OAuth access token and refresh token.
+     * @param accessToken The OAuth access token to use for requests made using this JerseyClientImpl.
+     * @param refreshToken The OAuth refresh token to use when the access token expires.
+     */
+    public JerseyClientImpl(String accessToken, String refreshToken) {
+    	authorisedResourceFactory = new AuthorisedResourceFactory(accessToken);
+    	this.refreshToken = refreshToken;
     }
 
     /**

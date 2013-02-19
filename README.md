@@ -4,6 +4,46 @@
 
 A Java library which implements the complete functionality of the [Campaign Monitor API](http://www.campaignmonitor.com/api/).
 
+## Authenticating
+
+The Campaign Monitor API supports authentication using either OAuth or an API key.
+
+### Using OAuth
+
+TODO: Implement and document OAuth flow.
+
+Once you have an access token and refresh token for your user, you can authenticate and make further API calls like so:
+
+```java
+import com.createsend.General;
+import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.exceptions.CreateSendException;
+
+public class Tester {
+	public static void main(String[] args) throws CreateSendException {
+		General client = new General("your access token", "your refresh token");
+		ClientBasics[] clients = client.getClients();
+	}
+}
+```
+
+TODO: Add instructions for refreshing an access token.
+
+### Using an API key
+
+```java
+import com.createsend.General;
+import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.exceptions.CreateSendException;
+
+public class Tester {
+	public static void main(String[] args) throws CreateSendException {
+		General client = new General("your api key");
+		ClientBasics[] clients = client.getClients();
+	}
+}
+```
+
 ## Example
 
 Here's a super simple example to get you started. This code just lists the clients in your account:
@@ -11,12 +51,11 @@ Here's a super simple example to get you started. This code just lists the clien
 ```java
 import com.createsend.General;
 import com.createsend.models.clients.ClientBasics;
-import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 
 public class Tester {
 	public static void main(String[] args) throws CreateSendException {
-		General client = new General(new JerseyClientImpl("Your API Key"));
+		General client = new General("Your API Key");
 		ClientBasics[] clients = client.getClients();
 		for (ClientBasics c : clients) {
 			System.out.printf("%s (ID: %s)\n", c.Name, c.ClientID);
@@ -35,17 +74,23 @@ Full javadoc for this library is available [here](http://campaignmonitor.github.
 ### Use Gradle:
 Run the following command from the root directory of the repository:
 
-    gradle -i
+```
+gradle -i
+```
 
 ### Developing with Eclipse:
-Gradle can be used to create the .classpath and .project files to import the project into Eclipse. Run the following command from the root directory of the repository:
+Gradle can be used to create the `.classpath` and `.project` files to import the project into Eclipse. Run the following command from the root directory of the repository:
 
-    gradle eclipse
+```
+gradle eclipse
+```
 
 ### Developing with IDEA
 Gradle can be used to create an IDEA project and module files. Run the following command from the root directory of the repository:
 
-    gradle idea
+```
+gradle idea
+```
 
 ## Contributing
 1. Fork the repository

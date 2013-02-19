@@ -17,7 +17,7 @@ import com.createsend.General;
 
 String authorizeUrl = General.getAuthorizeUrl(
     32132,                 // The Client ID for your application
-    "982u39823r928398",    // 'The Client Secret for your application
+    "982u39823r928398",    // The Client Secret for your application
     "http://example.com/", // Redirect URI for your application
     "ViewReports",         // The permission level your application requires
     "some state data"      // Optional state data to be included

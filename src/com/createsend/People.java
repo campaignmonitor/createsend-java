@@ -5,6 +5,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.createsend.models.people.Person;
 import com.createsend.models.people.PersonResult;
 import com.createsend.models.people.PersonToAdd;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -15,13 +16,16 @@ public class People {
 	private String clientID;
 	private final JerseyClient client;
 
-	public People(String clientID) {
-		this(clientID, new JerseyClientImpl());
-	}
-	
-	public People(String clientID, JerseyClient jerseyClientImpl) {
+    /**
+     * Constructor.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param clientID The Client ID to use when making API calls.
+     */
+	public People(AuthenticationDetails auth, String clientID) {
 		this.setClientID(clientID);
-		this.client = jerseyClientImpl;
+		this.client = new JerseyClientImpl(auth);
 	}
 	
 	public String getClientID() {

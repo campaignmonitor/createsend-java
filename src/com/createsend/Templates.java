@@ -23,6 +23,7 @@ package com.createsend;
 
 import com.createsend.models.templates.TemplateDetails;
 import com.createsend.models.templates.TemplateForCreate;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -34,31 +35,27 @@ import com.createsend.util.exceptions.CreateSendException;
 public class Templates {
     private String templateID;
     private JerseyClient client;
-    
+
     /**
-     * Constructor.
-     * Use this for creating new templates.
+     * Constructor used to create new templates.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
      */
-    public Templates() {
-        this(null);
+    public Templates(AuthenticationDetails auth) {
+        this(auth, null);
     }
-    
+
     /**
-     * Constructor.
-     * @param templateID The ID of the template to apply calls to.
+     * Constructor for working with existing templates.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param templateID The Template ID to use when making API calls.
      */
-    public Templates(String templateID) {
-        this(templateID, new JerseyClientImpl());
-    }
-    
-    /**
-     * Constructor.
-     * @param templateID The ID of the template to apply any calls to.
-     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
-     */
-    public Templates(String templateID, JerseyClient client) {
+    public Templates(AuthenticationDetails auth, String templateID) {
         setTemplateID(templateID);
-        this.client = client;
+        this.client = new JerseyClientImpl(auth);
     }
     
     /**

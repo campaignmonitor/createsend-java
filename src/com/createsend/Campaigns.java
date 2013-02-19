@@ -36,6 +36,7 @@ import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
 import com.createsend.models.subscribers.Subscriber;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.JerseyClient;
@@ -50,33 +51,29 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class Campaigns {
     private String campaignID;
     private JerseyClient client;
-    
+
     /**
-     * Constructor.
-     * Use this to create new campaigns.
+     * Constructor used to create new campaigns.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
      */
-    public Campaigns() {
-        this(null);
-    }
-    
-    /**
-     * Constructor.
-     * @param campaignID The ID of the campaign to apply api calls to.
-     */
-    public Campaigns(String campaignID) {
-        this(campaignID, new JerseyClientImpl());
+    public Campaigns(AuthenticationDetails auth) {
+        this(auth, null);
     }
 
     /**
-     * Constructor.
-     * @param campaignID The ID of the campaign to apply api calls to.
-     * @param client The {@link com.createsend.util.JerseyClient} to use to make API calls
+     * Constructor used for working with existing campaigns.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param campaignID The campaign ID to use when making API calls.
      */
-    public Campaigns(String campaignID, JerseyClient client) {
-        setCampaignID(campaignID);
-        this.client = client;
+    public Campaigns(AuthenticationDetails auth, String campaignID) {
+    	this.setCampaignID(campaignID);
+        this.client = new JerseyClientImpl(auth);
     }
-    
+
     /**
      * Gets the current campaign ID.
      * @return The current campaign ID.

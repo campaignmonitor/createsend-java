@@ -17,13 +17,16 @@ Once you have an access token and refresh token for your user, you can authentic
 ```java
 import com.createsend.General;
 import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
 
 public class Tester {
-	public static void main(String[] args) throws CreateSendException {
-		General client = new General("your access token", "your refresh token");
-		ClientBasics[] clients = client.getClients();
-	}
+    public static void main(String[] args) throws CreateSendException {
+        OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails(
+            "your access token", "your refresh token");
+        General client = new General(auth);
+        ClientBasics[] clients = client.getClients();
+    }
 }
 ```
 
@@ -34,13 +37,16 @@ TODO: Add instructions for refreshing an access token.
 ```java
 import com.createsend.General;
 import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.ApiKeyAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
 
 public class Tester {
-	public static void main(String[] args) throws CreateSendException {
-		General client = new General("your api key");
-		ClientBasics[] clients = client.getClients();
-	}
+    public static void main(String[] args) throws CreateSendException {
+        ApiKeyAuthenticationDetails auth = new ApiKeyAuthenticationDetails(
+            "your api key");
+        General client = new General(auth);
+        ClientBasics[] clients = client.getClients();
+    }
 }
 ```
 
@@ -51,16 +57,19 @@ Here's a super simple example to get you started. This code just lists the clien
 ```java
 import com.createsend.General;
 import com.createsend.models.clients.ClientBasics;
+import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
 
 public class Tester {
-	public static void main(String[] args) throws CreateSendException {
-		General client = new General("Your API Key");
-		ClientBasics[] clients = client.getClients();
-		for (ClientBasics c : clients) {
-			System.out.printf("%s (ID: %s)\n", c.Name, c.ClientID);
-		}
-	}
+    public static void main(String[] args) throws CreateSendException {
+        OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails(
+            "your access token", "your refresh token");
+        General client = new General(auth);
+        ClientBasics[] clients = client.getClients();
+        for (ClientBasics c : clients) {
+            System.out.printf("%s (ID: %s)\n", c.Name, c.ClientID);
+        }
+    }
 }
 ```
 

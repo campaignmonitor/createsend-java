@@ -31,6 +31,7 @@ import com.createsend.models.segments.Rule;
 import com.createsend.models.segments.RuleCreationFailureDetails;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
@@ -47,29 +48,25 @@ public class Segments {
     private JerseyClient client;
     
     /**
-     * Constructor.
-     * Use this parameterless constructor for creating new segments.
+     * Constructor used to create new segments.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
      */
-    public Segments() {
-        this(null);
+    public Segments(AuthenticationDetails auth) {
+        this(auth, null);
     }
     
     /**
-     * Constructor. 
-     * @param segmentID The ID of the segment to apply calls to
+     * Constructor for working with existing segments.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param segmentID The Segment ID to use when making API calls.
      */
-    public Segments(String segmentID) {
-        this(segmentID, new JerseyClientImpl());
-    }
-    
-    /**
-     * Constructor.
-     * @param segmentID The ID of the segment to apply calls to
-     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
-     */
-    public Segments(String segmentID, JerseyClient client) {
-        setSegmentID(segmentID);
-        this.client = client;
+    public Segments(AuthenticationDetails auth, String segmentID) {
+    	setSegmentID(segmentID);
+        this.client = new JerseyClientImpl(auth);
     }
     
     /**

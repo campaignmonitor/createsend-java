@@ -37,6 +37,7 @@ import com.createsend.models.lists.Webhook;
 import com.createsend.models.lists.WebhookTestFailureDetails;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
@@ -51,34 +52,29 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class Lists {
     private String listID;
     private JerseyClient client;
-    
+
     /**
-     * Constructor.
-     * Use this constructor for creating new lists.
+     * Constructor used to create new lists.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
      */
-    public Lists() {
-        this(null);
+    public Lists(AuthenticationDetails auth) {
+        this(auth, null);
     }
-    
+
     /**
-     * Constructor.
-     * Use this constructor when the list ID is already known
-     * @param listID The ID of the list to apply any calls to
+     * Constructor for working with existing lists.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param listID The List ID to use when making API calls.
      */
-    public Lists(String listID) {
-        this(listID, new JerseyClientImpl());
+    public Lists(AuthenticationDetails auth, String listID) {
+    	setListID(listID);
+        this.client = new JerseyClientImpl(auth);
     }
-    
-    /**
-     * Constructor.
-     * @param listID The ID of the list to apply any calls to
-     * @param client The {@link com.createsend.util.JerseyClient} to use for API requests
-     */
-    public Lists(String listID, JerseyClient client) {
-        setListID(listID);
-        this.client = client;
-    }
-    
+
     /**
      * Sets the current list ID. 
      * @param listID The ID of the list to apply any calls to.

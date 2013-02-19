@@ -60,11 +60,15 @@ import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SubscriberToAdd;
 import com.createsend.models.subscribers.SubscribersToAdd;
 import com.createsend.models.templates.TemplateForCreate;
+import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.samples.AssertException;
 
 public class SampleRunner {
+
+	private static OAuthAuthenticationDetails auth = 
+			new OAuthAuthenticationDetails("your access token", "your refresh token");
 
     /**
      * @param args
@@ -96,7 +100,7 @@ public class SampleRunner {
     }
     
     private static void runTemplateMethods(String clientID) throws CreateSendException {
-        Templates templateAPI = new Templates();
+        Templates templateAPI = new Templates(auth);
         
         TemplateForCreate template = new TemplateForCreate();
         template.Name = "Java Test Template";
@@ -115,7 +119,7 @@ public class SampleRunner {
     
     @SuppressWarnings("deprecation")
     private static void runSubscriberMethods(String clientID) throws CreateSendException { 
-        Lists listAPI = new Lists();
+        Lists listAPI = new Lists(auth);
         Date subscribersFrom = new Date();
         subscribersFrom.setHours(0);
         
@@ -130,7 +134,7 @@ public class SampleRunner {
         
         String key = listAPI.createCustomField(customField);
         
-        Subscribers subscriberAPI = new Subscribers(listAPI.getListID());
+        Subscribers subscriberAPI = new Subscribers(auth, listAPI.getListID());
         
         SubscriberToAdd subscriber = new SubscriberToAdd();
         subscriber.Resubscribe = true;
@@ -183,7 +187,7 @@ public class SampleRunner {
     }
     
     private static void runSegmentMethods(String clientID) throws CreateSendException {
-        Lists listAPI = new Lists();
+        Lists listAPI = new Lists(auth);
         Date subscribersFrom = new Date();
         
         List list = new List();
@@ -191,7 +195,7 @@ public class SampleRunner {
         list.ConfirmedOptIn = false;
         listAPI.create(clientID, list);
         
-        Segments segmentAPI = new Segments();
+        Segments segmentAPI = new Segments(auth);
         
         Segment segment = new Segment();
         segment.Title = "Java Test Segment";
@@ -225,7 +229,7 @@ public class SampleRunner {
     }
     
     private static void runListMethods(String clientID) throws CreateSendException {
-        Lists listAPI = new Lists();
+        Lists listAPI = new Lists(auth);
         Date subscribersFrom = new Date();
         
         List list = new List();
@@ -303,7 +307,7 @@ public class SampleRunner {
 
     private static void testCampaignCreationFromTemplate(
     		String clientID) throws CreateSendException {
-    	Campaigns campaignAPI = new Campaigns();
+    	Campaigns campaignAPI = new Campaigns(auth);
 
         // Prepare the template content
         TemplateContent templateContent = new TemplateContent();
@@ -375,7 +379,7 @@ public class SampleRunner {
     }
     
     private static void runCampaignMethods(String clientID) throws CreateSendException {
-        Campaigns campaignAPI = new Campaigns();
+        Campaigns campaignAPI = new Campaigns(auth);
         Date resultsAfter = new Date();
         
         CampaignForCreation newCampaign = new CampaignForCreation();
@@ -431,7 +435,7 @@ public class SampleRunner {
     }
     
     private static void runClientMethods() throws AssertException, CreateSendException {
-        Clients clientAPI = new Clients();
+        Clients clientAPI = new Clients(auth);
         
         Client newClient = new Client();
         newClient.CompanyName = "Client Company Name";
@@ -545,7 +549,7 @@ public class SampleRunner {
     }
     
     private static void runGeneralMethods() throws CreateSendException {
-        General client = new General();
+        General client = new General(auth);
         
         System.out.printf("Result of get apikey: %s\n", 
             client.getAPIKey("Site URL", "Username", "Password"));
@@ -563,14 +567,14 @@ public class SampleRunner {
     }
     
     private static void runPeopleMethods(String clientID) throws CreateSendException {
-    	People people = new People(clientID);
+    	People people = new People(auth, clientID);
     	PersonToAdd person = new PersonToAdd();
     	person.EmailAddress = "this.is@notarealdomain.com";
     	person.Password = "djfdjffdj123";
     	person.AccessLevel = 1023;
     	person.Name = "NotaReal Person";
 		people.add(person);
-		Clients client = new Clients(clientID);
+		Clients client = new Clients(auth, clientID);
 						
 		Person details = people.details(person.EmailAddress);
 		details.Name = "NotaReal PersonUpdated";
@@ -589,12 +593,12 @@ public class SampleRunner {
     }
         
     private static void runAdminMethods() throws CreateSendException {
-    	Administrators admins = new Administrators();
+    	Administrators admins = new Administrators(auth);
     	Administrator admin = new Administrator();
     	admin.EmailAddress = "this.is@notarealadmin.com";
     	admin.Name = "NotaReal Admin";
 		admins.add(admin);
-		General general = new General();
+		General general = new General(auth);
 						
 		for(Administrator a: general.administrators()) {
 			System.out.println("admin: " + a.Name + " (" + a.EmailAddress + ")");

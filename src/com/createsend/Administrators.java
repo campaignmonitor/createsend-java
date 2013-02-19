@@ -4,6 +4,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.administrators.AdministratorResult;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -12,14 +13,16 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class Administrators {
 	private final JerseyClient client;
 
-	public Administrators() {
-		this(new JerseyClientImpl());
+    /**
+     * Constructor.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     */
+	public Administrators(AuthenticationDetails auth) {
+		this.client = new JerseyClientImpl(auth);
 	}
-	
-	public Administrators(JerseyClient jerseyClientImpl) {
-		this.client = jerseyClientImpl;
-	}
-	
+
 	 /**
      * Adds an administrator to the account.
      * @param person The administrator to add to the account

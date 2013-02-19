@@ -40,6 +40,7 @@ import com.createsend.models.people.Person;
 import com.createsend.models.people.PersonResult;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.SuppressedSubscriber;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -53,30 +54,27 @@ public class Clients {
     private String clientID;
     private JerseyClient jerseyClient;
     
+
     /**
-     * Constructor.
-     * Use this for creating new clients.
+     * Constructor used to create new clients.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
      */
-    public Clients() {
-        this(null);
+    public Clients(AuthenticationDetails auth) {
+        this(auth, null);
     }
-    
+
     /**
-     * Constructor.
-     * @param clientID The ID of the client to apply calls to.
+     * Constructor used for working with existing clients.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param clientID The Client ID to use when making API calls.
      */
-    public Clients(String clientID) {
-        this(clientID, new JerseyClientImpl());
-    }
-    
-    /**
-     * Constructor.
-     * @param clientID The ID of the client to apply calls to.
-     * @param client The {@link com.createsend.util.JerseyClient} to use to make API calls
-     */
-    public Clients(String clientID, JerseyClient client) {
+    public Clients(AuthenticationDetails auth, String clientID) {
         setClientID(clientID);
-        this.jerseyClient = client;
+        this.jerseyClient = new JerseyClientImpl(auth);
     }
     
     /**

@@ -29,6 +29,7 @@ import com.createsend.models.subscribers.ImportResult;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SubscriberToAdd;
 import com.createsend.models.subscribers.SubscribersToAdd;
+import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
@@ -42,23 +43,17 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 public class Subscribers {
     private String listID;
     private JerseyClient client;
-    
+
     /**
-     * Constructor
-     * @param listID The ID of the list to apply any calls to
+     * Constructor.
+     * @param auth The authentication details to use when making API calls.
+     * May be either an OAuthAuthenticationDetails or
+     * ApiKeyAuthenticationDetails instance.
+     * @param listID The List ID to use when making API calls.
      */
-    public Subscribers(String listID) {
-        this(listID, new JerseyClientImpl());
-    }
-    
-    /**
-     * Constructor
-     * @param listID The ID of the list to apply any calls to
-     * @param client The {@link com.createsend.util.JerseyClient} to use for any API requests
-     */
-    public Subscribers(String listID, JerseyClient client) {
+    public Subscribers(AuthenticationDetails auth, String listID) {
         setListID(listID);
-        this.client = client;
+        this.client = new JerseyClientImpl(auth);
     }
     
     /**

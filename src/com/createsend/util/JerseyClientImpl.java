@@ -65,11 +65,11 @@ public class JerseyClientImpl implements JerseyClient {
         Map<String, Object> properties = cc.getProperties();
         properties.put(ClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 64 * 1024);
         properties.put(com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING, "true");
-        
+
         client = Client.create(cc);
         client.setFollowRedirects(false);
-        
-        if(Configuration.Current.isLoggingEnabled()) {
+
+        if (Configuration.Current.isLoggingEnabled()) {
             client.addFilter(new LoggingFilter(System.out));
         }
 
@@ -78,31 +78,22 @@ public class JerseyClientImpl implements JerseyClient {
     }
 
     private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>();
-    private ResourceFactory authorisedResourceFactory = 
-        new AuthorisedResourceFactory(Configuration.Current.getApiKey(), "x");
-    private String refreshToken;
-
-    /**
-     * Constructs a JerseyClientImpl instance.
-     */
-    public JerseyClientImpl() { }
-
-    /**
-     * Constructs a JerseyClientImpl instance, including a specific API key.
-     * @param apiKey The API key to use for requests made using this JerseyClientImpl.
-     */
-    public JerseyClientImpl(String apiKey) {
-    	authorisedResourceFactory = new AuthorisedResourceFactory(apiKey, "x");
-    }
+    private ResourceFactory authorisedResourceFactory;
+    private AuthenticationDetails authDetails;
 
     /**
      * Constructs a JerseyClientImpl instance, including an OAuth access token and refresh token.
-     * @param accessToken The OAuth access token to use for requests made using this JerseyClientImpl.
-     * @param refreshToken The OAuth refresh token to use when the access token expires.
+     * @param auth 
      */
-    public JerseyClientImpl(String accessToken, String refreshToken) {
-    	authorisedResourceFactory = new AuthorisedResourceFactory(accessToken);
-    	this.refreshToken = refreshToken;
+    public JerseyClientImpl(AuthenticationDetails auth) {
+    	authDetails = auth;
+    	if (auth instanceof OAuthAuthenticationDetails) {
+			OAuthAuthenticationDetails oauthDetails = (OAuthAuthenticationDetails)auth;
+			authorisedResourceFactory = new AuthorisedResourceFactory(oauthDetails.getAccessToken());
+    	} else if (auth instanceof ApiKeyAuthenticationDetails) {
+			ApiKeyAuthenticationDetails apiKeyDetails = (ApiKeyAuthenticationDetails)auth;
+			authorisedResourceFactory = new AuthorisedResourceFactory(apiKeyDetails.getApiKey(), "x");
+    	}
     }
 
     /**

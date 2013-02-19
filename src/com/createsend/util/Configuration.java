@@ -52,6 +52,10 @@ public class Configuration {
         return properties.getProperty("createsend.endpoint");
     }
 
+    public String getOAuthBaseUri() {
+        return properties.getProperty("createsend.oauthbaseuri");
+    }
+
     public String getWrapperVersion() {
         return properties.getProperty("createsend.version");
     }

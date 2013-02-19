@@ -32,10 +32,10 @@ public abstract class ResourceFactory {
         resource.setProperty(ClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 64 * 1024);
         resource.setProperty(com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING, "true");
 
-        for(String pathElement : pathElements) {
+        for (String pathElement : pathElements) {
             resource = resource.path(pathElement);
         }        
-        
+
         return resource;
     }
 }

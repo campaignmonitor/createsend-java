@@ -10,6 +10,21 @@ The Campaign Monitor API supports authentication using either OAuth or an API ke
 
 ### Using OAuth
 
+The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using `com.createsend.General.getAuthorizeUrl()`, like so:
+
+```java
+import com.createsend.General;
+
+String authorizeUrl = General.getAuthorizeUrl(
+    32132,                 // The Client ID for your application
+    "982u39823r928398",    // 'The Client Secret for your application
+    "http://example.com/", // Redirect URI for your application
+    "ViewReports",         // The permission level your application requires
+    "some state data"      // Optional state data to be included
+);
+// Redirect your users to authorizeUrl.
+```
+
 TODO: Implement and document OAuth flow.
 
 Once you have an access token and refresh token for your user, you can authenticate and make further API calls like so:

@@ -21,6 +21,8 @@
  */
 package com.createsend;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -31,6 +33,7 @@ import com.createsend.models.administrators.Administrator;
 import com.createsend.models.administrators.AdministratorResult;
 import com.createsend.models.clients.ClientBasics;
 import com.createsend.util.AuthenticationDetails;
+import com.createsend.util.Configuration;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -44,6 +47,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  *
  */
 public class General {
+	private static final String urlEncodingScheme = "UTF-8";
     private JerseyClient client;
 
     /**
@@ -54,6 +58,35 @@ public class General {
      */
     public General(AuthenticationDetails auth) {
     	this.client = new JerseyClientImpl(auth);
+    }
+
+    /**
+     * Get the authorization URL for your application, given the application's
+     * Client ID, Client Secret, Redirect URI, Scope, and optional State data.
+     * @param clientID The Client ID value for your application.
+     * @param clientSecret The Client Secret value for your application.
+     * @param redirectUri The Redirect URI value for your application.
+     * @param scope The permission scope your application is requesting.
+     * @param state Optional state data to include in the authorization URL.
+     * @return
+     */
+    public static String getAuthorizeUrl(
+    	int    clientID,
+    	String clientSecret,
+    	String redirectUri,
+    	String scope,
+    	String state) {
+        String qs = "client_id=" + String.valueOf(clientID);
+        try {
+			qs += "&client_secret=" + URLEncoder.encode(clientSecret, urlEncodingScheme);
+			qs += "&redirect_uri=" + URLEncoder.encode(redirectUri, urlEncodingScheme);
+			qs += "&scope=" + URLEncoder.encode(scope, urlEncodingScheme);
+			if (state != null)
+				qs += "&state=" + URLEncoder.encode(state, urlEncodingScheme);
+		} catch (UnsupportedEncodingException e) {
+			qs = null;
+		}
+    	return Configuration.Current.getOAuthBaseUri() + "?" + qs;
     }
 
     /**

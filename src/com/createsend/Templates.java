@@ -24,7 +24,6 @@ package com.createsend;
 import com.createsend.models.templates.TemplateDetails;
 import com.createsend.models.templates.TemplateForCreate;
 import com.createsend.util.AuthenticationDetails;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 
@@ -32,9 +31,8 @@ import com.createsend.util.exceptions.CreateSendException;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/templates/" target="_blank">
  * Template</a> resources in the Campaign Monitor API *
  */
-public class Templates {
+public class Templates extends CreateSendBase {
     private String templateID;
-    private JerseyClient client;
 
     /**
      * Constructor used to create new templates.
@@ -55,7 +53,7 @@ public class Templates {
      */
     public Templates(AuthenticationDetails auth, String templateID) {
         setTemplateID(templateID);
-        this.client = new JerseyClientImpl(auth);
+        this.jerseyClient = new JerseyClientImpl(auth);
     }
     
     /**
@@ -86,7 +84,7 @@ public class Templates {
      * Creating a template</a>
      */
     public String create(String clientID, TemplateForCreate template) throws CreateSendException {
-        templateID = client.post(String.class, template, "templates", clientID + ".json");
+        templateID = jerseyClient.post(String.class, template, "templates", clientID + ".json");
         return templateID;
     }
     
@@ -98,7 +96,7 @@ public class Templates {
      * Getting a template</a>
      */
     public TemplateDetails get() throws CreateSendException {
-        return client.get(TemplateDetails.class, "templates", templateID + ".json");
+        return jerseyClient.get(TemplateDetails.class, "templates", templateID + ".json");
     }
     
     /**
@@ -109,7 +107,7 @@ public class Templates {
      * Updating a template</a>
      */
     public void update(TemplateForCreate template) throws CreateSendException {
-        client.put(template, "templates", templateID + ".json");
+        jerseyClient.put(template, "templates", templateID + ".json");
     }
     
     /**
@@ -119,6 +117,6 @@ public class Templates {
      * Deleting a template</a>
      */
     public void delete() throws CreateSendException {
-        client.delete("templates", templateID + ".json");
+        jerseyClient.delete("templates", templateID + ".json");
     }
 }

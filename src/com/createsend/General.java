@@ -25,9 +25,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.ApiKey;
+import com.createsend.models.OAuthTokenDetails;
 import com.createsend.models.SystemDate;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.administrators.AdministratorResult;
@@ -46,9 +48,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * methods in the Campaign Monitor API
  *
  */
-public class General {
-	private static final String urlEncodingScheme = "UTF-8";
-    private JerseyClient client;
+public class General extends CreateSendBase {
 
     /**
      * Constructor.
@@ -57,7 +57,7 @@ public class General {
      * ApiKeyAuthenticationDetails instance.
      */
     public General(AuthenticationDetails auth) {
-    	this.client = new JerseyClientImpl(auth);
+    	this.jerseyClient = new JerseyClientImpl(auth);
     }
 
     /**
@@ -68,7 +68,8 @@ public class General {
      * @param redirectUri The Redirect URI value for your application.
      * @param scope The permission scope your application is requesting.
      * @param state Optional state data to include in the authorization URL.
-     * @return
+     * @return The authorization URL to which your application should redirect
+     * your users.
      */
     public static String getAuthorizeUrl(
     	int    clientID,
@@ -90,6 +91,40 @@ public class General {
     }
 
     /**
+     * Exchange a provided OAuth code for an OAuth access token, 'expires in'
+     * value, and refresh token.
+     * @param clientID The Client ID value for your application.
+     * @param clientSecret The Client Secret value for your application.
+     * @param redirectUri The Redirect URI value for your application.
+     * @param code A unique code provided to your user which can be exchanged
+     * for an access token.
+     * @return An OAuthTokenDetails object containing the access token,
+     * 'expires in' value, and refresh token.
+     */
+    public static OAuthTokenDetails exchangeToken(
+    	int    clientID,
+    	String clientSecret,
+    	String redirectUri,
+    	String code) throws CreateSendException {
+
+    	JerseyClient oauthClient = new JerseyClientImpl(null);
+    	String body = "grant_type=authorization_code";
+    	try {
+        	body += "&client_id=" + String.valueOf(clientID);
+        	body += "&client_secret=" + URLEncoder.encode(clientSecret, urlEncodingScheme);
+        	body += "&redirect_uri=" + URLEncoder.encode(redirectUri, urlEncodingScheme);
+        	body += "&code=" + URLEncoder.encode(code, urlEncodingScheme);
+		} catch (UnsupportedEncodingException e) {
+			body = null;
+		}
+
+    	OAuthTokenDetails result = oauthClient.post(
+    			Configuration.Current.getOAuthBaseUri(), OAuthTokenDetails.class, body,
+    			MediaType.APPLICATION_FORM_URLENCODED_TYPE, "token");
+    	return result;
+    }
+
+    /**
      * Gets the API Key to use with the given authentication data
      * @param siteAddress The create send site address for the account
      * @param username The username used to login
@@ -103,7 +138,7 @@ public class General {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("siteurl", siteAddress);
         
-        return client.get(ApiKey.class, queryString, 
+        return jerseyClient.get(ApiKey.class, queryString, 
             new AuthorisedResourceFactory(username, password), "apikey.json").ApiKey;
     }
 
@@ -114,7 +149,7 @@ public class General {
      * @throws CreateSendException
      */
     public ClientBasics[] getClients() throws CreateSendException {
-        return client.get(ClientBasics[].class, "clients.json");
+        return jerseyClient.get(ClientBasics[].class, "clients.json");
     }
 
     /**
@@ -124,7 +159,7 @@ public class General {
      * @throws CreateSendException
      */
     public com.createsend.models.BillingDetails getBillingDetails() throws CreateSendException {
-        return client.get(com.createsend.models.BillingDetails.class, "billingdetails.json");
+        return jerseyClient.get(com.createsend.models.BillingDetails.class, "billingdetails.json");
     }
 
     /**
@@ -134,7 +169,7 @@ public class General {
      * @throws CreateSendException
      */
     public String[] getCountries() throws CreateSendException {
-        return client.get(String[].class, "countries.json");
+        return jerseyClient.get(String[].class, "countries.json");
     }
     
     /**
@@ -144,7 +179,7 @@ public class General {
      * @throws CreateSendException
      */
     public String[] getTimezones() throws CreateSendException {
-        return client.get(String[].class, "timezones.json");
+        return jerseyClient.get(String[].class, "timezones.json");
     }
     
     /**
@@ -154,20 +189,20 @@ public class General {
      * @throws CreateSendException
      */
     public Date getSystemDate() throws CreateSendException {
-        return client.get(SystemDate.class, "systemdate.json").SystemDate;
+        return jerseyClient.get(SystemDate.class, "systemdate.json").SystemDate;
     }
     
     public Administrator[] administrators() throws CreateSendException {
-    	return client.get(Administrator[].class, "admins.json");
+    	return jerseyClient.get(Administrator[].class, "admins.json");
     }
     
     public String getPrimaryContact() throws CreateSendException {
-    	return client.get(AdministratorResult.class, "primarycontact.json").EmailAddress;
+    	return jerseyClient.get(AdministratorResult.class, "primarycontact.json").EmailAddress;
     } 
     
     public void setPrimaryContact(String emailAddress) throws CreateSendException {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
-        client.put("", queryString, "primarycontact.json");
+        jerseyClient.put("", queryString, "primarycontact.json");
     }
 }

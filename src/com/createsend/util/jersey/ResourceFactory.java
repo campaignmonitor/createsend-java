@@ -27,8 +27,14 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 
 public abstract class ResourceFactory {
+
     public WebResource getResource(Client client, String... pathElements) {
-        WebResource resource = client.resource(Configuration.Current.getApiEndpoint());
+    	return getResource(Configuration.Current.getApiEndpoint(),
+    			client, pathElements);
+    }
+
+	public WebResource getResource(String baseUri, Client client, String... pathElements) {
+        WebResource resource = client.resource(baseUri);
         resource.setProperty(ClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 64 * 1024);
         resource.setProperty(com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING, "true");
 
@@ -37,5 +43,5 @@ public abstract class ResourceFactory {
         }        
 
         return resource;
-    }
+	}
 }

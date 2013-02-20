@@ -5,13 +5,11 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.administrators.AdministratorResult;
 import com.createsend.util.AuthenticationDetails;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class Administrators {
-	private final JerseyClient client;
+public class Administrators extends CreateSendBase {
 
     /**
      * Constructor.
@@ -20,7 +18,7 @@ public class Administrators {
      * ApiKeyAuthenticationDetails instance.
      */
 	public Administrators(AuthenticationDetails auth) {
-		this.client = new JerseyClientImpl(auth);
+		this.jerseyClient = new JerseyClientImpl(auth);
 	}
 
 	 /**
@@ -32,7 +30,7 @@ public class Administrators {
      * Adding a subscriber</a>
      */
     public String add(Administrator person) throws CreateSendException {
-        return client.post(AdministratorResult.class, person, "admins.json").EmailAddress;
+        return jerseyClient.post(AdministratorResult.class, person, "admins.json").EmailAddress;
     }
     
     /**
@@ -47,7 +45,7 @@ public class Administrators {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        return client.get(Administrator.class, queryString, "admins.json");
+        return jerseyClient.get(Administrator.class, queryString, "admins.json");
     }   
     
     /**
@@ -61,7 +59,7 @@ public class Administrators {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        client.delete(queryString, "admins.json");
+        jerseyClient.delete(queryString, "admins.json");
     }
     
     /**
@@ -76,6 +74,6 @@ public class Administrators {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", originalEmailAddress);
         
-        client.put(newDetails, queryString, "admins.json");
+        jerseyClient.put(newDetails, queryString, "admins.json");
     }
 }

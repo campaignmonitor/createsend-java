@@ -41,7 +41,6 @@ import com.createsend.models.people.PersonResult;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.SuppressedSubscriber;
 import com.createsend.util.AuthenticationDetails;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -50,10 +49,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/clients/" target="_blank">
  * Client</a> resources in the Campaign Monitor API
  */
-public class Clients {
+public class Clients extends CreateSendBase {
     private String clientID;
-    private JerseyClient jerseyClient;
-    
 
     /**
      * Constructor used to create new clients.

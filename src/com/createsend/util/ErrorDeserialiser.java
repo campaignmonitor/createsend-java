@@ -31,8 +31,7 @@ public class ErrorDeserialiser<T> {
 
     public ApiErrorResponse<T> getResponse(ClientResponse response) {
         ParameterizedType type = JerseyClientImpl.getGenericReturnType(this.getClass(), 2);
-        
         return response.getEntity(new GenericType<ApiErrorResponse<T>>(type));
     }
-    
+
 }

@@ -33,7 +33,6 @@ import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
@@ -43,9 +42,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/segments/" target="_blank">
  * Segment</a> resources in the Campaign Monitor API
  */
-public class Segments {
+public class Segments extends CreateSendBase {
     private String segmentID;
-    private JerseyClient client;
     
     /**
      * Constructor used to create new segments.
@@ -66,7 +64,7 @@ public class Segments {
      */
     public Segments(AuthenticationDetails auth, String segmentID) {
     	setSegmentID(segmentID);
-        this.client = new JerseyClientImpl(auth);
+        this.jerseyClient = new JerseyClientImpl(auth);
     }
     
     /**
@@ -97,7 +95,7 @@ public class Segments {
      * Creating a segment</a>
      */
     public String create(String listID, Segment segment) throws CreateSendException {
-        segmentID = client.post(String.class, segment, 
+        segmentID = jerseyClient.post(String.class, segment, 
             new ErrorDeserialiser<RuleCreationFailureDetails>(), "segments", listID + ".json");
         return segmentID;
     }
@@ -111,7 +109,7 @@ public class Segments {
      * Updating a segment</a>
      */
     public void update(Segment segment) throws CreateSendException {
-        client.put(segment, new ErrorDeserialiser<RuleCreationFailureDetails>(), 
+        jerseyClient.put(segment, new ErrorDeserialiser<RuleCreationFailureDetails>(), 
             "segments", segmentID + ".json");
     }
     
@@ -123,7 +121,7 @@ public class Segments {
      * Adding a segment rule</a>
      */
     public void addRule(Rule rule) throws CreateSendException {
-        client.post(String.class, rule, new ErrorDeserialiser<ClauseResults[]>(), 
+        jerseyClient.post(String.class, rule, new ErrorDeserialiser<ClauseResults[]>(), 
             "segments", segmentID, "rules.json");
     }
     
@@ -136,7 +134,7 @@ public class Segments {
      * Getting a segment</a>
      */
     public Segment details() throws CreateSendException {
-        return client.get(Segment.class, "segments", segmentID + ".json");
+        return jerseyClient.get(Segment.class, "segments", segmentID + ".json");
     }
 
     /**
@@ -191,7 +189,7 @@ public class Segments {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "segments", segmentID, "active.json");
     }
     
@@ -202,7 +200,7 @@ public class Segments {
      * Deleting a segment</a>
      */
     public void delete() throws CreateSendException {
-        client.delete("segments", segmentID + ".json");
+        jerseyClient.delete("segments", segmentID + ".json");
     }
     
     /**
@@ -212,6 +210,6 @@ public class Segments {
      * Deleting a segments rules</a>
      */
     public void deleteRules() throws CreateSendException {
-        client.delete("segments", segmentID, "rules.json");
+        jerseyClient.delete("segments", segmentID, "rules.json");
     }
 }

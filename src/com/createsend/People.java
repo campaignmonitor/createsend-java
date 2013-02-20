@@ -6,15 +6,12 @@ import com.createsend.models.people.Person;
 import com.createsend.models.people.PersonResult;
 import com.createsend.models.people.PersonToAdd;
 import com.createsend.util.AuthenticationDetails;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-public class People {
-	
+public class People extends CreateSendBase {
 	private String clientID;
-	private final JerseyClient client;
 
     /**
      * Constructor.
@@ -25,7 +22,7 @@ public class People {
      */
 	public People(AuthenticationDetails auth, String clientID) {
 		this.setClientID(clientID);
-		this.client = new JerseyClientImpl(auth);
+		this.jerseyClient = new JerseyClientImpl(auth);
 	}
 	
 	public String getClientID() {
@@ -46,7 +43,7 @@ public class People {
      * Adding a person</a>
      */
     public String add(PersonToAdd person) throws CreateSendException {
-        return client.post(PersonResult.class, person, "clients", clientID, "people" + ".json").EmailAddress;
+        return jerseyClient.post(PersonResult.class, person, "clients", clientID, "people" + ".json").EmailAddress;
     }
     
     /**
@@ -61,7 +58,7 @@ public class People {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        return client.get(Person.class, queryString, "clients", clientID, "people" + ".json");
+        return jerseyClient.get(Person.class, queryString, "clients", clientID, "people" + ".json");
     }   
     
     /**
@@ -75,7 +72,7 @@ public class People {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         
-        client.delete(queryString, "clients", clientID, "people" + ".json");
+        jerseyClient.delete(queryString, "clients", clientID, "people" + ".json");
     }
     
     /**
@@ -90,6 +87,6 @@ public class People {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", originalEmailAddress);
         
-        client.put(newDetails, queryString, "clients", clientID, "people" + ".json");
+        jerseyClient.put(newDetails, queryString, "clients", clientID, "people" + ".json");
     }
 }

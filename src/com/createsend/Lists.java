@@ -39,7 +39,6 @@ import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
-import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
@@ -49,9 +48,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/lists/" target="_blank">
  * List</a> resources in the Campaign Monitor API *
  */
-public class Lists {
+public class Lists extends CreateSendBase {
     private String listID;
-    private JerseyClient client;
 
     /**
      * Constructor used to create new lists.
@@ -72,7 +70,7 @@ public class Lists {
      */
     public Lists(AuthenticationDetails auth, String listID) {
     	setListID(listID);
-        this.client = new JerseyClientImpl(auth);
+        this.jerseyClient = new JerseyClientImpl(auth);
     }
 
     /**
@@ -103,7 +101,7 @@ public class Lists {
      * Creating a list</a>
      */
     public String create(String clientID, List list) throws CreateSendException {
-        listID = client.post(String.class, list, "lists", clientID + ".json");
+        listID = jerseyClient.post(String.class, list, "lists", clientID + ".json");
         return listID;
     }
     
@@ -115,7 +113,7 @@ public class Lists {
      * Updating a list</a>
      */
     public void update(ListForUpdate list) throws CreateSendException {
-        client.put(list, "lists", listID + ".json");
+        jerseyClient.put(list, "lists", listID + ".json");
     }
     
     /**
@@ -125,7 +123,7 @@ public class Lists {
      * Deleting a list</a>
      */
     public void delete() throws CreateSendException {
-        client.delete("lists", listID + ".json");
+        jerseyClient.delete("lists", listID + ".json");
     }
     
     /**
@@ -136,7 +134,7 @@ public class Lists {
      * Getting list details</a>
      */
     public List details() throws CreateSendException {
-        return client.get(List.class, "lists", listID + ".json");
+        return jerseyClient.get(List.class, "lists", listID + ".json");
     }
     
     /**
@@ -147,7 +145,7 @@ public class Lists {
      * Getting list stats</a>
      */
     public Statistics stats() throws CreateSendException {
-        return client.get(Statistics.class, "lists", listID, "stats.json");
+        return jerseyClient.get(Statistics.class, "lists", listID, "stats.json");
     }
     
     /**
@@ -158,7 +156,7 @@ public class Lists {
      * Getting list custom fields</a>
      */
     public CustomField[] customFields() throws CreateSendException {
-        return client.get(CustomField[].class, "lists", listID, "customfields.json");
+        return jerseyClient.get(CustomField[].class, "lists", listID, "customfields.json");
     }
     
     /**
@@ -169,7 +167,7 @@ public class Lists {
      * Getting list segments</a>
      */
     public Segment[] segments() throws CreateSendException {
-        return client.get(Segment[].class, "lists", listID, "segments.json");
+        return jerseyClient.get(Segment[].class, "lists", listID, "segments.json");
     }
 
     /**
@@ -224,7 +222,7 @@ public class Lists {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "active.json");
     }
 
@@ -280,7 +278,7 @@ public class Lists {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "unconfirmed.json");
     }
 
@@ -335,7 +333,7 @@ public class Lists {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "unsubscribed.json");
     }
 
@@ -390,7 +388,7 @@ public class Lists {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "deleted.json");
     }
     
@@ -445,7 +443,7 @@ public class Lists {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
         
-        return client.getPagedResult(page, pageSize, orderField, orderDirection,
+        return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "bounced.json");
     }
     
@@ -458,7 +456,7 @@ public class Lists {
      * Creating a custom field</a>
      */
     public String createCustomField(CustomFieldForCreate customField) throws CreateSendException {
-        return client.post(String.class, customField, "lists", listID, "customfields.json");
+        return jerseyClient.post(String.class, customField, "lists", listID, "customfields.json");
     }
 
     /**
@@ -472,7 +470,7 @@ public class Lists {
      */
     public String updateCustomField(String fieldKey, CustomFieldForUpdate customField)
 		throws CreateSendException {
-        return client.put(String.class, customField, "lists", listID, "customfields", fieldKey + ".json");
+        return jerseyClient.put(String.class, customField, "lists", listID, "customfields", fieldKey + ".json");
     }
 
     /**
@@ -485,7 +483,7 @@ public class Lists {
      */
     public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options)
         throws CreateSendException {
-        client.put(options, "lists", listID, "customFields", fieldKey, "options.json");
+        jerseyClient.put(options, "lists", listID, "customFields", fieldKey, "options.json");
     }
     
     /**
@@ -496,7 +494,7 @@ public class Lists {
      * Deleting a custom field</a>
      */
     public void deleteCustomField(String fieldKey) throws CreateSendException {
-        client.delete("lists", listID, "customFields", fieldKey + ".json");
+        jerseyClient.delete("lists", listID, "customFields", fieldKey + ".json");
     }
     
     /**
@@ -507,7 +505,7 @@ public class Lists {
      * Getting list webhooks</a>
      */
     public Webhook[] webhooks() throws CreateSendException {
-        return client.get(Webhook[].class, "lists", listID, "webhooks.json");
+        return jerseyClient.get(Webhook[].class, "lists", listID, "webhooks.json");
     }
     
     /**
@@ -519,7 +517,7 @@ public class Lists {
      * Creating a webhook</a>
      */
     public String createWebhook(Webhook webhook) throws CreateSendException {
-        return client.post(String.class, webhook, "lists", listID, "webhooks.json");
+        return jerseyClient.post(String.class, webhook, "lists", listID, "webhooks.json");
     }
     
     /**
@@ -530,7 +528,7 @@ public class Lists {
      * Testing a webhook</a>
      */
     public void testWebhook(String webhookID) throws CreateSendException {
-        client.get(String.class, new ErrorDeserialiser<WebhookTestFailureDetails>(), 
+        jerseyClient.get(String.class, new ErrorDeserialiser<WebhookTestFailureDetails>(), 
             "lists", listID, "webhooks", webhookID, "test.json");
     }
     
@@ -542,7 +540,7 @@ public class Lists {
      * Deleting a webhook</a>
      */
     public void deleteWebhook(String webhookID) throws CreateSendException {
-        client.delete("lists", listID, "webhooks", webhookID + ".json");
+        jerseyClient.delete("lists", listID, "webhooks", webhookID + ".json");
     }
     
     /**
@@ -553,7 +551,7 @@ public class Lists {
      * Activating a webhook</a>
      */
     public void activateWebhook(String webhookID) throws CreateSendException {
-        client.put("", "lists", listID, "webhooks", webhookID, "activate.json");
+        jerseyClient.put("", "lists", listID, "webhooks", webhookID, "activate.json");
     }
     
     /**
@@ -564,6 +562,6 @@ public class Lists {
      * Activating a webhook</a>
      */
     public void deactivateWebhook(String webhookID) throws CreateSendException {
-        client.put("", "lists", listID, "webhooks", webhookID, "activate.json");
+        jerseyClient.put("", "lists", listID, "webhooks", webhookID, "activate.json");
     }
 }

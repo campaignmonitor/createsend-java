@@ -39,6 +39,7 @@ import com.createsend.util.exceptions.UnauthorisedException;
 import com.createsend.util.jersey.AuthorisedResourceFactory;
 import com.createsend.util.jersey.JsonProvider;
 import com.createsend.util.jersey.ResourceFactory;
+import com.createsend.util.jersey.UnauthorisedResourceFactory;
 import com.createsend.util.jersey.UserAgentFilter;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -53,7 +54,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class JerseyClientImpl implements JerseyClient {
-    
+
     /**
      * As per Jersey docs the creation of a Client is expensive. We cache the client
      */
@@ -86,15 +87,25 @@ public class JerseyClientImpl implements JerseyClient {
      * @param auth 
      */
     public JerseyClientImpl(AuthenticationDetails auth) {
-    	authDetails = auth;
-    	if (auth instanceof OAuthAuthenticationDetails) {
-			OAuthAuthenticationDetails oauthDetails = (OAuthAuthenticationDetails)auth;
-			authorisedResourceFactory = new AuthorisedResourceFactory(oauthDetails.getAccessToken());
-    	} else if (auth instanceof ApiKeyAuthenticationDetails) {
-			ApiKeyAuthenticationDetails apiKeyDetails = (ApiKeyAuthenticationDetails)auth;
-			authorisedResourceFactory = new AuthorisedResourceFactory(apiKeyDetails.getApiKey(), "x");
-    	}
+    	this.setAuthenticationDetails(auth);
     }
+    
+    public AuthenticationDetails getAuthenticationDetails() {
+    	return this.authDetails;
+    }
+
+	public void setAuthenticationDetails(AuthenticationDetails authDetails) {
+		this.authDetails = authDetails;
+    	if (authDetails instanceof OAuthAuthenticationDetails) {
+			OAuthAuthenticationDetails oauthDetails = (OAuthAuthenticationDetails)authDetails;
+			authorisedResourceFactory = new AuthorisedResourceFactory(oauthDetails.getAccessToken());
+    	} else if (authDetails instanceof ApiKeyAuthenticationDetails) {
+			ApiKeyAuthenticationDetails apiKeyDetails = (ApiKeyAuthenticationDetails)authDetails;
+			authorisedResourceFactory = new AuthorisedResourceFactory(apiKeyDetails.getApiKey(), "x");
+    	} else {
+    		authorisedResourceFactory = new UnauthorisedResourceFactory();
+    	}
+	}
 
     /**
      * Performs a HTTP GET on the route specified by the pathElements deserialising the 
@@ -194,22 +205,51 @@ public class JerseyClientImpl implements JerseyClient {
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      */
     public <T> T post(Class<T> klass, Object entity, String... pathElements) throws CreateSendException {
-        return post(klass, entity, defaultDeserialiser, pathElements);
+        return post(null, klass, entity, defaultDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
     }
-    
+
     public <T> T post(Class<T> klass, Object entity, 
             ErrorDeserialiser<?> errorDeserialiser, String... pathElements) throws CreateSendException {
-        WebResource resource = authorisedResourceFactory.getResource(client, pathElements);
-        
-        try { 
+    	return post(null, klass, entity, errorDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
+    }
+
+    public <T> T post(String baseUri, Class<T> klass, Object entity, String... pathElements) throws CreateSendException {
+        return post(baseUri, klass, entity, defaultDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
+    }
+
+    public <T> T post(String baseUri, Class<T> klass, Object entity,
+            ErrorDeserialiser<?> errorDeserialiser, String... pathElements) throws CreateSendException {
+    	return post(baseUri, klass, entity, errorDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
+    }
+
+    public <T> T post(Class<T> klass, Object entity,
+            MediaType mediaType, String... pathElements) throws CreateSendException {
+    	return post(null, klass, entity, defaultDeserialiser, mediaType, pathElements);
+    }
+
+    public <T> T post(String baseUri, Class<T> klass, Object entity,
+            MediaType mediaType, String... pathElements) throws CreateSendException {
+    	return post(baseUri, klass, entity, defaultDeserialiser, mediaType, pathElements);
+    }
+
+    public <T> T post(String baseUri, Class<T> klass, Object entity,
+            ErrorDeserialiser<?> errorDeserialiser,
+            MediaType mediaType, String... pathElements) throws CreateSendException {
+    	WebResource resource;
+    	if (baseUri != null)
+    		resource = authorisedResourceFactory.getResource(baseUri, client, pathElements);
+    	else
+    		resource = authorisedResourceFactory.getResource(client, pathElements);
+
+        try {
             return fixStringResult(klass, resource.
-                type(MediaType.APPLICATION_JSON_TYPE).
+                type(mediaType).
                 post(klass, entity));
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue, errorDeserialiser);
         }
     }
-        
+
     /**
      * Makes a HTTP PUT request to the path specified, using the provided entity as the 
      * request body.
@@ -285,7 +325,7 @@ public class JerseyClientImpl implements JerseyClient {
             throw handleErrorResponse(ue, defaultDeserialiser);
         }
     }
-        
+
     protected void addPagingParams(MultivaluedMap<String, String> queryString,  
         Integer page, Integer pageSize, String orderField, String orderDirection) {        
         if(page != null) {

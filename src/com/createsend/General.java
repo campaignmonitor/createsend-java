@@ -117,6 +117,8 @@ public class General extends CreateSendBase {
 		} catch (UnsupportedEncodingException e) {
 			body = null;
 		}
+    	
+    	// TODO: Use a custom error deserialiser in the following post
 
     	OAuthTokenDetails result = oauthClient.post(
     			Configuration.Current.getOAuthBaseUri(), OAuthTokenDetails.class, body,

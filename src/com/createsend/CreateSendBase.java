@@ -60,6 +60,9 @@ public abstract class CreateSendBase {
 				body = null;
 			}
 			JerseyClient oauthClient = new JerseyClientImpl(null);
+			
+	    	// TODO: Use a custom error deserialiser in the following post
+
 			result = oauthClient.post(Configuration.Current.getOAuthBaseUri(),
 					OAuthTokenDetails.class, body,
 					MediaType.APPLICATION_FORM_URLENCODED_TYPE, "token");

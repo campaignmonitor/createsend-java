@@ -26,15 +26,13 @@ String authorizeUrl = com.createsend.General.getAuthorizeUrl(
 If your user approves your application, they will then be redirected to the redirect URI you specified, which will include a `code` parameter, and optionally a `state` parameter in the query string. Your application should implement a handler which can exchange the code passed to it for an access token, using `com.createsend.General.exchangeToken()` like so:
 
 ```java
-OAuthTokenDetails tokenDetails = com.createsend.General.exchangeToken(
+com.createsend.models.OAuthTokenDetails tokenDetails = com.createsend.General.exchangeToken(
     32132,                 // The Client ID for your application
     "982u39823r928398",    // The Client Secret for your application
     "http://example.com/", // Redirect URI for your application
     "8dw9uq98wu98d"        // The unique code for your user found in the query string
 );
-// Save the data returned in tokenDetails, including
-// tokenDetails.accessToken, tokenDetails.expiresIn, and
-// tokenDetails.refreshToken.
+// Save your access token, 'expires in' value, and refresh token (in tokenDetails).
 ```
 
 At this point you have an access token and refresh token for your user which you should store somewhere convenient so that your application can look up these values when your user wants to make future Campaign Monitor API calls.
@@ -103,12 +101,14 @@ public class Tester {
 }
 ```
 
-## Example
+## Basic usage
 
-Here's a super simple example to get you started. This code just lists the clients in your account:
+This example of listing all your clients and their campaigns demonstrates basic usage of the library and the data returned from the API:
 
 ```java
+import com.createsend.Clients;
 import com.createsend.General;
+import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.ClientBasics;
 import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
@@ -118,9 +118,16 @@ public class Tester {
         OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails(
             "your access token", "your refresh token");
         General general = new General(auth);
+        General general = new General(auth);
         ClientBasics[] clients = general.getClients();
-        for (ClientBasics c : clients) {
-            System.out.printf("%s (ID: %s)\n", c.Name, c.ClientID);
+
+        for (ClientBasics cl : clients) {
+            System.out.printf("Client: %s\n", cl.Name);
+            Clients cls = new Clients(auth, cl.ClientID);
+            System.out.printf("- Campaigns:\n");
+            for (SentCampaign cm : cls.sentCampaigns()) {
+                System.out.printf("  - %s\n", cm.Subject);
+            }
         }
     }
 }

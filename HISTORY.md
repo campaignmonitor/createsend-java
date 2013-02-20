@@ -1,5 +1,35 @@
 # createsend-java history
 
+## v3.0.0 - Whenever this is released
+
+* Added support for authenticating using OAuth. See the [README](README.md#authenticating) for full usage instructions.
+* Refactored authentication so that it is _always_ done at the instance level. This introduces some breaking changes, which are clearly explained below.
+  * Authentication using an API key is no longer supported using the `config.properties` or `createsend.properties` files.
+  
+      So if you _previously_ entered your API key into a properties file as follows:
+      
+      ```
+      createsend.apikey = your api key
+      ```
+
+      If you want to authenticate with an API key, you should _now_ always authenticate at the instance level. For example, as follows:
+
+      ```java
+      import com.createsend.Clients;
+      import com.createsend.models.campaigns.SentCampaign;
+      import com.createsend.util.ApiKeyAuthenticationDetails;
+      import com.createsend.util.exceptions.CreateSendException;
+
+      public class Tester {
+          public static void main(String[] args) throws CreateSendException {
+              ApiKeyAuthenticationDetails auth = new ApiKeyAuthenticationDetails(
+                  "your api key");
+              Clients clients = new Clients(auth, "your client id");
+              SentCampaign[] campaigns = clients.sentCampaigns();
+          }
+      }
+      ```
+
 ## v2.6.0 - 4 Jan, 2013  (f8cd13c)
 
 * Added support for instantiating JerseyClientImpl using a specific API key.

@@ -33,6 +33,7 @@ import com.createsend.models.PagedResult;
 import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.exceptions.CreateSendHttpException;
+import com.createsend.util.exceptions.ExpiredOAuthTokenException;
 import com.createsend.util.exceptions.NotFoundException;
 import com.createsend.util.exceptions.ServerErrorException;
 import com.createsend.util.exceptions.UnauthorisedException;
@@ -402,6 +403,8 @@ public class JerseyClientImpl implements JerseyClient {
             case NOT_FOUND:
                 return new NotFoundException(apiResponse.Code, apiResponse.Message);
             case UNAUTHORIZED:
+            	if (apiResponse.Code == 121)
+            		return new ExpiredOAuthTokenException(apiResponse.Code, apiResponse.Message);
                 return new UnauthorisedException(apiResponse.Code, apiResponse.Message);
             default:
                 return new CreateSendHttpException(responseStatus);

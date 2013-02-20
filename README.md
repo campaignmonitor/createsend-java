@@ -57,28 +57,31 @@ public class Tester {
 }
 ```
 
-All OAuth tokens have an expiry time, and can be renewed with a corresponding refresh token. If your access token expires when attempting to make an API call, you will receive an error response, so your code should handle this. Here's an example of how you could do this:
+All OAuth tokens have an expiry time, and can be renewed with a corresponding refresh token. If your access token expires when attempting to make an API call, a `com.createsend.util.exceptions.ExpiredOAuthTokenException` will be thrown, so your code should handle this. Here's an example of how you could do this:
 
 ```java
 import com.createsend.General;
 import com.createsend.models.clients.ClientBasics;
 import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
+import com.createsend.util.exceptions.ExpiredOAuthTokenException;
 
 public class Tester {
     public static void main(String[] args) throws CreateSendException {
         OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails(
             "your access token", "your refresh token");
-        General general = new General(auth);
-        ClientBasics[] clients = general.getClients();
-        
 
-        
-        // TODO: Add the ability to refresh an access token.
-        general.refreshToken();
-        
-        
-        
+        General general = new General(auth);
+        ClientBasics[] clients;
+
+        try {
+            clients = general.getClients();
+        } catch (ExpiredOAuthTokenException ex) {
+            OAuthTokenDetails newTokenDetails = general.refreshToken();
+            // Save your updated access token, 'expires in' value, and refresh token
+        }
+
+        general.getClients(); // Make the call again
     }
 }
 ```

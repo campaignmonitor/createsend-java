@@ -77,8 +77,8 @@ public class Tester {
         } catch (ExpiredOAuthTokenException ex) {
             OAuthTokenDetails newTokenDetails = general.refreshToken();
             // Save your updated access token, 'expires in' value, and refresh token
+            clients = general.getClients(); // Make the call again
         }
-        clients = general.getClients(); // Make the call again
     }
 }
 ```

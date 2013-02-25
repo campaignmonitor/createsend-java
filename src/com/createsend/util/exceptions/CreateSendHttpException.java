@@ -29,17 +29,17 @@ import com.sun.jersey.api.client.ClientResponse.Status;
  */
 public class CreateSendHttpException extends CreateSendException {
     private static final long serialVersionUID = 6026680795882633621L;
-    
+
     private ClientResponse.Status httpStatusCode;
     private int apiErrorCode;
     private String apiErrorMessage;
-    
+
     public CreateSendHttpException(Status httpStatusCode) {
         super("The API call failed due to an unexpected HTTP error: " + httpStatusCode);
         this.httpStatusCode = httpStatusCode;
         this.apiErrorMessage = "";
     }
-        
+
     public CreateSendHttpException(String message, int httpStatusCode, int apiErrorCode, String apiErrorMessage) {
         super(message);
         

@@ -394,23 +394,40 @@ public class JerseyClientImpl implements JerseyClient {
                 apiResponse = deserialiser.getResponse(response);
             } catch (Throwable t) { }                
         }
-        
-        switch(responseStatus) {
-            case BAD_REQUEST:
-                return new BadRequestException(apiResponse.Code, apiResponse.Message, apiResponse.ResultData);
-            case INTERNAL_SERVER_ERROR:
-                return new ServerErrorException(apiResponse.Code, apiResponse.Message);
-            case NOT_FOUND:
-                return new NotFoundException(apiResponse.Code, apiResponse.Message);
-            case UNAUTHORIZED:
-            	if (apiResponse.Code == 121)
-            		return new ExpiredOAuthTokenException(apiResponse.Code, apiResponse.Message);
-                return new UnauthorisedException(apiResponse.Code, apiResponse.Message);
-            default:
-                return new CreateSendHttpException(responseStatus);
-        }
+
+        if (apiResponse.error != null &&
+        	apiResponse.error.length() > 0)
+        	return handleOAuthErrorResponse(responseStatus, apiResponse);
+        else
+        	return handleAPIErrorResponse(responseStatus, apiResponse);
     }
     
+    private <T> CreateSendException handleAPIErrorResponse(
+    		Status responseStatus, ApiErrorResponse<T> apiResponse) {
+        switch(responseStatus) {
+	        case BAD_REQUEST:
+	            return new BadRequestException(apiResponse.Code, apiResponse.Message, apiResponse.ResultData);
+	        case INTERNAL_SERVER_ERROR:
+	            return new ServerErrorException(apiResponse.Code, apiResponse.Message);
+	        case NOT_FOUND:
+	            return new NotFoundException(apiResponse.Code, apiResponse.Message);
+	        case UNAUTHORIZED:
+	        	if (apiResponse.Code == 121)
+	        		return new ExpiredOAuthTokenException(apiResponse.Code, apiResponse.Message);
+	            return new UnauthorisedException(apiResponse.Code, apiResponse.Message);
+	        default:
+	            return new CreateSendHttpException(responseStatus);
+	    }
+    }
+
+    private <T> CreateSendException handleOAuthErrorResponse(
+    		Status responseStatus, ApiErrorResponse<T> apiResponse) {
+    	return new CreateSendHttpException(
+    			String.format("The CreateSend OAuth receiver responded with the following error - %s: %s",
+    					apiResponse.error, apiResponse.error_description),
+    			responseStatus.getStatusCode(), 0, apiResponse.error_description);
+    }
+
     private ParameterizedType getGenericReturnType() {
         return getGenericReturnType(null, 4);
     }

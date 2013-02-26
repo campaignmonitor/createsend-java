@@ -17,7 +17,6 @@ The first thing your application should do is redirect your user to the Campaign
 ```java
 String authorizeUrl = com.createsend.General.getAuthorizeUrl(
     32132,                 // The Client ID for your application
-    "982u39823r928398",    // The Client Secret for your application
     "http://example.com/", // Redirect URI for your application
     "ViewReports",         // The permission level your application requires
     "some state data"      // Optional state data to be included

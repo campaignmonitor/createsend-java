@@ -62,9 +62,8 @@ public class General extends CreateSendBase {
 
     /**
      * Get the authorization URL for your application, given the application's
-     * Client ID, Client Secret, Redirect URI, Scope, and optional State data.
+     * Client ID, Redirect URI, Scope, and optional State data.
      * @param clientID The Client ID value for your application.
-     * @param clientSecret The Client Secret value for your application.
      * @param redirectUri The Redirect URI value for your application.
      * @param scope The permission scope your application is requesting.
      * @param state Optional state data to include in the authorization URL.
@@ -73,13 +72,11 @@ public class General extends CreateSendBase {
      */
     public static String getAuthorizeUrl(
     	int    clientID,
-    	String clientSecret,
     	String redirectUri,
     	String scope,
     	String state) {
         String qs = "client_id=" + String.valueOf(clientID);
         try {
-			qs += "&client_secret=" + URLEncoder.encode(clientSecret, urlEncodingScheme);
 			qs += "&redirect_uri=" + URLEncoder.encode(redirectUri, urlEncodingScheme);
 			qs += "&scope=" + URLEncoder.encode(scope, urlEncodingScheme);
 			if (state != null)

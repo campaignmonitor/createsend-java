@@ -33,21 +33,125 @@
 
 <p>A Java library which implements the complete functionality of the <a href="http://www.campaignmonitor.com/api/">Campaign Monitor API</a>.</p>
 
-<h2>Example</h2>
+<h2>Authenticating</h2>
 
-<p>Here's a super simple example to get you started. This code just lists the clients in your account:</p>
+<p>The Campaign Monitor API supports authentication using either OAuth or an API key.</p>
+
+<h3>Using OAuth</h3>
+
+<p>This library helps you authenticate using OAuth, as described in the Campaign Monitor API <a href="http://www.campaignmonitor.com/api/getting-started/#authenticating_with_oauth">documentation</a>. You may also wish to reference this Java <a href="https://gist.github.com/jdennes/4997342">example application</a>. The authentication process is described below.</p>
+
+<p>The first thing your application should do is redirect your user to the Campaign Monitor authorization URL where they will have the opportunity to approve your application to access their Campaign Monitor account. You can get this authorization URL by using <code>com.createsend.General.getAuthorizeUrl()</code>, like so:</p>
+
+<div class="highlight"><pre><span class="n">String</span> <span class="n">authorizeUrl</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="na">createsend</span><span class="o">.</span><span class="na">General</span><span class="o">.</span><span class="na">getAuthorizeUrl</span><span class="o">(</span>
+    <span class="mi">32132</span><span class="o">,</span>                 <span class="c1">// The Client ID for your application</span>
+    <span class="s">"http://example.com/"</span><span class="o">,</span> <span class="c1">// Redirect URI for your application</span>
+    <span class="s">"ViewReports"</span><span class="o">,</span>         <span class="c1">// The permission level your application requires</span>
+    <span class="s">"some state data"</span>      <span class="c1">// Optional state data to be included</span>
+<span class="o">);</span>
+<span class="c1">// Redirect your users to authorizeUrl.</span>
+</pre></div>
+
+<p>If your user approves your application, they will then be redirected to the redirect URI you specified, which will include a <code>code</code> parameter, and optionally a <code>state</code> parameter in the query string. Your application should implement a handler which can exchange the code passed to it for an access token, using <code>com.createsend.General.exchangeToken()</code> like so:</p>
+
+<div class="highlight"><pre><span class="n">com</span><span class="o">.</span><span class="na">createsend</span><span class="o">.</span><span class="na">models</span><span class="o">.</span><span class="na">OAuthTokenDetails</span> <span class="n">tokenDetails</span> <span class="o">=</span> <span class="n">com</span><span class="o">.</span><span class="na">createsend</span><span class="o">.</span><span class="na">General</span><span class="o">.</span><span class="na">exchangeToken</span><span class="o">(</span>
+    <span class="mi">32132</span><span class="o">,</span>                 <span class="c1">// The Client ID for your application</span>
+    <span class="s">"982u39823r928398"</span><span class="o">,</span>    <span class="c1">// The Client Secret for your application</span>
+    <span class="s">"http://example.com/"</span><span class="o">,</span> <span class="c1">// Redirect URI for your application</span>
+    <span class="s">"8dw9uq98wu98d"</span>        <span class="c1">// The unique code for your user found in the query string</span>
+<span class="o">);</span>
+<span class="c1">// Save your access token, 'expires in' value, and refresh token (in tokenDetails).</span>
+</pre></div>
+
+<p>At this point you have an access token and refresh token for your user which you should store somewhere convenient so that your application can look up these values when your user wants to make future Campaign Monitor API calls.</p>
+
+<p>Once you have an access token and refresh token for your user, you can authenticate and make further API calls like so:</p>
 
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.createsend.General</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.createsend.models.clients.ClientBasics</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">com.createsend.util.JerseyClientImpl</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.OAuthAuthenticationDetails</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.CreateSendException</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tester</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CreateSendException</span> <span class="o">{</span>
-        <span class="n">General</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="k">new</span> <span class="n">JerseyClientImpl</span><span class="o">(</span><span class="s">"Your API Key"</span><span class="o">));</span>
-        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">ClientBasics</span> <span class="n">c</span> <span class="o">:</span> <span class="n">clients</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"%s (ID: %s)\n"</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">Name</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">ClientID</span><span class="o">);</span>
+        <span class="n">OAuthAuthenticationDetails</span> <span class="n">auth</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OAuthAuthenticationDetails</span><span class="o">(</span>
+            <span class="s">"your access token"</span><span class="o">,</span> <span class="s">"your refresh token"</span><span class="o">);</span>
+        <span class="n">General</span> <span class="n">general</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="n">auth</span><span class="o">);</span>
+        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>All OAuth tokens have an expiry time, and can be renewed with a corresponding refresh token. If your access token expires when attempting to make an API call, a <code>com.createsend.util.exceptions.ExpiredOAuthTokenException</code> will be thrown, so your code should handle this. Here's an example of how you could do this:</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.createsend.General</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.models.clients.ClientBasics</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.OAuthAuthenticationDetails</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.CreateSendException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.ExpiredOAuthTokenException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tester</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CreateSendException</span> <span class="o">{</span>
+        <span class="n">OAuthAuthenticationDetails</span> <span class="n">auth</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OAuthAuthenticationDetails</span><span class="o">(</span>
+            <span class="s">"your access token"</span><span class="o">,</span> <span class="s">"your refresh token"</span><span class="o">);</span>
+
+        <span class="n">General</span> <span class="n">general</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="n">auth</span><span class="o">);</span>
+        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span><span class="o">;</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">clients</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ExpiredOAuthTokenException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">OAuthTokenDetails</span> <span class="n">newTokenDetails</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">refreshToken</span><span class="o">();</span>
+            <span class="c1">// Save your updated access token, 'expires in' value, and refresh token</span>
+            <span class="n">clients</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span> <span class="c1">// Make the call again</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<h3>Using an API key</h3>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.createsend.General</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.models.clients.ClientBasics</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.ApiKeyAuthenticationDetails</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.CreateSendException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tester</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CreateSendException</span> <span class="o">{</span>
+        <span class="n">ApiKeyAuthenticationDetails</span> <span class="n">auth</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiKeyAuthenticationDetails</span><span class="o">(</span>
+            <span class="s">"your api key"</span><span class="o">);</span>
+        <span class="n">General</span> <span class="n">general</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="n">auth</span><span class="o">);</span>
+        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<h2>Basic usage</h2>
+
+<p>This example of listing all your clients and their campaigns demonstrates basic usage of the library and the data returned from the API:</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.createsend.Clients</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.General</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.models.campaigns.SentCampaign</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.models.clients.ClientBasics</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.OAuthAuthenticationDetails</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.createsend.util.exceptions.CreateSendException</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tester</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CreateSendException</span> <span class="o">{</span>
+        <span class="n">OAuthAuthenticationDetails</span> <span class="n">auth</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OAuthAuthenticationDetails</span><span class="o">(</span>
+            <span class="s">"your access token"</span><span class="o">,</span> <span class="s">"your refresh token"</span><span class="o">);</span>
+        <span class="n">General</span> <span class="n">general</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="n">auth</span><span class="o">);</span>
+        <span class="n">General</span> <span class="n">general</span> <span class="o">=</span> <span class="k">new</span> <span class="n">General</span><span class="o">(</span><span class="n">auth</span><span class="o">);</span>
+        <span class="n">ClientBasics</span><span class="o">[]</span> <span class="n">clients</span> <span class="o">=</span> <span class="n">general</span><span class="o">.</span><span class="na">getClients</span><span class="o">();</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="n">ClientBasics</span> <span class="n">cl</span> <span class="o">:</span> <span class="n">clients</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"Client: %s\n"</span><span class="o">,</span> <span class="n">cl</span><span class="o">.</span><span class="na">Name</span><span class="o">);</span>
+            <span class="n">Clients</span> <span class="n">cls</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Clients</span><span class="o">(</span><span class="n">auth</span><span class="o">,</span> <span class="n">cl</span><span class="o">.</span><span class="na">ClientID</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"- Campaigns:\n"</span><span class="o">);</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">SentCampaign</span> <span class="n">cm</span> <span class="o">:</span> <span class="n">cls</span><span class="o">.</span><span class="na">sentCampaigns</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"  - %s\n"</span><span class="o">,</span> <span class="n">cm</span><span class="o">.</span><span class="na">Subject</span><span class="o">);</span>
+            <span class="o">}</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -70,7 +174,7 @@
 
 <h3>Developing with Eclipse:</h3>
 
-<p>Gradle can be used to create the .classpath and .project files to import the project into Eclipse. Run the following command from the root directory of the repository:</p>
+<p>Gradle can be used to create the <code>.classpath</code> and <code>.project</code> files to import the project into Eclipse. Run the following command from the root directory of the repository:</p>
 
 <pre><code>gradle eclipse
 </code></pre>

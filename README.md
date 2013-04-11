@@ -163,8 +163,5 @@ gradle idea
 ```
 
 ## Contributing
-1. Fork the repository
-2. Make your changes.
-3. Ensure that the build passes, by running `gradle -i` (CI runs on: `openjdk6`, `openjdk7`, and `oraclejdk7`)
-4. It should go without saying, but do not increment the version number in your commits.
-5. Submit a pull request.
+
+Please check the [guidelines for contributing](https://github.com/campaignmonitor/createsend-java/blob/master/CONTRIBUTING.md) to this repository.

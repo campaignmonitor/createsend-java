@@ -29,6 +29,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.ApiKey;
+import com.createsend.models.ExternalSessionOptions;
+import com.createsend.models.ExternalSessionResult;
 import com.createsend.models.OAuthTokenDetails;
 import com.createsend.models.SystemDate;
 import com.createsend.models.administrators.Administrator;
@@ -203,5 +205,19 @@ public class General extends CreateSendBase {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         jerseyClient.put("", queryString, "primarycontact.json");
+    }
+
+    /**
+     * Get a URL which initiates a new external session for the user with the
+     * given email.
+     * Full details: http://www.campaignmonitor.com/api/account/#single_sign_on
+     * @param sessionOptions The session options to use.
+     * @return The URL to initiate the external Campaign Monitor session.
+     * @throws CreateSendException
+     */
+    public String getExternalSessionUrl(ExternalSessionOptions sessionOptions) 
+    		throws CreateSendException {
+    	return jerseyClient.put(ExternalSessionResult.class, sessionOptions, 
+    			"externalsession.json").SessionUrl;
     }
 }

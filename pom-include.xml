@@ -1,52 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.createsend</groupId>
-  <artifactId>createsend-java</artifactId>
-  <version>3.1.0</version>
-  <name>createsend-java</name>
-  <description>A Java library which implements the complete functionality of the Campaign Monitor API.</description>
-  <url>http://campaignmonitor.github.io/createsend-java/</url>
-  <licenses>
-    <license>
-      <name>The MIT License</name>
-      <url>https://raw.github.com/campaignmonitor/createsend-java/master/LICENSE</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <repositories>
-    <repository>
-      <id>java.net</id>
-      <name>Java.Net Repo</name>
-      <layout>default</layout>
-      <url>http://download.java.net/maven/2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <dependencies>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-json</artifactId>
-      <version>1.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-      <version>1.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-apache-client</artifactId>
-      <version>1.5</version>
-      <scope>compile</scope>
-    </dependency>
-  </dependencies>
-
+<project>
   <scm>
     <connection>scm:git:git://github.com/campaignmonitor/createsend-java.git</connection>
     <developerConnection>scm:git:git://github.com/campaignmonitor/createsend-java.git</developerConnection>
@@ -122,5 +74,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>

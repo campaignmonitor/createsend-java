@@ -49,6 +49,8 @@ $ git commit -am "Version X.Y.Z"
 
 ### Releasing to Sonatype OSS staging repository
 
+Ensure that the version specified in `pom.xml` includes the `-SNAPSHOT` suffix: `<version>X.Y.Z-SNAPSHOT</version>`
+
 ```sh
 $ mvn -Dresume=false release:prepare
 $ mvn release:perform -Darguments="-Dgpg.keyname=jdennes@gmail.com -Dgpg.passphrase="

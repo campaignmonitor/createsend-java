@@ -2,6 +2,7 @@
 
 ## Requirements
 
+ * You must have Apache Maven 3.0.4+ installed.
  * You must have a gpg key which is registered on a public key server (see [How To Generate PGP Signatures With Maven][])
  * You must have a Sonatype OSS account (see [Sonatype OSS Maven Repository Usage Guide][])
  * You must have added the Sonatype repositories and your Sonatype credentials to your `~/.m2/settings.xml` file:
@@ -20,6 +21,18 @@
        <password>password</password>
      </server>
    </servers>
+   <profiles>
+     <profile>
+       <id>gpg</id>
+       <properties>
+         <gpg.passphrase>yourpassphrase</gpg.passphrase>
+         <gpg.keyname>yourkeyname</gpg.keyname>
+       </properties>
+     </profile>
+   </profiles>
+   <activeProfiles>
+     <activeProfile>gpg</activeProfile>
+   </activeProfiles>
  </settings>
  ```
 
@@ -53,7 +66,7 @@ Ensure that the version specified in `pom.xml` includes the `-SNAPSHOT` suffix: 
 
 ```sh
 $ mvn -Dresume=false release:prepare
-$ mvn release:perform -Darguments="-Dgpg.keyname=jdennes@gmail.com -Dgpg.passphrase="
+$ mvn release:perform
 ```
 
 This will build and sign all artifacts and upload them to the staging repository.

@@ -18,8 +18,6 @@ repositories {
 }
 
 dependencies {
-	// testCompile group: 'junit', name: 'junit', version: '4.8.1'
-
 	compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.5'
 	compile group: 'com.sun.jersey.contribs', name: 'jersey-apache-client', version: '1.5'
 	compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.5'
@@ -55,4 +53,53 @@ task doc(type: Javadoc) {
 	classpath = sourceSets.main.compileClasspath
 	destinationDir = new File(new File(buildDir, 'doc'), version)
 	options.version = true
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      snapshotRepository(
+        url: 'https://oss.sonatype.org/content/repositories/snapshots',
+        id: 'sonatype-nexus-snapshots') {
+        authentication(getAuth('sonatype-nexus-snapshots'))
+      }
+      repository(
+        url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/',
+        id: 'sonatype-nexus-staging') {
+        authentication(getAuth('sonatype-nexus-staging'))
+      }
+
+      pom {
+        project {
+          name 'createsend-java'
+          description 'A Java library which implements the complete functionality of the Campaign Monitor API.'
+          url 'http://campaignmonitor.github.io/createsend-java/'
+          licenses {
+            license {
+              name 'The MIT License'
+              url 'https://raw.github.com/campaignmonitor/createsend-java/master/LICENSE'
+              distribution 'repo'
+            }
+          }
+        }
+        withXml { xml ->
+          new XmlParser().parse(new File("pom-include.xml")).children().each { kid -> xml.asNode().append(kid) }
+        }
+      }
+    }
+  }
+}
+
+task writePom << {
+  uploadArchives.repositories.mavenDeployer().getPom().writeTo("pom.xml")
+}
+
+def getAuth(repo_id) {
+  def m2_settings = new File("${System.getProperty('user.home')}/.m2/settings.xml")
+  if (m2_settings.exists()) {
+    def settings = new XmlSlurper().parse(m2_settings)
+    def repo = settings.servers.server.find { it.id.text() == repo_id }
+    if (repo != null) return [userName: repo.username.text(), password: repo.password.text()]
+  }
+  [:]
 }

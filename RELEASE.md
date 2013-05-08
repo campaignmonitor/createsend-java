@@ -1,10 +1,10 @@
 # Releasing createsend-java
 
-Requirements:
+## Requirements
 
- * You have a gpg key which is registered on a public key server (see [How To Generate PGP Signatures With Maven][])
- * You have a Sonatype OSS account (see [Sonatype OSS Maven Repository Usage Guide][])
- * You have added the Sonatype repositories and your Sonatype credentials to `~/.m2/settings.xml`
+ * You must have a gpg key which is registered on a public key server (see [How To Generate PGP Signatures With Maven][])
+ * You must have a Sonatype OSS account (see [Sonatype OSS Maven Repository Usage Guide][])
+ * You must have added the Sonatype repositories and your Sonatype credentials to your `~/.m2/settings.xml` file:
 
  ```xml
  <settings>
@@ -25,7 +25,7 @@ Requirements:
 
 ## Releasing developer snapshot versions
 
-You can release a developer snapshot version of the package at any time. Snapshot versions should have the `-SNAPSHOT` suffix appended, which can be done by temporarily editing the `version` field in the `build.gradle` file. Then, to release a snapshot version, run:
+You can release a developer snapshot version of the package at any time. Snapshot versions have the `-SNAPSHOT` suffix appended, and can be released by running:
 
 ```sh
 $ gradle uploadArchive

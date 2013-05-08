@@ -1,7 +1,7 @@
 <project>
   <scm>
-    <connection>scm:git:git://github.com/campaignmonitor/createsend-java.git</connection>
-    <developerConnection>scm:git:git://github.com/campaignmonitor/createsend-java.git</developerConnection>
+    <connection>scm:git:https://github.com/campaignmonitor/createsend-java.git</connection>
+    <developerConnection>scm:git:https://github.com/campaignmonitor/createsend-java.git</developerConnection>
     <url>https://github.com/campaignmonitor/createsend-java.git</url>
   </scm>
 

@@ -2,43 +2,43 @@
 
 ## Requirements
 
- * You must have Apache Maven 3.0.4+ installed.
+ * You must have Apache Maven 3.0.4 or greater installed.
  * You must have a gpg key which is registered on a public key server (see [How To Generate PGP Signatures With Maven][])
- * You must have a Sonatype OSS account (see [Sonatype OSS Maven Repository Usage Guide][])
- * You must have added the Sonatype repositories and your Sonatype credentials to your `~/.m2/settings.xml` file:
+ * You must have a Sonatype OSS account with publish rights for the `com.createsend` group (see [Sonatype OSS Maven Repository Usage Guide][])
+ * You must have a `~/.m2/settings.xml` file which includes the Sonatype repositories, your Sonatype credentials, and your gpg keyname and passphrase:
 
- ```xml
- <settings>
-   <servers>
-     <server>
-       <id>sonatype-nexus-snapshots</id>
-       <username>username</username>
-       <password>password</password>
-     </server>
-     <server>
-       <id>sonatype-nexus-staging</id>
-       <username>username</username>
-       <password>password</password>
-     </server>
-   </servers>
-   <profiles>
-     <profile>
-       <id>gpg</id>
-       <properties>
-         <gpg.passphrase>yourpassphrase</gpg.passphrase>
-         <gpg.keyname>yourkeyname</gpg.keyname>
-       </properties>
-     </profile>
-   </profiles>
-   <activeProfiles>
-     <activeProfile>gpg</activeProfile>
-   </activeProfiles>
- </settings>
- ```
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>username</username>
+      <password>password</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>username</username>
+      <password>password</password>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>gpg</id>
+      <properties>
+        <gpg.keyname>yourkeyname</gpg.keyname>
+        <gpg.passphrase>yourpassphrase</gpg.passphrase>
+      </properties>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>gpg</activeProfile>
+  </activeProfiles>
+</settings>
+```
 
 ## Releasing developer snapshot versions
 
-You can release a developer snapshot version of the package at any time. Snapshot versions have the `-SNAPSHOT` suffix appended, and can be released by running:
+You can release developer snapshot versions of the package at any time for developer testing. These are released by running:
 
 ```sh
 $ gradle uploadArchive
@@ -46,15 +46,18 @@ $ gradle uploadArchive
 
 Developer snapshot versions can be found in the [snapshot repo][].
 
-## Releasing a production version
+## Releasing production versions
 
-Increment version constants in the following files, ensuring that you use [Semantic Versioning][]:
+### Prepare release
 
- * `build.gradle`
- * `pom.xml`
- * `src/com/createsend/util/config.properties`
+- Increment version constants in the following files, ensuring that you use [Semantic Versioning][]:
 
-Commit your changes:
+  * `build.gradle`
+  * `pom.xml`
+  * `src/com/createsend/util/config.properties`
+
+- Add an entry to `HISTORY.md` which clearly explains the new release.
+- Commit your changes:
 
 ```sh
 $ git commit -am "Version X.Y.Z"
@@ -62,24 +65,29 @@ $ git commit -am "Version X.Y.Z"
 
 ### Releasing to Sonatype OSS staging repository
 
-Ensure that the version specified in `pom.xml` includes the `-SNAPSHOT` suffix: `<version>X.Y.Z-SNAPSHOT</version>`
+Ensure that the version specified in `pom.xml` includes the `-SNAPSHOT` suffix. It should take the form: `<version>X.Y.Z-SNAPSHOT</version>`
+
+Then _prepare_ the release. This will tag the repository and increment the version number in `pom.xml` for the next development iteration. When you are asked for the tag to apply to the release, use a tag of the form: `vX.Y.Z`.
 
 ```sh
 $ mvn -Dresume=false release:prepare
+```
+
+Then _perform_ the release. This will build and sign all artifacts and upload them to the staging repository.
+
+```sh
 $ mvn release:perform
 ```
 
-This will build and sign all artifacts and upload them to the staging repository.
-
 ### Promoting the release from staging
 
-In order to promote the release from staging, log in to [Sonatype OSS][], and from the "Build Promotion" tab on the left hand site select "Staging Repositories".
+In order to promote the release from the staging repository, log in to [Sonatype OSS][], and from the _Build Promotion_ tab on the left hand site select _Staging Repositories_.
 
-The release you just uploaded should show up in the list. Select it and pick "Close". This will check if the deployment is complete and properly signed, then create a staging repository which can be used for testing. Once everything works you select "Release" to actually release it to the [release repo][]. The release repo is synced with [Maven Central][].
+The release you just uploaded should show up in the list. Select the release and click _Close_. This will check if the deployment is complete and properly signed, then create a staging repository which can be used for testing. Once the closing process is successful, click _Release_ to actually release it to the [release repo][]. The release repo is synced with [Maven Central][].
 
 ### Generate and publish javadoc
 
-Generate and publish javadoc:
+Generate and publish the javadoc for the new release:
 
 ```sh
 $ ./update-javadoc.sh

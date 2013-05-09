@@ -4,6 +4,10 @@
 
 A Java library which implements the complete functionality of the [Campaign Monitor API](http://www.campaignmonitor.com/api/).
 
+## Installation
+
+Jar files are distributed to Sonatype and Maven Central. Development snapshots are available from the [Sonatype snapshots repository](https://oss.sonatype.org/content/repositories/snapshots/com/createsend/createsend-java/), and production releases are available from either the [Sonatype releases repository](https://oss.sonatype.org/content/repositories/releases/com/createsend/createsend-java/) or the [Maven Central repository](http://repo1.maven.org/maven2/com/createsend/createsend-java/).
+
 ## Authenticating
 
 The Campaign Monitor API supports authentication using either OAuth or an API key.
@@ -137,11 +141,12 @@ public class Tester {
 See the [samples](https://github.com/campaignmonitor/createsend-java/blob/master/samples/com/createsend/samples/SampleRunner.java) directory for more example code.
 
 ## Documentation
+
 Full javadoc for this library is available [here](http://campaignmonitor.github.com/createsend-java/doc/).
 
-## Building
+## Developing
 
-### Use Gradle:
+### Build using Gradle:
 Run the following command from the root directory of the repository:
 
 ```
@@ -165,3 +170,7 @@ gradle idea
 ## Contributing
 
 Please check the [guidelines for contributing](https://github.com/campaignmonitor/createsend-java/blob/master/CONTRIBUTING.md) to this repository.
+
+## Releasing
+
+Please check the [instructions for releasing](https://github.com/campaignmonitor/createsend-java/blob/master/RELEASE.md) this library.

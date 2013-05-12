@@ -3,6 +3,8 @@
 .project
 .gradle
 .settings
+.idea
+classes
 createsend-java.i*
 javadoc.xml
 workingsamples

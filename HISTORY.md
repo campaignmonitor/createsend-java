@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v3.1.1 - 15 May, 2013
+
+* Updated `com.sun.jersey` and `org.codehaus.jackson` dependencies to the latest versions.
+
 ## v3.1.0 - 16 Apr, 2013
 
 * Added support for [single sign on](http://www.campaignmonitor.com/api/account/#single_sign_on) which allows initiation of external login sessions to Campaign Monitor.

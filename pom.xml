@@ -14,34 +14,48 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <repositories>
-    <repository>
-      <id>java.net</id>
-      <name>Java.Net Repo</name>
-      <layout>default</layout>
-      <url>http://download.java.net/maven/2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
+  <repositories></repositories>
   <dependencies>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-json</artifactId>
-      <version>1.5</version>
+      <version>1.17.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>1.5</version>
+      <version>1.17.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-core</artifactId>
+      <version>1.17.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-apache-client</artifactId>
-      <version>1.5</version>
+      <version>1.17.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.9.12</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+      <version>1.9.12</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.12</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -57,6 +71,11 @@
       <id>jdennes</id>
       <name>James Dennes</name>
       <email>jdennes@gmail.com</email>
+    </developer>
+    <developer>
+      <id>tobio</id>
+      <name>Toby Brain</name>
+      <email>tobio85@gmail.com</email>
     </developer>
   </developers>
 

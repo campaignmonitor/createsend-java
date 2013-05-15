@@ -50,7 +50,7 @@ public class JsonProvider extends JacksonJsonProvider {
             MultivaluedMap<String, Object> httpHeaders,
             OutputStream entityStream) throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
-        mapper.getSerializationConfig().setSerializationInclusion(Inclusion.NON_NULL);
+        mapper.getSerializationConfig().withSerializationInclusion(Inclusion.NON_NULL);
         
         super.writeTo(value, type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);
@@ -62,11 +62,9 @@ public class JsonProvider extends JacksonJsonProvider {
             MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
             throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
-        mapper.getDeserializationConfig().setDateFormat(ApiDateFormat);
-        mapper.getDeserializationConfig().set(
-                DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        
-        
+        mapper.getDeserializationConfig().withDateFormat(ApiDateFormat);
+        mapper.getDeserializationConfig().without(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+
         return super.readFrom(type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);
     }

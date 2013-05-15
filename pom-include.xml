@@ -11,6 +11,11 @@
       <name>James Dennes</name>
       <email>jdennes@gmail.com</email>
     </developer>
+    <developer>
+      <id>tobio</id>
+      <name>Toby Brain</name>
+      <email>tobio85@gmail.com</email>
+    </developer>
   </developers>
 
   <distributionManagement>

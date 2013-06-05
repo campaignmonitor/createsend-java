@@ -26,4 +26,10 @@ public class WebhookTestFailureDetails {
     public String FailureResponseMessage;
     public Integer FailureResponseCode;
     public String FailureResponse;
+
+    @Override
+    public String toString() {
+        return String.format("{ FailureStatus: %s, FailureResponseMessage: %s, FailureResponseCode: %s }",
+                FailureStatus, FailureResponseMessage, FailureResponseCode);
+    }
 }

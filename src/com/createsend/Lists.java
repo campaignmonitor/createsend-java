@@ -69,7 +69,7 @@ public class Lists extends CreateSendBase {
      * @param listID The List ID to use when making API calls.
      */
     public Lists(AuthenticationDetails auth, String listID) {
-    	setListID(listID);
+        setListID(listID);
         this.jerseyClient = new JerseyClientImpl(auth);
     }
 
@@ -178,7 +178,7 @@ public class Lists extends CreateSendBase {
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active() throws CreateSendException {
-    	return active(1, 1000, "email", "asc");
+        return active(1, 1000, "email", "asc");
     }
 
     /**
@@ -194,7 +194,7 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> active(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return active("", page, pageSize, orderField, orderDirection);
+        return active("", page, pageSize, orderField, orderDirection);
     }
 
     /**
@@ -213,8 +213,8 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> active(Date subscribedFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+        return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
+                page, pageSize, orderField, orderDirection);
     }
     
     private PagedResult<Subscriber> active(String subscribedFrom,
@@ -234,7 +234,7 @@ public class Lists extends CreateSendBase {
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed() throws CreateSendException {
-    	return unconfirmed(1, 1000, "email", "asc");
+        return unconfirmed(1, 1000, "email", "asc");
     }
 
     /**
@@ -250,7 +250,7 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> unconfirmed(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return unconfirmed("", page, pageSize, orderField, orderDirection);
+        return unconfirmed("", page, pageSize, orderField, orderDirection);
     }
 
     /**
@@ -269,8 +269,8 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> unconfirmed(Date subscribedFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return unconfirmed(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+        return unconfirmed(JsonProvider.ApiDateFormat.format(subscribedFrom),
+                page, pageSize, orderField, orderDirection);
     }
     
     private PagedResult<Subscriber> unconfirmed(String subscribedFrom,
@@ -290,7 +290,7 @@ public class Lists extends CreateSendBase {
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed() throws CreateSendException {
-    	return unsubscribed(1, 1000, "email", "asc");
+        return unsubscribed(1, 1000, "email", "asc");
     }
 
     /**
@@ -306,7 +306,7 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> unsubscribed(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return unsubscribed("", page, pageSize, orderField, orderDirection);
+        return unsubscribed("", page, pageSize, orderField, orderDirection);
     }
 
     /**
@@ -324,8 +324,8 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> unsubscribed(Date subscribedFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return unsubscribed(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+        return unsubscribed(JsonProvider.ApiDateFormat.format(subscribedFrom),
+                page, pageSize, orderField, orderDirection);
     }
 
     private PagedResult<Subscriber> unsubscribed(String subscribedFrom,
@@ -345,7 +345,7 @@ public class Lists extends CreateSendBase {
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted() throws CreateSendException {
-    	return deleted(1, 1000, "email", "asc");
+        return deleted(1, 1000, "email", "asc");
     }
 
     /**
@@ -361,7 +361,7 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> deleted(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return deleted("", page, pageSize, orderField, orderDirection);
+        return deleted("", page, pageSize, orderField, orderDirection);
     }
 
     /**
@@ -379,8 +379,8 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> deleted(Date subscribedFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return deleted(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+        return deleted(JsonProvider.ApiDateFormat.format(subscribedFrom),
+                page, pageSize, orderField, orderDirection);
     }
     
     private PagedResult<Subscriber> deleted(String subscribedFrom,
@@ -400,7 +400,7 @@ public class Lists extends CreateSendBase {
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced() throws CreateSendException {
-    	return bounced(1, 1000, "email", "asc");
+        return bounced(1, 1000, "email", "asc");
     }
 
     /**
@@ -416,7 +416,7 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> bounced(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return bounced("", page, pageSize, orderField, orderDirection);
+        return bounced("", page, pageSize, orderField, orderDirection);
     }
 
     /**
@@ -434,8 +434,8 @@ public class Lists extends CreateSendBase {
      */
     public PagedResult<Subscriber> bounced(Date subscribedFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return bounced(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+        return bounced(JsonProvider.ApiDateFormat.format(subscribedFrom),
+                page, pageSize, orderField, orderDirection);
     }
 
     private PagedResult<Subscriber> bounced(String subscribedFrom,
@@ -469,7 +469,7 @@ public class Lists extends CreateSendBase {
      * Creating a custom field</a>
      */
     public String updateCustomField(String fieldKey, CustomFieldForUpdate customField)
-		throws CreateSendException {
+        throws CreateSendException {
         return jerseyClient.put(String.class, customField, "lists", listID, "customfields", fieldKey + ".json");
     }
 
@@ -528,7 +528,7 @@ public class Lists extends CreateSendBase {
      * Testing a webhook</a>
      */
     public void testWebhook(String webhookID) throws CreateSendException {
-        jerseyClient.get(String.class, new ErrorDeserialiser<WebhookTestFailureDetails>(), 
+        jerseyClient.get(String.class, new ErrorDeserialiser<WebhookTestFailureDetails>(){},
             "lists", listID, "webhooks", webhookID, "test.json");
     }
     

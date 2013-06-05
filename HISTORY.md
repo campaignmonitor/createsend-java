@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v3.1.2 - 5 June, 2013
+
+* Correctly configure the date format used by our JsonProvider. See #16.
+
 ## v3.1.1 - 15 May, 2013
 
 * Updated `com.sun.jersey` and `org.codehaus.jackson` dependencies to the latest versions.

@@ -21,13 +21,6 @@
  */
 package com.createsend.util.jersey;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -36,13 +29,21 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
 /**
  * An extension of the Jersey JacksonJsonProvider used to set Jackson 
  * serialisation/deserialisation properties
  */
 public class JsonProvider extends JacksonJsonProvider {
     public static final DateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
+
     @Override
     public void writeTo(Object value, Class<?> type, Type genericType,
             Annotation[] annotations, MediaType mediaType,
@@ -61,12 +62,8 @@ public class JsonProvider extends JacksonJsonProvider {
             MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
             throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
-
-        mapper.setDeserializationConfig(
-                mapper.getDeserializationConfig()
-                        .withDateFormat(ApiDateFormat)
-                        .without(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES)
-        );
+        mapper.setDateFormat(ApiDateFormat);
+        mapper.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         return super.readFrom(type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);

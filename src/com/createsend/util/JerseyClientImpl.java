@@ -79,7 +79,7 @@ public class JerseyClientImpl implements JerseyClient {
         client.addFilter(new UserAgentFilter());
     }
 
-    private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>();
+    private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>(){};
     private ResourceFactory authorisedResourceFactory;
     private AuthenticationDetails authDetails;
 
@@ -389,7 +389,8 @@ public class JerseyClientImpl implements JerseyClient {
         Status responseStatus = response.getClientResponseStatus();
         if(responseStatus == Status.BAD_REQUEST || 
            responseStatus == Status.NOT_FOUND ||
-           responseStatus == Status.UNAUTHORIZED) { 
+           responseStatus == Status.UNAUTHORIZED ||
+           responseStatus == Status.INTERNAL_SERVER_ERROR) {
             try { 
                 apiResponse = deserialiser.getResponse(response);
             } catch (Throwable t) { }                

@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v3.1.3 - 21 June, 2013
+
+* Improve error handling and determination of generic error handling. 
+
 ## v3.1.2 - 5 June, 2013
 
 * Correctly configure the date format used by our JsonProvider. See #16.

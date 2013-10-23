@@ -35,6 +35,7 @@ import com.createsend.models.campaigns.EmailClient;
 import com.createsend.models.campaigns.ListsAndSegments;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Schedule;
+import com.createsend.models.subscribers.BouncedSubscriber;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
@@ -210,7 +211,7 @@ public class Campaigns extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> bounces() throws CreateSendException {
+    public PagedResult<BouncedSubscriber> bounces() throws CreateSendException {
     	return bounces(1, 1000, "date", "asc");
     }
 
@@ -225,7 +226,7 @@ public class Campaigns extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> bounces(
+    public PagedResult<BouncedSubscriber> bounces(
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
     	return bounces("", page, pageSize, orderField, orderDirection);
     }
@@ -242,13 +243,13 @@ public class Campaigns extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
      * Getting campaign bounces</a>
      */
-    public PagedResult<Subscriber> bounces(Date bouncesFrom,
+    public PagedResult<BouncedSubscriber> bounces(Date bouncesFrom,
             Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
     	return bounces(JsonProvider.ApiDateFormat.format(bouncesFrom),
     			page, pageSize, orderField, orderDirection);
     }
     
-    private PagedResult<Subscriber> bounces(String bouncesFrom,
+    private PagedResult<BouncedSubscriber> bounces(String bouncesFrom,
         Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("date", bouncesFrom);

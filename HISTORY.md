@@ -1,5 +1,20 @@
 # createsend-java history
 
+## v4.0.0 - 24 Oct, 2013
+
+* [Campaign bounces should include Reason and BounceType](https://github.com/campaignmonitor/createsend-java/issues/18). This introduces a breaking change to the return type of ```com.createsend.Campaigns.bounces``` from ```com.createsend.models.PagedResult<com.createsend.models.subscribers.Subscriber>``` to ```com.createsend.models.PagedResult<com.createsend.models.subscribers.BouncedSubscriber>```. 
+  * If you're using this method, upgrading to this version will require you to update any code to use the new signature. For example
+
+  ```
+  PagedResult<Subscriber> bouncedSubscribers = campaigns.bounces();
+  ```
+
+  would need to be updated to 
+
+  ```
+  PagedResult<BouncedSubscriber> bouncedSubscribers = campaigns.bounces();
+  ```
+
 ## v3.1.3 - 21 June, 2013
 
 * Improve error handling and determination of generic error handling. 

@@ -7,7 +7,7 @@ install.dependsOn ':build'
 defaultTasks 'clean', 'install'
 
 sourceCompatibility = 1.6
-version = '3.1.3-SNAPSHOT'
+version = '4.0.0-SNAPSHOT'
 group = 'com.createsend'
 
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath

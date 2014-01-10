@@ -36,7 +36,7 @@
     </dependency>
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-apache-client</artifactId>
+      <artifactId>jersey-apache-client4</artifactId>
       <version>1.17.1</version>
       <scope>compile</scope>
     </dependency>

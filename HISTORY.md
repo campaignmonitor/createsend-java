@@ -1,15 +1,19 @@
 # createsend-java history
 
+## v4.0.1 - 16 Jan, 2014
+
+* Removed jersey-apache-client reference due to vulnerability. See #20.
+
 ## v4.0.0 - 24 Oct, 2013
 
-* [Campaign bounces should include Reason and BounceType](https://github.com/campaignmonitor/createsend-java/issues/18). This introduces a breaking change to the return type of ```com.createsend.Campaigns.bounces``` from ```com.createsend.models.PagedResult<com.createsend.models.subscribers.Subscriber>``` to ```com.createsend.models.PagedResult<com.createsend.models.subscribers.BouncedSubscriber>```. 
+* [Campaign bounces should include Reason and BounceType](https://github.com/campaignmonitor/createsend-java/issues/18). This introduces a breaking change to the return type of ```com.createsend.Campaigns.bounces``` from ```com.createsend.models.PagedResult<com.createsend.models.subscribers.Subscriber>``` to ```com.createsend.models.PagedResult<com.createsend.models.subscribers.BouncedSubscriber>```.
   * If you're using this method, upgrading to this version will require you to update any code to use the new signature. For example
 
   ```
   PagedResult<Subscriber> bouncedSubscribers = campaigns.bounces();
   ```
 
-  would need to be updated to 
+  would need to be updated to
 
   ```
   PagedResult<BouncedSubscriber> bouncedSubscribers = campaigns.bounces();
@@ -17,7 +21,7 @@
 
 ## v3.1.3 - 21 June, 2013
 
-* Improve error handling and determination of generic error handling. 
+* Improve error handling and determination of generic error handling.
 
 ## v3.1.2 - 5 June, 2013
 
@@ -36,9 +40,9 @@
 * Added support for authenticating using OAuth. See the [README](README.md#authenticating) for full usage instructions.
 * Refactored authentication so that it is _always_ done at the instance level. This introduces some breaking changes, which are clearly explained below.
   * Authentication using an API key is no longer supported using the `config.properties` or `createsend.properties` files.
-  
+
       So if you _previously_ entered your API key into a properties file as follows:
-      
+
       ```
       createsend.apikey = your api key
       ```

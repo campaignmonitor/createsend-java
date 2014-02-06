@@ -54,6 +54,7 @@ import com.createsend.models.lists.WebhookTestFailureDetails;
 import com.createsend.models.people.Person;
 import com.createsend.models.people.PersonToAdd;
 import com.createsend.models.segments.Rule;
+import com.createsend.models.segments.RuleGroup;
 import com.createsend.models.segments.Segment;
 import com.createsend.models.subscribers.CustomField;
 import com.createsend.models.subscribers.Subscriber;
@@ -198,33 +199,31 @@ public class SampleRunner {
         Segments segmentAPI = new Segments(auth);
         
         Segment segment = new Segment();
-        segment.Title = "Java Test Segment";
-        segment.Rules = new Rule[] {
-            new Rule()
-        };
-        segment.Rules[0].Subject = "EmailAddress";
-        segment.Rules[0].Clauses = new String[] {
-            "CONTAINS gmail.com"
-        };
-        
+        segment.Title = "Java Segment";
+        RuleGroup ruleGroup = new RuleGroup();
+        ruleGroup.Rules = new Rule[] {new Rule()};
+        ruleGroup.Rules[0].RuleType = "EmailAddress";
+        ruleGroup.Rules[0].Clause = "CONTAINS gmail.com";
+        segment.RuleGroups = new RuleGroup[] {ruleGroup};
         segmentAPI.create(listAPI.getListID(), segment);
         System.out.printf("Result of create segment: %s\n", segmentAPI.getSegmentID());
-        
         System.out.printf("Result of segment details: %s\n", segmentAPI.details());
-        System.out.printf("Result of segment active: %s\n", 
-            segmentAPI.active(subscribersFrom, null, null, null, null));
-        
+        System.out.printf("Result of segment active: %s\n",  segmentAPI.active(subscribersFrom, null, null, null, null));
+
         segment.Title = "New Java Test Segment";
-        segment.Rules[0].Clauses[0] = "CONTAINS hotmail.com";
+        segment.RuleGroups[0].Rules[0].Clause = "CONTAINS hotmail.com";
         segmentAPI.update(segment);
-        
+
+        RuleGroup extraRuleGroup = new RuleGroup();
+        extraRuleGroup.Rules = new Rule[] {new Rule()};
+        extraRuleGroup.Rules[0].RuleType = "DateSubscribed";
+        extraRuleGroup.Rules[0].Clause = "AFTER 2013-11-02";
+
+        segmentAPI.addRuleGroup(extraRuleGroup);
+
         segmentAPI.deleteRules();
-        
-        segment.Rules[0].Subject = "DateSubscribed";
-        segment.Rules[0].Clauses[0] = "AFTER 2009-01-01";
-        segmentAPI.addRule(segment.Rules[0]);
-        
-        segmentAPI.delete();        
+
+        segmentAPI.delete();
         listAPI.delete();
     }
     
@@ -550,9 +549,6 @@ public class SampleRunner {
     
     private static void runGeneralMethods() throws CreateSendException {
         General client = new General(auth);
-        
-        System.out.printf("Result of get apikey: %s\n", 
-            client.getAPIKey("Site URL", "Username", "Password"));
         
         System.out.printf("Result of get clients: %s\n", Arrays.deepToString(client.getClients()));
         

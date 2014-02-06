@@ -26,10 +26,7 @@ import java.util.Date;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.createsend.models.PagedResult;
-import com.createsend.models.segments.ClauseResults;
-import com.createsend.models.segments.Rule;
-import com.createsend.models.segments.RuleCreationFailureDetails;
-import com.createsend.models.segments.Segment;
+import com.createsend.models.segments.*;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
@@ -115,13 +112,13 @@ public class Segments extends CreateSendBase {
     
     /**
      * Adds a new rule to an existing list segment
-     * @param rule The rule specification
+     * @param ruleGroup The rule group specification
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#adding_a_segment_rule" target="_blank">
      * Adding a segment rule</a>
      */
-    public void addRule(Rule rule) throws CreateSendException {
-        jerseyClient.post(String.class, rule, new ErrorDeserialiser<ClauseResults[]>(), 
+    public void addRuleGroup(RuleGroup ruleGroup) throws CreateSendException {
+        jerseyClient.post(String.class, ruleGroup, new ErrorDeserialiser<ClauseResults[]>(),
             "segments", segmentID, "rules.json");
     }
     

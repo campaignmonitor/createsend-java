@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v5.0.0 - 6 Feb, 2014
+
+* Updated to v3.1 API
+
 ## v4.0.1 - 16 Jan, 2014
 
 * Removed jersey-apache-client reference due to vulnerability. See #20.

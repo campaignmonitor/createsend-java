@@ -126,24 +126,6 @@ public class General extends CreateSendBase {
     }
 
     /**
-     * Gets the API Key to use with the given authentication data
-     * @param siteAddress The create send site address for the account
-     * @param username The username used to login
-     * @param password The password of the account
-     * @return The API key for the specified authentication data
-     * @see <a href="http://www.campaignmonitor.com/api/account/#getting_your_api_key" target="_blank">
-     * Getting you API Key</a>
-     * @throws CreateSendException
-     */
-    public String getAPIKey(String siteAddress, String username, String password) throws CreateSendException {
-        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
-        queryString.add("siteurl", siteAddress);
-        
-        return jerseyClient.get(ApiKey.class, queryString, 
-            new AuthorisedResourceFactory(username, password), "apikey.json").ApiKey;
-    }
-
-    /**
      * @return An array of active clients in the create send account. 
      * @see <a href="http://www.campaignmonitor.com/api/account/#getting_your_clients" target="_blank">
      * Getting your clients</a>

@@ -29,11 +29,11 @@ public class Segment {
     public String Title; 
     
     public Integer ActiveSubscribers;
-    public Rule[] Rules;
+    public RuleGroup[] RuleGroups;
     
     @Override
     public String toString() {
-        return String.format("{ ListID: %s, SegmentID: %s, Title: %s, Active: %d, Rules: %s }", ListID,
-                SegmentID, Title, ActiveSubscribers, Arrays.deepToString(Rules));
+        return String.format("{ ListID: %s, SegmentID: %s, Title: %s, Active: %d, Rule Groups: %s }", ListID,
+                SegmentID, Title, ActiveSubscribers, Arrays.deepToString(RuleGroups));
     }
 }

@@ -3,6 +3,54 @@
 ## v5.0.0 - 6 Feb, 2014
 
 * Updated to v3.1 API
+* Added support for new segments structure
+  * Segment now includes a new `RuleGroup[] RuleGroups` member, instead of a `Rule[] Rules` member.
+
+    ```java
+   	public RuleGroup[] RuleGroups;
+    ```
+
+    So for example, when you _previously_ would have created a segment like so:
+
+    ```java
+	segment.Rules = new Rule[] {new Rule()};
+    segment.Rules[0].Subject = "EmailAddress";
+    segment.Rules[0].Clauses = new String[] {"CONTAINS example.com"};
+    ```
+
+    You would _now_ do this:
+
+    ```java
+    segment.RuleGroups = new RuleGroup[] {new RuleGroup()};
+    segment.RuleGroups[0].Rules = new Rule[] {new Rule()};
+    segment.RuleGroups[0].Rules[0].RuleType = "EmailAddress";
+    segment.RuleGroups[0].Rules[0].Clause = "CONTAINS example.com";
+    ```
+    
+  * The Add Rule call is now Add Rule Group, taking a `RuleGroup` in a `ruleGroup` argument instead of a rule argument.
+
+    ```java
+ 	public void Segment.addRuleGroup(RuleGroup ruleGroup)
+    ```
+
+    So for example, when you _previously_ would have added a rule like so:
+
+    ```java
+	Rule rule = new Rule();
+    rule.Subject = "EmailAddress";
+    rule.Clauses = new String[] {"CONTAINS @hello.com"};
+    segmentAPI.addRule(rule);
+    ```
+
+    You would _now_ do this:
+
+    ```java
+    RuleGroup extraRuleGroup = new RuleGroup();
+    extraRuleGroup.Rules = new Rule[] {new Rule()};
+    extraRuleGroup.Rules[0].RuleType = "EmailAddress";
+    extraRuleGroup.Rules[0].Clause = "CONTAINS @hello.com";
+    segmentAPI.addRuleGroup(extraRuleGroup);
+    ```
 
 ## v4.0.1 - 16 Jan, 2014
 

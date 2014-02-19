@@ -51,6 +51,7 @@
     extraRuleGroup.Rules[0].Clause = "CONTAINS @hello.com";
     segmentAPI.addRuleGroup(extraRuleGroup);
     ```
+* Removed the getAPIKey method to promote usage of oAuth authentication
 
 ## v4.0.1 - 16 Jan, 2014
 

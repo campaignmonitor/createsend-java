@@ -44,6 +44,8 @@ public interface JerseyClient {
             throws CreateSendException;
 
     public <T> T post(Class<T> klass, Object entity, String... pathElements) throws CreateSendException;
+    public <T> T post(Class<T> klass, MultivaluedMap<String, String> queryString, Object entity, String... pathElements) throws CreateSendException;
+
     public <T> T post(Class<T> klass, Object entity, 
             ErrorDeserialiser<?> errorDeserialiser, String... pathElements) throws CreateSendException;
     public <T> T post(String baseUri, Class<T> klass, Object entity, String... pathElements) throws CreateSendException;

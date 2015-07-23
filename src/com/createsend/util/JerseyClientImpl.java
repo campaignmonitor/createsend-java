@@ -209,6 +209,10 @@ public class JerseyClientImpl implements JerseyClient {
         return post(null, klass, entity, defaultDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
     }
 
+    public <T> T post(Class<T> klass, MultivaluedMap<String, String> queryString, Object entity, String... pathElements) throws CreateSendException {
+        return post(null, klass, queryString, entity, defaultDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
+    }
+
     public <T> T post(Class<T> klass, Object entity, 
             ErrorDeserialiser<?> errorDeserialiser, String... pathElements) throws CreateSendException {
     	return post(null, klass, entity, errorDeserialiser, MediaType.APPLICATION_JSON_TYPE, pathElements);
@@ -236,20 +240,38 @@ public class JerseyClientImpl implements JerseyClient {
     public <T> T post(String baseUri, Class<T> klass, Object entity,
             ErrorDeserialiser<?> errorDeserialiser,
             MediaType mediaType, String... pathElements) throws CreateSendException {
-    	WebResource resource;
-    	if (baseUri != null)
-    		resource = authorisedResourceFactory.getResource(baseUri, client, pathElements);
-    	else
-    		resource = authorisedResourceFactory.getResource(client, pathElements);
+    	return post(baseUri, klass, null, entity, errorDeserialiser, mediaType, pathElements);
+    }
+
+    private <T> T post(String baseUri,
+                      Class<T> klass,
+                      MultivaluedMap<String, String> queryString,
+                      Object entity,
+                      ErrorDeserialiser<?> errorDeserialiser,
+                      MediaType mediaType,
+                      String... pathElements) throws CreateSendException {
+        WebResource resource;
+        if (baseUri != null)
+            resource = authorisedResourceFactory.getResource(baseUri, client, pathElements);
+        else
+            resource = authorisedResourceFactory.getResource(client, pathElements);
+
+        if( queryString != null )
+            resource = resource.queryParams(queryString);
 
         try {
-            return fixStringResult(klass, resource.
-                type(mediaType).
-                post(klass, entity));
+            WebResource.Builder builder = resource.type(mediaType);
+
+            return fixStringResult(klass,
+                    entity == null ?
+                            builder.post(klass, "") :
+                            builder.post(klass, entity)
+            );
         } catch (UniformInterfaceException ue) {
             throw handleErrorResponse(ue, errorDeserialiser);
         }
     }
+
 
     /**
      * Makes a HTTP PUT request to the path specified, using the provided entity as the 

@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v5.1.0 - 28 Jul 2015
+
+* Transactional API
+
 ## v5.0.0 - 6 Feb, 2014
 
 * Updated to v3.1 API

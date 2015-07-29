@@ -104,7 +104,7 @@ public class Messages extends CreateSendBase {
         }
 
         if (to != null) {
-            String toStr = dateFormat.format(from);
+            String toStr = dateFormat.format(to);
             queryString.add("to", toStr);
         }
 

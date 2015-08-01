@@ -31,6 +31,7 @@ import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 import javax.ws.rs.core.MultivaluedMap;
+import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/smartEmail/" target="_blank">
@@ -92,8 +93,8 @@ public class SmartEmail extends CreateSendBase {
      * @return SmartEmailDetails
      * @throws CreateSendException
      */
-    public SmartEmailDetails get(String smartEmailId) throws CreateSendException {
-        return jerseyClient.get(SmartEmailDetails.class, "transactional", "smartEmail", smartEmailId);
+    public SmartEmailDetails get(UUID smartEmailId) throws CreateSendException {
+        return jerseyClient.get(SmartEmailDetails.class, "transactional", "smartEmail", smartEmailId.toString());
     }
 
     /**
@@ -102,6 +103,6 @@ public class SmartEmail extends CreateSendBase {
      * @throws CreateSendException
      */
     public void send(SmartEmailRequest smartEmailRequest) throws CreateSendException {
-        jerseyClient.post(String.class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId(), "send");
+        jerseyClient.post(String.class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId().toString(), "send");
     }
 }

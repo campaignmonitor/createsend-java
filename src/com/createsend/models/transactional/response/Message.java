@@ -24,6 +24,7 @@ package com.createsend.models.transactional.response;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Message {
     @JsonProperty("MessageID")
@@ -33,7 +34,7 @@ public class Message {
     private String status;
 
     @JsonProperty("SmartEmailID")
-    private String smartEmailId;
+    private UUID smartEmailId;
 
     @JsonProperty("CanBeResent")
     private boolean canBeResent;
@@ -73,7 +74,7 @@ public class Message {
     /**
      * @return the smart email id.
      */
-    public String getSmartEmailId() {
+    public UUID getSmartEmailId() {
         return smartEmailId;
     }
 

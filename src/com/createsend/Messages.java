@@ -33,6 +33,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/messages/" target="_blank">
@@ -81,7 +82,7 @@ public class Messages extends CreateSendBase {
      * @return the message activity statistics.
      * @throws CreateSendException
      */
-    public TransactionalStatistics statistics(String clientID, String smartEmailID, String group, Date from, Date to, String timezone) throws CreateSendException {
+    public TransactionalStatistics statistics(String clientID, UUID smartEmailID, String group, Date from, Date to, String timezone) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -89,7 +90,7 @@ public class Messages extends CreateSendBase {
         }
 
         if (smartEmailID != null) {
-            queryString.add("smartEmailID", smartEmailID);
+            queryString.add("smartEmailID", smartEmailID.toString());
         }
 
         if (group != null) {
@@ -136,7 +137,7 @@ public class Messages extends CreateSendBase {
      * @return
      * @throws CreateSendException
      */
-    public MessageLogItem[] timeline(String clientID, String sentBeforeID, String sentAfterID, int count, String status, String smartEmailID, String group) throws CreateSendException {
+    public MessageLogItem[] timeline(String clientID, String sentBeforeID, String sentAfterID, int count, String status, UUID smartEmailID, String group) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -160,7 +161,7 @@ public class Messages extends CreateSendBase {
         }
 
         if (smartEmailID != null) {
-            queryString.add("smartEmailID", smartEmailID);
+            queryString.add("smartEmailID", smartEmailID.toString());
         }
 
         if (group != null) {

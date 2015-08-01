@@ -23,12 +23,14 @@ package com.createsend.models.transactional.response;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.UUID;
+
 public class TransactionalStatisticsQuery {
     @JsonProperty("Group")
     private String group;
 
     @JsonProperty("SmartEmailID")
-    private String smartEmailID;
+    private UUID smartEmailID;
 
     @JsonProperty("From")
     private String from;
@@ -49,7 +51,7 @@ public class TransactionalStatisticsQuery {
     /**
      * @return the smart email id.
      */
-    public String getSmartEmailID() {
+    public UUID getSmartEmailID() {
         return smartEmailID;
     }
 

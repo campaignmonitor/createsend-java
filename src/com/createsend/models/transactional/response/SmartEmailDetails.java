@@ -24,10 +24,11 @@ package com.createsend.models.transactional.response;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class SmartEmailDetails {
     @JsonProperty("SmartEmailID")
-    private String smartEmailID;
+    private UUID smartEmailID;
 
     @JsonProperty("CreatedAt")
     private Date createdAt;
@@ -44,7 +45,7 @@ public class SmartEmailDetails {
     /**
      * @return the smart email id.
      */
-    public String getSmartEmailID() {
+    public UUID getSmartEmailID() {
         return smartEmailID;
     }
 

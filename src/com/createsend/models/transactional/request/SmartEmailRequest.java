@@ -29,7 +29,7 @@ import java.util.*;
 
 public class SmartEmailRequest {
     @JsonIgnore
-    private String smartEmailId;
+    private UUID smartEmailId;
     private List<String> to = new ArrayList<>();
     private List<String> cc = new ArrayList<>();
     private List<String> bcc = new ArrayList<>();
@@ -42,8 +42,8 @@ public class SmartEmailRequest {
      * @param smartEmailId The SmartEmailID of the email to send.
      * @param to The recipient of the email.
      */
-    public SmartEmailRequest(String smartEmailId, String to) {
-        if (smartEmailId == null || smartEmailId.length() == 0) {
+    public SmartEmailRequest(UUID smartEmailId, String to) {
+        if (smartEmailId == null) {
             throw new InvalidParameterException("Must supply a Smart Email ID");
         }
 
@@ -58,7 +58,7 @@ public class SmartEmailRequest {
     /**
      * @return the smart email id.
      */
-    public String getSmartEmailId() {
+    public UUID getSmartEmailId() {
         return smartEmailId;
     }
 

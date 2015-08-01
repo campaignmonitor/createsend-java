@@ -35,6 +35,7 @@ import com.createsend.util.exceptions.CreateSendException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
 
 /**
  * Simple examples of how to use the Transactional API.
@@ -43,13 +44,13 @@ public class TransactionalSample {
 
     private static OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails("your access token", "your refresh token");
 
-    private static final String smartEmailID = "your smart email id";
+    private static final UUID smartEmailID = UUID.fromString("your smart email id");
     private static final String messageID = "your message id";
     private static final String toAddress = "you@example.com";
     private static final String fromAddress = "you@example.com";
     private static final String replyToAddress = "you@example.com";
     private static final String subject = "java transactional api wrapper";
-    private static final String basicGroup = "java wrapper emails";
+    private static final String group = "java wrapper emails";
 
     public static void main(String args[]) throws CreateSendException, IOException {
         listSmartEmails();
@@ -153,7 +154,7 @@ public class TransactionalSample {
         }
     }
 
-    private static void getSmartEmailDetails(String smartEmailId) throws CreateSendException {
+    private static void getSmartEmailDetails(UUID smartEmailId) throws CreateSendException {
         System.out.println("---- Get Smart Email Details ----");
 
         SmartEmail smartEmail = new SmartEmail(auth);

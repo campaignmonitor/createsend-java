@@ -24,6 +24,7 @@ package com.createsend.models.transactional.response;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class MessageLogItem {
     @JsonProperty("MessageID")
@@ -39,7 +40,7 @@ public class MessageLogItem {
     private Date sentAt;
 
     @JsonProperty("SmartEmailID")
-    private String smartEmailId;
+    private UUID smartEmailId;
 
     @JsonProperty("CanBeResent")
     private boolean canBeResent;
@@ -84,7 +85,7 @@ public class MessageLogItem {
     /**
      * @return the smart email id.
      */
-    public String getSmartEmailId() {
+    public UUID getSmartEmailId() {
         return smartEmailId;
     }
 

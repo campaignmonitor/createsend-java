@@ -55,7 +55,7 @@ public class TransactionalSample {
         listSmartEmails();
         sendSmartEmail();
 
-        listBasicGroups();
+        listGroups();
         sendBasicEmail();
 
         resend();
@@ -72,7 +72,7 @@ public class TransactionalSample {
 
         Messages messages = new Messages(auth);
 
-        MessageLogItem[] timeline = messages.timeline(null, null, null, 50, null);
+        MessageLogItem[] timeline = messages.timeline(null, null, null, 50, null, null, null);
 
         for (MessageLogItem item : timeline) {
             System.out.println(item);
@@ -117,7 +117,7 @@ public class TransactionalSample {
         basicEmailRequest.setContent(content);
 
         //optional, but more powerful reporting is available if you specify a group
-        basicEmailRequest.setBasicGroup(basicGroup);
+        basicEmailRequest.setGroup(group);
 
         Attachment attachment = getAttachment();
         basicEmailRequest.addAttachment(attachment);
@@ -125,8 +125,8 @@ public class TransactionalSample {
         basicEmail.send(basicEmailRequest);
     }
 
-    private static void listBasicGroups() throws CreateSendException {
-        System.out.println("---- List Basic Email Groups ----");
+    private static void listGroups() throws CreateSendException {
+        System.out.println("---- List Groups ----");
 
         BasicEmail basicEmail = new BasicEmail(auth);
 

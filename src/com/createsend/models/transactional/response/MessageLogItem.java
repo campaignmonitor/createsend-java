@@ -24,14 +24,13 @@ package com.createsend.models.transactional.response;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
-import java.util.List;
 
 public class MessageLogItem {
     @JsonProperty("MessageID")
     private String messageID;
 
-    @JsonProperty("BasicGroup")
-    private String basicGroup;
+    @JsonProperty("Group")
+    private String group;
 
     @JsonProperty("Status")
     private String status;
@@ -62,10 +61,10 @@ public class MessageLogItem {
     }
 
     /**
-     * @return the basic group.
+     * @return the group.
      */
-    public String getBasicGroup() {
-        return basicGroup;
+    public String getGroup() {
+        return group;
     }
 
     /**
@@ -119,6 +118,6 @@ public class MessageLogItem {
 
     @Override
     public String toString() {
-        return String.format("MessageID: %s, BasicGroup: %s, SentAt: %s, Status: %s, Recipient: %s", messageID, basicGroup, sentAt, status, recipient);
+        return String.format("MessageID: %s, Group: %s, SentAt: %s, Status: %s, Recipient: %s", messageID, group, sentAt, status, recipient);
     }
 }

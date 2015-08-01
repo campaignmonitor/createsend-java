@@ -78,9 +78,9 @@ public class BasicEmailRequest {
     private String html;
 
     /**
-     * The Basic Group to tag the message with. This allows you to group similar messages for reporting purposes.
+     * The Group to tag the message with. This allows you to group similar messages for reporting purposes.
      */
-    private String basicGroup;
+    private String group;
 
     /**
      * The ListID to add recipients to.
@@ -194,11 +194,11 @@ public class BasicEmailRequest {
         this.replyTo = replyTo;
     }
 
-    public String getBasicGroup() {
-        return basicGroup;
+    public String getGroup() {
+        return group;
     }
 
-    public void setBasicGroup(String basicGroup) {
-        this.basicGroup = basicGroup;
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

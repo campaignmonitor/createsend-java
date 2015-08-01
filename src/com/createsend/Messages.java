@@ -71,17 +71,17 @@ public class Messages extends CreateSendBase {
     }
 
     /**
-     * Gets statistics for a range of messagesa.
+     * Gets statistics for a range of messages.
      * @param clientID optional Client ID to filter.
      * @param smartEmailID optional Smart Email ID.
-     * @param basicGroup optional Basic Group.
+     * @param group optional Group.
      * @param from optional From address.
      * @param to optional To address.
      * @param timezone optional timezone.
      * @return the message activity statistics.
      * @throws CreateSendException
      */
-    public TransactionalStatistics statistics(String clientID, String smartEmailID, String basicGroup, Date from, Date to, String timezone) throws CreateSendException {
+    public TransactionalStatistics statistics(String clientID, String smartEmailID, String group, Date from, Date to, String timezone) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -92,8 +92,8 @@ public class Messages extends CreateSendBase {
             queryString.add("smartEmailID", smartEmailID);
         }
 
-        if (basicGroup != null) {
-            queryString.add("basicGroup", basicGroup);
+        if (group != null) {
+            queryString.add("group", group);
         }
 
         final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -131,10 +131,12 @@ public class Messages extends CreateSendBase {
      * @param sentAfterID optional end range. Find message sent after this id.
      * @param count optional count, number of messages to retrieve.
      * @param status optional message status filter.
+     * @param smartEmailID optional filter to a specific smart email.
+     * @param group optional filter to a specific group.
      * @return
      * @throws CreateSendException
      */
-    public MessageLogItem[] timeline(String clientID, String sentBeforeID, String sentAfterID, int count, String status) throws CreateSendException {
+    public MessageLogItem[] timeline(String clientID, String sentBeforeID, String sentAfterID, int count, String status, String smartEmailID, String group) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -155,6 +157,14 @@ public class Messages extends CreateSendBase {
 
         if (status != null) {
             queryString.add("status", status);
+        }
+
+        if (smartEmailID != null) {
+            queryString.add("smartEmailID", smartEmailID);
+        }
+
+        if (group != null) {
+            queryString.add("group", group);
         }
 
         return jerseyClient.get(MessageLogItem[].class, queryString, "transactional", "messages");

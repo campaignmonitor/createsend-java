@@ -46,7 +46,7 @@ public class BasicEmail extends CreateSendBase {
     }
 
     /**
-     * List BasicEmail groups.
+     * List groups.
      * @return Array of BasicEmailGroup.
      * @throws CreateSendException
      */

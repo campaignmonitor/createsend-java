@@ -26,17 +26,17 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.util.Date;
 
 public class BasicEmailGroup {
-    @JsonProperty("BasicGroup")
-    private String basicGroup;
+    @JsonProperty("Group")
+    private String group;
 
     @JsonProperty("CreatedAt")
     private Date createdAt;
 
     /**
-     * @return the Basic Group.
+     * @return the Group.
      */
-    public String getBasicGroup() {
-        return basicGroup;
+    public String getGroup() {
+        return group;
     }
 
     /**
@@ -48,6 +48,6 @@ public class BasicEmailGroup {
 
     @Override
     public String toString() {
-        return String.format("BasicGroup: %s, CreatedAt: %s", basicGroup, createdAt);
+        return String.format("Group: %s, CreatedAt: %s", group, createdAt);
     }
 }

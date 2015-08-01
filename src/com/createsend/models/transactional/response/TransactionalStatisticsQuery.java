@@ -24,8 +24,8 @@ package com.createsend.models.transactional.response;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class TransactionalStatisticsQuery {
-    @JsonProperty("BasicGroup")
-    private String basicGroup;
+    @JsonProperty("Group")
+    private String group;
 
     @JsonProperty("SmartEmailID")
     private String smartEmailID;
@@ -40,10 +40,10 @@ public class TransactionalStatisticsQuery {
     private String timeZone;
 
     /**
-     * @return the basic group.
+     * @return the group.
      */
-    public String getBasicGroup() {
-        return basicGroup;
+    public String getGroup() {
+        return group;
     }
 
     /**

@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class MessageLogItem {
     @JsonProperty("MessageID")
-    private String messageID;
+    private UUID messageID;
 
     @JsonProperty("Group")
     private String group;
@@ -57,7 +57,7 @@ public class MessageLogItem {
     /**
      * @return the message id.
      */
-    public String getMessageID() {
+    public UUID getMessageID() {
         return messageID;
     }
 

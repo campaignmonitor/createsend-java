@@ -45,7 +45,7 @@ public class TransactionalSample {
     private static OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails("your access token", "your refresh token");
 
     private static final UUID smartEmailID = UUID.fromString("your smart email id");
-    private static final String messageID = "your message id";
+    private static final UUID messageID = UUID.fromString("your message id");
     private static final String toAddress = "you@example.com";
     private static final String fromAddress = "you@example.com";
     private static final String replyToAddress = "you@example.com";

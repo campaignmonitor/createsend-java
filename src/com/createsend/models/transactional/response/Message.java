@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class Message {
     @JsonProperty("MessageID")
-    private String messageID;
+    private UUID messageID;
 
     @JsonProperty("Status")
     private String status;
@@ -60,7 +60,7 @@ public class Message {
     /**
      * @return the message id.
      */
-    public String getMessageID() {
+    public UUID getMessageID() {
         return messageID;
     }
 

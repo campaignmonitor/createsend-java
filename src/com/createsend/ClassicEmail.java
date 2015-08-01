@@ -21,8 +21,8 @@
  */
 package com.createsend;
 
-import com.createsend.models.transactional.request.BasicEmailRequest;
-import com.createsend.models.transactional.response.BasicEmailGroup;
+import com.createsend.models.transactional.request.ClassicEmailRequest;
+import com.createsend.models.transactional.response.ClassicEmailGroup;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -31,67 +31,67 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
- * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/basicEmail/" target="_blank">
+ * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/classicEmail/" target="_blank">
  * Campaign</a> resources in the Campaign Monitor API
  */
-public class BasicEmail extends CreateSendBase {
+public class ClassicEmail extends CreateSendBase {
 
     /**
      * @param auth The authentication details to use when making API calls.
      * May be either an OAuthAuthenticationDetails or
      * ApiKeyAuthenticationDetails instance.
      */
-    public BasicEmail(AuthenticationDetails auth) {
+    public ClassicEmail(AuthenticationDetails auth) {
         this.jerseyClient = new JerseyClientImpl(auth);
     }
 
     /**
      * List groups.
-     * @return Array of BasicEmailGroup.
+     * @return Array of ClassicEmailGroup.
      * @throws CreateSendException
      */
-    public BasicEmailGroup[] list() throws CreateSendException {
+    public ClassicEmailGroup[] list() throws CreateSendException {
         return list(null);
     }
 
     /**
-     * List BasicEmail groups for a specific Client.
+     * List ClassicEmailGroup for a specific Client.
      * @param clientID The ClientID to filter.
-     * @return Array of BasicEmailGroup.
+     * @return Array of ClassicEmailGroup.
      * @throws CreateSendException
      */
-    public BasicEmailGroup[] list(String clientID) throws CreateSendException {
+    public ClassicEmailGroup[] list(String clientID) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
             queryString.add("clientID", clientID);
         }
 
-        return jerseyClient.get(BasicEmailGroup[].class, queryString, "transactional", "basicEmail", "groups");
+        return jerseyClient.get(ClassicEmailGroup[].class, queryString, "transactional", "classicEmail", "groups");
     }
 
     /**
-     * Send a BasicEmail.
-     * @param basicEmailRequest The BasicEmailRequest to send.
+     * Send a ClassicEmail.
+     * @param classicEmailRequest The ClassicEmailRequest to send.
      * @throws CreateSendException
      */
-    public void send(BasicEmailRequest basicEmailRequest) throws CreateSendException {
-        send(basicEmailRequest, null);
+    public void send(ClassicEmailRequest classicEmailRequest) throws CreateSendException {
+        send(classicEmailRequest, null);
     }
 
     /**
-     * Send a BasicEmail.
-     * @param basicEmailRequest The BasicEmailRequest to send.
+     * Send a ClassicEmail.
+     * @param classicEmailRequest The ClassicEmailRequest to send.
      * @param clientID The ClientID to filter.
      * @throws CreateSendException
      */
-    public void send(BasicEmailRequest basicEmailRequest, String clientID) throws CreateSendException {
+    public void send(ClassicEmailRequest classicEmailRequest, String clientID) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
             queryString.add("clientID", clientID);
         }
 
-        jerseyClient.post(String.class, queryString, basicEmailRequest, "transactional", "basicEmail", "send");
+        jerseyClient.post(String.class, queryString, classicEmailRequest, "transactional", "classicEmail", "send");
     }
 }

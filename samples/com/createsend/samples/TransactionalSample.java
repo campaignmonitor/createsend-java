@@ -21,12 +21,12 @@
  */
 package com.createsend.samples;
 
-import com.createsend.BasicEmail;
+import com.createsend.ClassicEmail;
 import com.createsend.Messages;
 import com.createsend.SmartEmail;
 import com.createsend.models.transactional.EmailContent;
 import com.createsend.models.transactional.request.Attachment;
-import com.createsend.models.transactional.request.BasicEmailRequest;
+import com.createsend.models.transactional.request.ClassicEmailRequest;
 import com.createsend.models.transactional.request.SmartEmailRequest;
 import com.createsend.models.transactional.response.*;
 import com.createsend.util.ApiKeyAuthenticationDetails;
@@ -56,7 +56,7 @@ public class TransactionalSample {
         sendSmartEmail();
 
         listGroups();
-        sendBasicEmail();
+        sendClassicEmail();
 
         resend();
 
@@ -99,41 +99,41 @@ public class TransactionalSample {
         System.out.println(message);
     }
 
-    private static void sendBasicEmail() throws CreateSendException, IOException {
-        System.out.println("---- Send Basic Email ----");
+    private static void sendClassicEmail() throws CreateSendException, IOException {
+        System.out.println("---- Send Classic Email ----");
 
-        BasicEmail basicEmail = new BasicEmail(auth);
+        ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        BasicEmailRequest basicEmailRequest = new BasicEmailRequest(toAddress);
-        basicEmailRequest.setFrom(fromAddress);
-        basicEmailRequest.setReplyTo(replyToAddress);
-        basicEmailRequest.setSubject(subject);
+        ClassicEmailRequest classicEmailRequest = new ClassicEmailRequest(toAddress);
+        classicEmailRequest.setFrom(fromAddress);
+        classicEmailRequest.setReplyTo(replyToAddress);
+        classicEmailRequest.setSubject(subject);
 
         EmailContent content = new EmailContent();
         content.setHtml("<html><body><h1>HTML content</h1>html sent via the wrapper</body></html>");
         content.setText("plain text sent via the wrapper");
         content.setTrackOpens(true);
         content.setTrackClicks(true);
-        basicEmailRequest.setContent(content);
+        classicEmailRequest.setContent(content);
 
         //optional, but more powerful reporting is available if you specify a group
-        basicEmailRequest.setGroup(group);
+        classicEmailRequest.setGroup(group);
 
         Attachment attachment = getAttachment();
-        basicEmailRequest.addAttachment(attachment);
+        classicEmailRequest.addAttachment(attachment);
 
-        basicEmail.send(basicEmailRequest);
+        classicEmail.send(classicEmailRequest);
     }
 
     private static void listGroups() throws CreateSendException {
         System.out.println("---- List Groups ----");
 
-        BasicEmail basicEmail = new BasicEmail(auth);
+        ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        BasicEmailGroup[] basicGroups = basicEmail.list();
+        ClassicEmailGroup[] groups = classicEmail.list();
 
-        for (BasicEmailGroup basicGroup : basicGroups) {
-            System.out.printf("Basic Email: %s\n", basicGroup);
+        for (ClassicEmailGroup group : groups) {
+            System.out.printf("Classic Email: %s\n", group);
         }
     }
 
@@ -143,9 +143,13 @@ public class TransactionalSample {
         SmartEmail smartEmail = new SmartEmail(auth);
         SmartEmailItem[] smartEmails = smartEmail.list();
 
+        boolean hasGotFirst = false;
         for (SmartEmailItem status : smartEmails) {
             System.out.printf("Smart Email: %s\n", status);
-            getSmartEmailDetails(status.getId());
+            if (!hasGotFirst) {
+                getSmartEmailDetails(status.getId());
+                hasGotFirst = true;
+            }
         }
     }
 

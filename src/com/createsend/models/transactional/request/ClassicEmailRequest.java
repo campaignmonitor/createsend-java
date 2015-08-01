@@ -29,9 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Contains the request body for Transactional Send Basic email in the Campaign Monitor API.
+ * Contains the request body for Transactional Send Classic email in the Campaign Monitor API.
  */
-public class BasicEmailRequest {
+public class ClassicEmailRequest {
     /**
      * The Subject of the email.
      */
@@ -102,7 +102,7 @@ public class BasicEmailRequest {
      */
     private boolean trackClicks;
 
-    public BasicEmailRequest(String to) {
+    public ClassicEmailRequest(String to) {
         if (to == null || to.length() == 0) {
             throw new InvalidParameterException("Must supply a TO address");
         }

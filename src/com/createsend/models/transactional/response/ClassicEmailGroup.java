@@ -25,7 +25,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.Date;
 
-public class BasicEmailGroup {
+public class ClassicEmailGroup {
     @JsonProperty("Group")
     private String group;
 

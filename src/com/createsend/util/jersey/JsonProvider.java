@@ -53,6 +53,7 @@ public class JsonProvider extends JacksonJsonProvider {
 
         @Override
         public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
+            // FIXME this will break Campaigns, Lists and Segments methods that use ApiDateFormat
             throw new UnsupportedOperationException();
         }
 

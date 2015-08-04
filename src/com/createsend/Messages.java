@@ -37,7 +37,7 @@ import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/messages/" target="_blank">
- * Campaign</a> resources in the Campaign Monitor API
+ * Transactional Message</a> resources in the Campaign Monitor API
  */
 public class Messages extends CreateSendBase {
 
@@ -97,7 +97,8 @@ public class Messages extends CreateSendBase {
             queryString.add("group", group);
         }
 
-        final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        // TODO Constant somewhere (JsonProvider.ApiDateFormatNoTime?)
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         if (from != null) {
             String fromStr = dateFormat.format(from);

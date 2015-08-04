@@ -35,11 +35,9 @@ import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/smartEmail/" target="_blank">
- * Campaign</a> resources in the Campaign Monitor API
+ * Transactional Smart Email</a> resources in the Campaign Monitor API
  */
 public class SmartEmail extends CreateSendBase {
-
-    private static final SmartEmailStatus defaultStatus = SmartEmailStatus.ACTIVE;
 
     /**
      * @param auth The authentication details to use when making API calls.
@@ -56,7 +54,7 @@ public class SmartEmail extends CreateSendBase {
      * @throws CreateSendException
      */
     public SmartEmailItem[] list() throws CreateSendException {
-        return list(defaultStatus);
+        return list(null, null);
     }
 
     /**
@@ -70,6 +68,16 @@ public class SmartEmail extends CreateSendBase {
     }
 
     /**
+     * List SmartEmails, filtered for a specific Client.
+     * @param clientID
+     * @return
+     * @throws CreateSendException
+     */
+    public SmartEmailItem[] list(String clientID) throws CreateSendException {
+        return list(null, clientID);
+    }
+
+    /**
      * List SmartEmails, filtered by status for a specific Client.
      * @param status
      * @param clientID
@@ -78,7 +86,9 @@ public class SmartEmail extends CreateSendBase {
      */
     public SmartEmailItem[] list(SmartEmailStatus status, String clientID) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
-        queryString.add("status", status.toValue());
+        if (status != null) {
+            queryString.add("status", status.toValue());
+        }
 
         if (clientID != null) {
             queryString.add("clientID", clientID);

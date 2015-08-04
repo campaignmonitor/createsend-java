@@ -22,6 +22,7 @@
 package com.createsend;
 
 import com.createsend.models.transactional.request.SmartEmailRequest;
+import com.createsend.models.transactional.response.MessageSent;
 import com.createsend.models.transactional.response.SmartEmailDetails;
 import com.createsend.models.transactional.response.SmartEmailItem;
 import com.createsend.models.transactional.response.SmartEmailStatus;
@@ -110,9 +111,10 @@ public class SmartEmail extends CreateSendBase {
     /**
      * Send a SmartEmail.
      * @param smartEmailRequest The SmartEmailRequest to send.
+     * @return Message sent acknowledgement.
      * @throws CreateSendException
      */
-    public void send(SmartEmailRequest smartEmailRequest) throws CreateSendException {
-        jerseyClient.post(String.class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId().toString(), "send");
+    public MessageSent[] send(SmartEmailRequest smartEmailRequest) throws CreateSendException {
+        return jerseyClient.post(MessageSent[].class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId().toString(), "send");
     }
 }

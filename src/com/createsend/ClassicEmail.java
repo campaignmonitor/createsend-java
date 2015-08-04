@@ -23,6 +23,7 @@ package com.createsend;
 
 import com.createsend.models.transactional.request.ClassicEmailRequest;
 import com.createsend.models.transactional.response.ClassicEmailGroup;
+import com.createsend.models.transactional.response.MessageSent;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -32,7 +33,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/classicEmail/" target="_blank">
- * Campaign</a> resources in the Campaign Monitor API
+ * Transactional Classic Email</a> resources in the Campaign Monitor API
  */
 public class ClassicEmail extends CreateSendBase {
 
@@ -83,15 +84,16 @@ public class ClassicEmail extends CreateSendBase {
      * Send a ClassicEmail.
      * @param classicEmailRequest The ClassicEmailRequest to send.
      * @param clientID The ClientID to filter.
+     * @return Message sent acknowledgement.
      * @throws CreateSendException
      */
-    public void send(ClassicEmailRequest classicEmailRequest, String clientID) throws CreateSendException {
+    public MessageSent[] send(ClassicEmailRequest classicEmailRequest, String clientID) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
             queryString.add("clientID", clientID);
         }
 
-        jerseyClient.post(String.class, queryString, classicEmailRequest, "transactional", "classicEmail", "send");
+        return jerseyClient.post(MessageSent[].class, queryString, classicEmailRequest, "transactional", "classicEmail", "send");
     }
 }

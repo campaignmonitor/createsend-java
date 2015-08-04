@@ -22,6 +22,7 @@
 package com.createsend;
 
 import com.createsend.models.transactional.request.SmartEmailRequest;
+import com.createsend.models.transactional.response.MessageSent;
 import com.createsend.models.transactional.response.SmartEmailDetails;
 import com.createsend.models.transactional.response.SmartEmailItem;
 import com.createsend.models.transactional.response.SmartEmailStatus;
@@ -35,11 +36,9 @@ import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/smartEmail/" target="_blank">
- * Campaign</a> resources in the Campaign Monitor API
+ * Transactional Smart Email</a> resources in the Campaign Monitor API
  */
 public class SmartEmail extends CreateSendBase {
-
-    private static final SmartEmailStatus defaultStatus = SmartEmailStatus.ACTIVE;
 
     /**
      * @param auth The authentication details to use when making API calls.
@@ -56,7 +55,7 @@ public class SmartEmail extends CreateSendBase {
      * @throws CreateSendException
      */
     public SmartEmailItem[] list() throws CreateSendException {
-        return list(defaultStatus);
+        return list(null, null);
     }
 
     /**
@@ -70,6 +69,16 @@ public class SmartEmail extends CreateSendBase {
     }
 
     /**
+     * List SmartEmails, filtered for a specific Client.
+     * @param clientID
+     * @return
+     * @throws CreateSendException
+     */
+    public SmartEmailItem[] list(String clientID) throws CreateSendException {
+        return list(null, clientID);
+    }
+
+    /**
      * List SmartEmails, filtered by status for a specific Client.
      * @param status
      * @param clientID
@@ -78,7 +87,9 @@ public class SmartEmail extends CreateSendBase {
      */
     public SmartEmailItem[] list(SmartEmailStatus status, String clientID) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
-        queryString.add("status", status.toValue());
+        if (status != null) {
+            queryString.add("status", status.toValue());
+        }
 
         if (clientID != null) {
             queryString.add("clientID", clientID);
@@ -100,9 +111,10 @@ public class SmartEmail extends CreateSendBase {
     /**
      * Send a SmartEmail.
      * @param smartEmailRequest The SmartEmailRequest to send.
+     * @return Message sent acknowledgement.
      * @throws CreateSendException
      */
-    public void send(SmartEmailRequest smartEmailRequest) throws CreateSendException {
-        jerseyClient.post(String.class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId().toString(), "send");
+    public MessageSent[] send(SmartEmailRequest smartEmailRequest) throws CreateSendException {
+        return jerseyClient.post(MessageSent[].class, smartEmailRequest, "transactional", "smartEmail", smartEmailRequest.getSmartEmailId().toString(), "send");
     }
 }

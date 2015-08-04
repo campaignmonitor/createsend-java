@@ -52,11 +52,6 @@ public class JsonProvider extends JacksonJsonProvider {
         final SimpleDateFormat ApiDateFormatTz = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 
         @Override
-        public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public Date parse(String source, ParsePosition pos) {
             if (source.length() - pos.getIndex() == ApiDateFormat.toPattern().length())
                 return ApiDateFormat.parse(source, pos);

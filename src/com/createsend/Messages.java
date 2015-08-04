@@ -23,6 +23,7 @@ package com.createsend;
 
 import com.createsend.models.transactional.response.Message;
 import com.createsend.models.transactional.response.MessageLogItem;
+import com.createsend.models.transactional.response.MessageSent;
 import com.createsend.models.transactional.response.TransactionalStatistics;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClientImpl;
@@ -37,7 +38,7 @@ import java.util.UUID;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/messages/" target="_blank">
- * Campaign</a> resources in the Campaign Monitor API
+ * Transactional Message</a> resources in the Campaign Monitor API
  */
 public class Messages extends CreateSendBase {
 
@@ -97,7 +98,8 @@ public class Messages extends CreateSendBase {
             queryString.add("group", group);
         }
 
-        final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        // TODO Constant somewhere (JsonProvider.ApiDateFormatNoTime?)
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         if (from != null) {
             String fromStr = dateFormat.format(from);
@@ -119,10 +121,11 @@ public class Messages extends CreateSendBase {
     /**
      * Resend a message. Message may have a retention limit and might not always be valid to resend.
      * @param messageID the message id to resend.
+     * @return Message sent acknowledgement.
      * @throws CreateSendException
      */
-    public void resend(UUID messageID) throws CreateSendException {
-        jerseyClient.post(String.class, (Object)null, "transactional", "messages", messageID.toString(), "resend");
+    public MessageSent resend(UUID messageID) throws CreateSendException {
+        return jerseyClient.post(MessageSent.class, (Object)null, "transactional", "messages", messageID.toString(), "resend");
     }
 
     /**
@@ -137,7 +140,7 @@ public class Messages extends CreateSendBase {
      * @return
      * @throws CreateSendException
      */
-    public MessageLogItem[] timeline(String clientID, UUID sentBeforeID, UUID sentAfterID, int count, String status, UUID smartEmailID, String group) throws CreateSendException {
+    public MessageLogItem[] timeline(String clientID, UUID sentBeforeID, UUID sentAfterID, Integer count, String status, UUID smartEmailID, String group) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -152,8 +155,8 @@ public class Messages extends CreateSendBase {
             queryString.add("sentAfterID", sentAfterID.toString());
         }
 
-        if (count > 0 && count < 200) {
-            queryString.add("count", String.valueOf(count));
+        if (count != null) {
+            queryString.add("count", count.toString());
         }
 
         if (status != null) {

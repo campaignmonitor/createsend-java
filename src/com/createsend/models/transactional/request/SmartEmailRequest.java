@@ -24,7 +24,6 @@ package com.createsend.models.transactional.request;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonUnwrapped;
 
-import java.security.InvalidParameterException;
 import java.util.*;
 
 public class SmartEmailRequest {
@@ -44,11 +43,11 @@ public class SmartEmailRequest {
      */
     public SmartEmailRequest(UUID smartEmailId, String to) {
         if (smartEmailId == null) {
-            throw new InvalidParameterException("Must supply a Smart Email ID");
+            throw new IllegalArgumentException("Must supply a Smart Email ID");
         }
 
         if (to == null || to.length() == 0) {
-            throw new InvalidParameterException("Must supply a TO address");
+            throw new IllegalArgumentException("Must supply a TO address");
         }
 
         this.smartEmailId = smartEmailId;

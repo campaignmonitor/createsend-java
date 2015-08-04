@@ -23,6 +23,8 @@ package com.createsend.models.transactional;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.List;
+
 public class EmailContent {
 
     @JsonProperty("Html")
@@ -30,6 +32,9 @@ public class EmailContent {
 
     @JsonProperty("Text")
     private String text;
+
+    @JsonProperty("EmailVariables")
+    private List<String> emailVariables;
 
     @JsonProperty("InlineCss")
     private boolean inlineCss;
@@ -52,6 +57,13 @@ public class EmailContent {
      */
     public String getText() {
         return text;
+    }
+
+    /**
+     * @return the data merge variables.
+     */
+    public List<String> getEmailVariables() {
+        return emailVariables;
     }
 
     /**

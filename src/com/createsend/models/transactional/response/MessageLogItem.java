@@ -48,6 +48,12 @@ public class MessageLogItem {
     @JsonProperty("Recipient")
     private String recipient;
 
+    @JsonProperty("From")
+    private String from;
+
+    @JsonProperty("Subject")
+    private String subject;
+
     @JsonProperty("TotalOpens")
     private int totalOpens;
 
@@ -101,6 +107,20 @@ public class MessageLogItem {
      */
     public String getRecipient() {
         return recipient;
+    }
+
+    /**
+     * @return the from address of the message.
+     */
+    public String getFrom() {
+        return from;
+    }
+
+    /**
+     * @return the subject of the message.
+     */
+    public String getSubject() {
+        return subject;
     }
 
     /**

@@ -36,6 +36,9 @@ public class SmartEmailDetails {
     @JsonProperty("Status")
     private String status;
 
+    @JsonProperty("Name")
+    private String name;
+
     @JsonProperty("Properties")
     private SmartEmailProperties properties;
 
@@ -64,6 +67,13 @@ public class SmartEmailDetails {
     }
 
     /**
+     * @return the name of the smart email.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * @return smart email properties.
      */
     public SmartEmailProperties getProperties() {
@@ -79,6 +89,6 @@ public class SmartEmailDetails {
 
     @Override
     public String toString() {
-        return String.format("ID: %s, Status: %s, Properties:\n%s", getSmartEmailID(), getStatus(), getProperties());
+        return String.format("ID: %s, Status: %s, Name: %s, Properties:\n%s", getSmartEmailID(), getStatus(), getName(), getProperties());
     }
 }

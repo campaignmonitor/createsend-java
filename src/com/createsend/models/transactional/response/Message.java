@@ -23,6 +23,7 @@ package com.createsend.models.transactional.response;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,9 @@ public class Message {
 
     @JsonProperty("Status")
     private String status;
+
+    @JsonProperty("SentAt")
+    private Date sentAt;
 
     @JsonProperty("SmartEmailID")
     private UUID smartEmailId;
@@ -69,6 +73,13 @@ public class Message {
      */
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * @return the message sentAt.
+     */
+    public Date getSentAt() {
+        return sentAt;
     }
 
     /**

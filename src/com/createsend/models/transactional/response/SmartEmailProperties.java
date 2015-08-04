@@ -29,6 +29,9 @@ public class SmartEmailProperties {
     @JsonProperty("From")
     private String from;
 
+    @JsonProperty("ReplyTo")
+    private String replyTo;
+
     @JsonProperty("Subject")
     private String subject;
 
@@ -46,6 +49,13 @@ public class SmartEmailProperties {
      */
     public String getFrom() {
         return from;
+    }
+
+    /**
+     * @return the replyTo address of the smart email.
+     */
+    public String getReplyTo() {
+        return replyTo;
     }
 
     /**

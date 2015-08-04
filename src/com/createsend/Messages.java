@@ -138,7 +138,7 @@ public class Messages extends CreateSendBase {
      * @return
      * @throws CreateSendException
      */
-    public MessageLogItem[] timeline(String clientID, UUID sentBeforeID, UUID sentAfterID, int count, String status, UUID smartEmailID, String group) throws CreateSendException {
+    public MessageLogItem[] timeline(String clientID, UUID sentBeforeID, UUID sentAfterID, Integer count, String status, UUID smartEmailID, String group) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
 
         if (clientID != null) {
@@ -153,8 +153,8 @@ public class Messages extends CreateSendBase {
             queryString.add("sentAfterID", sentAfterID.toString());
         }
 
-        if (count > 0 && count < 200) {
-            queryString.add("count", String.valueOf(count));
+        if (count != null) {
+            queryString.add("count", count.toString());
         }
 
         if (status != null) {

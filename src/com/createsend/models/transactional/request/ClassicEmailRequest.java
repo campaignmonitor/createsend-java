@@ -23,7 +23,6 @@ package com.createsend.models.transactional.request;
 
 import com.createsend.models.transactional.EmailContent;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -104,7 +103,7 @@ public class ClassicEmailRequest {
 
     public ClassicEmailRequest(String to) {
         if (to == null || to.length() == 0) {
-            throw new InvalidParameterException("Must supply a TO address");
+            throw new IllegalArgumentException("Must supply a TO address");
         }
 
         this.to.add(to);

@@ -42,7 +42,7 @@ import java.util.UUID;
  */
 public class TransactionalSample {
 
-    private static OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails("your access token", "your refresh token");
+    private static final OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails("your access token", "your refresh token");
 
     private static final UUID smartEmailID = UUID.fromString("your smart email id");
     private static final UUID messageID = UUID.fromString("your message id");
@@ -51,6 +51,7 @@ public class TransactionalSample {
     private static final String replyToAddress = "you@example.com";
     private static final String subject = "java transactional api wrapper";
     private static final String group = "java wrapper emails";
+    private static final String clientID = "your client id"; // Can be null
 
     public static void main(String args[]) throws CreateSendException, IOException {
         listSmartEmails();
@@ -59,8 +60,7 @@ public class TransactionalSample {
         listGroups();
         sendClassicEmail();
 
-        resend();
-
+        resendMessage();
         getMessage();
 
         showStatistics();
@@ -73,7 +73,7 @@ public class TransactionalSample {
 
         Messages messages = new Messages(auth);
 
-        MessageLogItem[] timeline = messages.timeline(null, null, null, 50, null, null, null);
+        MessageLogItem[] timeline = messages.timeline(clientID, null, null, 50, null, null, null);
 
         for (MessageLogItem item : timeline) {
             System.out.println(item);
@@ -85,7 +85,7 @@ public class TransactionalSample {
 
         Messages messages = new Messages(auth);
 
-        TransactionalStatistics stats = messages.statistics(null, smartEmailID, null, null, null, null);
+        TransactionalStatistics stats = messages.statistics(clientID, smartEmailID, null, null, null, null);
 
         System.out.println(stats);
     }
@@ -131,7 +131,7 @@ public class TransactionalSample {
 
         ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        ClassicEmailGroup[] groups = classicEmail.list();
+        ClassicEmailGroup[] groups = classicEmail.list(clientID);
 
         for (ClassicEmailGroup group : groups) {
             System.out.printf("Classic Email: %s\n", group);
@@ -142,7 +142,7 @@ public class TransactionalSample {
         System.out.println("---- List Smart Emails ----");
 
         SmartEmail smartEmail = new SmartEmail(auth);
-        SmartEmailItem[] smartEmails = smartEmail.list();
+        SmartEmailItem[] smartEmails = smartEmail.list(clientID);
 
         boolean hasGotFirst = false;
         for (SmartEmailItem status : smartEmails) {
@@ -176,8 +176,8 @@ public class TransactionalSample {
         smartEmail.send(smartEmailRequest);
     }
 
-    private static void resend() throws CreateSendException {
-        System.out.println("---- Resend Email ----");
+    private static void resendMessage() throws CreateSendException {
+        System.out.println("---- Resend Message ----");
 
         Messages messages = new Messages(auth);
         messages.resend(messageID);

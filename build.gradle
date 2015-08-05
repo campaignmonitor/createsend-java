@@ -6,8 +6,8 @@ apply plugin: 'idea'
 install.dependsOn ':build'
 defaultTasks 'clean', 'install'
 
-sourceCompatibility = 1.6
-version = '5.0.0-SNAPSHOT'
+sourceCompatibility = 1.7
+version = '5.1.0-SNAPSHOT'
 group = 'com.createsend'
 
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
@@ -19,10 +19,12 @@ repositories {
 dependencies {
 	compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.17.1'
 	compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.17.1'
-  compile group: 'com.sun.jersey', 'name': 'jersey-core', version: '1.17.1'
+    compile group: 'com.sun.jersey', 'name': 'jersey-core', version: '1.17.1'
 	compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.12'
 	compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version: '1.9.12'
 	compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.12'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 
 sourceSets {

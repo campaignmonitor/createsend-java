@@ -27,13 +27,17 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -42,7 +46,18 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  * serialisation/deserialisation properties
  */
 public class JsonProvider extends JacksonJsonProvider {
-    public static final DateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static final DateFormat ApiDateFormat = new SimpleDateFormat() {
+        final SimpleDateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final SimpleDateFormat ApiDateFormatTz = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+
+        @Override
+        public Date parse(String source, ParsePosition pos) {
+            if (source.length() - pos.getIndex() == ApiDateFormat.toPattern().length())
+                return ApiDateFormat.parse(source, pos);
+            return ApiDateFormatTz.parse(source, pos);
+        }
+    };
 
     @Override
     public void writeTo(Object value, Class<?> type, Type genericType,

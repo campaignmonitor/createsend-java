@@ -21,6 +21,7 @@
  */
 package com.createsend.util;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -33,7 +34,11 @@ public class Configuration {
         properties = new Properties();
 
         try {
-            properties.load(getClass().getClassLoader().getResourceAsStream("com/createsend/util/config.properties"));
+            InputStream configProperties = getClass().getClassLoader().getResourceAsStream("com/createsend/util/config.properties");
+            if (configProperties == null) {
+                throw new FileNotFoundException("Could not find config.properties");
+            }
+            properties.load(configProperties);
                         
             InputStream createsendProperties = getClass().getClassLoader().getResourceAsStream("createsend.properties");
             if(createsendProperties != null) {

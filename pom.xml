@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.createsend</groupId>
   <artifactId>createsend-java</artifactId>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.1.0-SNAPSHOT</version>
   <name>createsend-java</name>
   <description>A Java library which implements the complete functionality of the Campaign Monitor API.</description>
   <url>http://campaignmonitor.github.io/createsend-java/</url>
@@ -52,6 +52,16 @@
       <version>1.9.12</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
   </dependencies>
 
   <scm>
@@ -95,6 +105,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>

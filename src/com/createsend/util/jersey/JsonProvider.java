@@ -47,7 +47,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  */
 public class JsonProvider extends JacksonJsonProvider {
 
-    public static final DateFormat ApiDateFormat = new SimpleDateFormat() {
+    public static final DateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd") {
         final SimpleDateFormat ApiDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         final SimpleDateFormat ApiDateFormatTz = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 

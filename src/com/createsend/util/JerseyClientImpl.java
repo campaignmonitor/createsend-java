@@ -471,9 +471,11 @@ public class JerseyClientImpl implements JerseyClient {
             } catch (ClassNotFoundException e) { }
         }
         
-        for(Method method : klass.getMethods()) {
-            if(method.getName().equals(callingMethodName)) {
-                return (ParameterizedType)method.getGenericReturnType();
+        if (klass != null) {
+            for (Method method : klass.getMethods()) {
+                if (method.getName().equals(callingMethodName)) {
+                    return (ParameterizedType) method.getGenericReturnType();
+                }
             }
         }
         

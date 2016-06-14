@@ -79,10 +79,10 @@ public class General extends CreateSendBase {
     	String state) {
         String qs = "client_id=" + String.valueOf(clientID);
         try {
-			qs += "&redirect_uri=" + URLEncoder.encode(redirectUri, urlEncodingScheme);
-			qs += "&scope=" + URLEncoder.encode(scope, urlEncodingScheme);
+			qs += "&redirect_uri=" + URLEncoder.encode(redirectUri, URL_ENCODING_SCHEME);
+			qs += "&scope=" + URLEncoder.encode(scope, URL_ENCODING_SCHEME);
 			if (state != null)
-				qs += "&state=" + URLEncoder.encode(state, urlEncodingScheme);
+				qs += "&state=" + URLEncoder.encode(state, URL_ENCODING_SCHEME);
 		} catch (UnsupportedEncodingException e) {
 			qs = null;
 		}
@@ -110,9 +110,9 @@ public class General extends CreateSendBase {
     	String body = "grant_type=authorization_code";
     	try {
         	body += "&client_id=" + String.valueOf(clientID);
-        	body += "&client_secret=" + URLEncoder.encode(clientSecret, urlEncodingScheme);
-        	body += "&redirect_uri=" + URLEncoder.encode(redirectUri, urlEncodingScheme);
-        	body += "&code=" + URLEncoder.encode(code, urlEncodingScheme);
+        	body += "&client_secret=" + URLEncoder.encode(clientSecret, URL_ENCODING_SCHEME);
+        	body += "&redirect_uri=" + URLEncoder.encode(redirectUri, URL_ENCODING_SCHEME);
+        	body += "&code=" + URLEncoder.encode(code, URL_ENCODING_SCHEME);
 		} catch (UnsupportedEncodingException e) {
 			body = null;
 		}

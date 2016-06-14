@@ -6,7 +6,7 @@
  *  in the Software without restriction, including without limitation the rights
  *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
+ *  furnished to do so, SUBJECT to the following conditions:
  *
  *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
@@ -46,12 +46,12 @@ public class TransactionalSample {
 
     private static final UUID smartEmailID = UUID.fromString("your smart email id");
     private static final UUID messageID = UUID.fromString("your message id");
-    private static final String toAddress = "you@example.com";
-    private static final String fromAddress = "you@example.com";
-    private static final String replyToAddress = "you@example.com";
-    private static final String subject = "java transactional api wrapper";
-    private static final String group = "java wrapper emails";
-    private static final String clientID = "your client id"; // Can be null
+    private static final String TO_ADDRESS = "you@example.com";
+    private static final String FROM_ADDRESS = "you@example.com";
+    private static final String REPLY_TO_ADDRESS = "you@example.com";
+    private static final String SUBJECT = "java transactional api wrapper";
+    private static final String GROUP = "java wrapper emails";
+    private static final String CLIENT_ID = "your client id"; // Can be null
 
     public static void main(String args[]) throws CreateSendException, IOException {
         listSmartEmails();
@@ -73,7 +73,7 @@ public class TransactionalSample {
 
         Messages messages = new Messages(auth);
 
-        MessageLogItem[] timeline = messages.timeline(clientID, null, null, 50, null, null, null);
+        MessageLogItem[] timeline = messages.timeline(CLIENT_ID, null, null, 50, null, null, null);
 
         for (MessageLogItem item : timeline) {
             System.out.println(item);
@@ -85,7 +85,7 @@ public class TransactionalSample {
 
         Messages messages = new Messages(auth);
 
-        TransactionalStatistics stats = messages.statistics(clientID, smartEmailID, null, null, null, null);
+        TransactionalStatistics stats = messages.statistics(CLIENT_ID, smartEmailID, null, null, null, null);
 
         System.out.println(stats);
     }
@@ -105,10 +105,10 @@ public class TransactionalSample {
 
         ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        ClassicEmailRequest classicEmailRequest = new ClassicEmailRequest(toAddress);
-        classicEmailRequest.setFrom(fromAddress);
-        classicEmailRequest.setReplyTo(replyToAddress);
-        classicEmailRequest.setSubject(subject);
+        ClassicEmailRequest classicEmailRequest = new ClassicEmailRequest(TO_ADDRESS);
+        classicEmailRequest.setFrom(FROM_ADDRESS);
+        classicEmailRequest.setReplyTo(REPLY_TO_ADDRESS);
+        classicEmailRequest.setSubject(SUBJECT);
 
         EmailContent content = new EmailContent();
         content.setHtml("<html><body><h1>HTML content</h1>html sent via the wrapper</body></html>");
@@ -117,8 +117,8 @@ public class TransactionalSample {
         content.setTrackClicks(true);
         classicEmailRequest.setContent(content);
 
-        //optional, but more powerful reporting is available if you specify a group
-        classicEmailRequest.setGroup(group);
+        //optional, but more powerful reporting is available if you specify a GROUP
+        classicEmailRequest.setGroup(GROUP);
 
         Attachment attachment = getAttachment();
         classicEmailRequest.addAttachment(attachment);
@@ -131,7 +131,7 @@ public class TransactionalSample {
 
         ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        ClassicEmailGroup[] groups = classicEmail.list(clientID);
+        ClassicEmailGroup[] groups = classicEmail.list(CLIENT_ID);
 
         for (ClassicEmailGroup group : groups) {
             System.out.printf("Classic Email: %s\n", group);
@@ -142,7 +142,7 @@ public class TransactionalSample {
         System.out.println("---- List Smart Emails ----");
 
         SmartEmail smartEmail = new SmartEmail(auth);
-        SmartEmailItem[] smartEmails = smartEmail.list(clientID);
+        SmartEmailItem[] smartEmails = smartEmail.list(CLIENT_ID);
 
         boolean hasGotFirst = false;
         for (SmartEmailItem status : smartEmails) {
@@ -167,7 +167,7 @@ public class TransactionalSample {
         System.out.println("---- Send Smart Email ----");
 
         SmartEmail smartEmail = new SmartEmail(auth);
-        SmartEmailRequest smartEmailRequest = new SmartEmailRequest(smartEmailID, toAddress);
+        SmartEmailRequest smartEmailRequest = new SmartEmailRequest(smartEmailID, TO_ADDRESS);
         smartEmailRequest.addData("myvariable", "supplied via the wrapper sample runner");
 
         Attachment attachment = getAttachment();

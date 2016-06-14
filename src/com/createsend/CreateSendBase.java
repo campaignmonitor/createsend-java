@@ -35,7 +35,7 @@ import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
 
 public abstract class CreateSendBase {
-	protected static final String urlEncodingScheme = "UTF-8";
+	protected static final String URL_ENCODING_SCHEME = "UTF-8";
 
 	protected JerseyClient jerseyClient = null;
 
@@ -55,7 +55,7 @@ public abstract class CreateSendBase {
 			try {
 				body += "&refresh_token="
 						+ URLEncoder.encode(oauthDetails.getRefreshToken(),
-								urlEncodingScheme);
+						URL_ENCODING_SCHEME);
 			} catch (UnsupportedEncodingException e) {
 				body = null;
 			}

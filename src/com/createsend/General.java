@@ -28,7 +28,6 @@ import java.util.Date;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.createsend.models.ApiKey;
 import com.createsend.models.ExternalSessionOptions;
 import com.createsend.models.ExternalSessionResult;
 import com.createsend.models.OAuthTokenDetails;
@@ -41,7 +40,6 @@ import com.createsend.util.Configuration;
 import com.createsend.util.JerseyClient;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
-import com.createsend.util.jersey.AuthorisedResourceFactory;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**

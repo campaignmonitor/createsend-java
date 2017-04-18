@@ -562,6 +562,6 @@ public class Lists extends CreateSendBase {
      * Activating a webhook</a>
      */
     public void deactivateWebhook(String webhookID) throws CreateSendException {
-        jerseyClient.put("", "lists", listID, "webhooks", webhookID, "activate.json");
+        jerseyClient.put("", "lists", listID, "webhooks", webhookID, "deactivate.json");
     }
 }

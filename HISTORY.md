@@ -1,5 +1,11 @@
 # createsend-java history
 
+## v5.1.1 - 13 Jun 2017
+
+* Fix date format in `JsonProvider.ApiDateFormat`
+* Fix NPE in `JerseyClientImpl`
+* Fix incorrect List `deactivateWebhook` endpoint.
+
 ## v5.1.0 - 28 Jul 2015
 
 * Transactional API

@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v5.1.2 - 14 Jun 2-17
+
+* Disable JavaDoc generation for release, for now, as it's failing with Java 8.
+
 ## v5.1.1 - 13 Jun 2017
 
 * Fix date format in `JsonProvider.ApiDateFormat`

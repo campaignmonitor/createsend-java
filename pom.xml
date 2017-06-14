@@ -14,7 +14,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <repositories />
+  <repositories/>
   <dependencies>
     <dependency>
       <groupId>com.sun.jersey</groupId>
@@ -92,15 +92,15 @@
   </distributionManagement>
 
   <build>
-  	<sourceDirectory>src</sourceDirectory>
-  	<resources>
-  		<resource>
-  			<directory>src</directory>
-  			<excludes>
-  				<exclude>**/*.java</exclude>
-  			</excludes>
-  		</resource>
-  	</resources>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -112,12 +112,19 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
-          <configuration>
-            <goals>deploy</goals>
-            <arguments>-Dmaven.javadoc.skip=true</arguments>
-          </configuration>
+        <configuration>
+          <goals>deploy</goals>
+        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -1,6 +1,10 @@
 # createsend-java history
 
-## v5.1.2 - 14 Jun 2-17
+## v5.1.3 - 14 Jun 2017
+
+* Undo v5.1.2; instead configure JavaDoc generation to not fail on errors. Sonatype insists on JavaDoc :-P 
+
+## v5.1.2 - 14 Jun 2017
 
 * Disable JavaDoc generation for release, for now, as it's failing with Java 8.
 

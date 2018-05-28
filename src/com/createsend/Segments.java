@@ -138,11 +138,23 @@ public class Segments extends CreateSendBase {
      * Gets a paged collection of active subscribers within the specified segment.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active() throws CreateSendException {
-    	return active(1, 1000, "email", "asc");
+    	return active(1, 1000, "email", "asc", false);
+    }
+
+    /**
+     * Gets a paged collection of active subscribers within the specified segment.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(boolean includeTrackingPreference) throws CreateSendException {
+        return active(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
@@ -153,12 +165,29 @@ public class Segments extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-    	return active("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> active(Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
+    	return active("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of active subscribers within the specified segment.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(Integer page, Integer pageSize, String orderField,
+        String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return active("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -172,20 +201,42 @@ public class Segments extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_segment_subs" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
     	return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
-    			page, pageSize, orderField, orderDirection);
+    			page, pageSize, orderField, orderDirection, false);
     }
 
-    private PagedResult<Subscriber> active(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    /**
+     * Gets a paged collection of active subscribers within the specified segment
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who became active on or after this date.
+     *     This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
+    }
+
+    private PagedResult<Subscriber> active(String subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "segments", segmentID, "active.json");
     }

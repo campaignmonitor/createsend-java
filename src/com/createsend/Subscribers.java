@@ -106,9 +106,23 @@ public class Subscribers extends CreateSendBase {
      * Getting subscriber details</a>
      */
     public Subscriber details(String emailAddress) throws CreateSendException {
+        return details(emailAddress, false);
+    }
+
+    /**
+     * Gets the details for the subscriber with the given email address in the specified list
+     * @param emailAddress The email address to get the subscriber details for
+     * @param includeTrackingPreference To include subscriber consent to track value.
+     * @return The details of the subscriber
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#getting_subscriber_details" target="_blank">
+     * Getting subscriber details</a>
+     */
+    public Subscriber details(String emailAddress, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.get(Subscriber.class, queryString, "subscribers", listID + ".json");
     }
     

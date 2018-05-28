@@ -140,6 +140,7 @@ public class SampleRunner {
         SubscriberToAdd subscriber = new SubscriberToAdd();
         subscriber.Resubscribe = true;
         subscriber.EmailAddress = "Subscriber Email 1";
+        subscriber.ConsentToTrack = ConsentToTrack.UNCHANGED;
         subscriber.Name = "Java Test Sub 1";
         subscriber.CustomFields = new CustomField[] {
             new CustomField()
@@ -151,6 +152,7 @@ public class SampleRunner {
         
         String originalEmail = subscriber.EmailAddress;
         subscriber.EmailAddress = "New Subscriber Email Address";
+        subscriber.ConsentToTrack = ConsentToTrack.UNCHANGED;
         subscriber.CustomFields = null; // We don't want to update any custom fields
         subscriber.Name = "New Subscriber Name";
         subscriberAPI.update(originalEmail, subscriber);  
@@ -167,13 +169,16 @@ public class SampleRunner {
         };
         
         subscribers.Subscribers[0].EmailAddress = "Subscriber Email 1";
+        subscribers.Subscribers[0].ConsentToTrack = ConsentToTrack.UNCHANGED;
         subscribers.Subscribers[0].CustomFields = new CustomField[] { new CustomField() };
         subscribers.Subscribers[0].CustomFields[0].Key = key;
         subscribers.Subscribers[0].CustomFields[0].Clear = true; // remove website from this existing subscriber
         
         subscribers.Subscribers[1].EmailAddress = "Subscriber Email 2";
-        
+        subscribers.Subscribers[1].ConsentToTrack = ConsentToTrack.YES;
+
         subscribers.Subscribers[2].EmailAddress = "Subscriber Email 3";
+        subscribers.Subscribers[2].ConsentToTrack = ConsentToTrack.NO;
         subscribers.Subscribers[2].CustomFields = new CustomField[] { new CustomField() };
         subscribers.Subscribers[2].CustomFields[0].Key = key;
         subscribers.Subscribers[2].CustomFields[0].Value = "http://www.google.com";
@@ -208,7 +213,7 @@ public class SampleRunner {
         segmentAPI.create(listAPI.getListID(), segment);
         System.out.printf("Result of create segment: %s\n", segmentAPI.getSegmentID());
         System.out.printf("Result of segment details: %s\n", segmentAPI.details());
-        System.out.printf("Result of segment active: %s\n",  segmentAPI.active(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of segment active: %s\n",  segmentAPI.active(subscribersFrom, null, null, null, null, true));
 
         segment.Title = "New Java Test Segment";
         segment.RuleGroups[0].Rules[0].Clause = "CONTAINS hotmail.com";

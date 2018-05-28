@@ -32,7 +32,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
- * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/classicEmail/" target="_blank">
+ * Provides methods for accessing all <a href="https://www.campaignmonitor.com/api/transactional/" target="_blank">
  * Transactional Classic Email</a> resources in the Campaign Monitor API
  */
 public class ClassicEmail extends CreateSendBase {

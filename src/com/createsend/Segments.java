@@ -88,7 +88,7 @@ public class Segments extends CreateSendBase {
      * @param segment The segment details
      * @return The ID of the newly created segment
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#creating_a_segment" target="blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#creating-a-segment" target="blank">
      * Creating a segment</a>
      */
     public String create(String listID, Segment segment) throws CreateSendException {
@@ -102,7 +102,7 @@ public class Segments extends CreateSendBase {
      * @param segment The details of the segment to update. 
      *     The <code>SegmentID</code> field of this object must be populated
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#updating_a_segment" target="blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#updating-a-segment" target="blank">
      * Updating a segment</a>
      */
     public void update(Segment segment) throws CreateSendException {
@@ -114,7 +114,7 @@ public class Segments extends CreateSendBase {
      * Adds a new rule to an existing list segment
      * @param ruleGroup The rule group specification
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#adding_a_segment_rule" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#adding-segment-rulegroup" target="_blank">
      * Adding a segment rule</a>
      */
     public void addRuleGroup(RuleGroup ruleGroup) throws CreateSendException {
@@ -127,7 +127,7 @@ public class Segments extends CreateSendBase {
      * active subscribers.
      * @return The details of the specified segment.
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#getting_a_segment" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#getting-segments-details" target="_blank">
      * Getting a segment</a>
      */
     public Segment details() throws CreateSendException {
@@ -136,7 +136,7 @@ public class Segments extends CreateSendBase {
 
     /**
      * Gets a paged collection of active subscribers within the specified segment.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -148,7 +148,7 @@ public class Segments extends CreateSendBase {
     /**
      * Gets a paged collection of active subscribers within the specified segment.
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -163,7 +163,7 @@ public class Segments extends CreateSendBase {
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -180,7 +180,7 @@ public class Segments extends CreateSendBase {
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -199,7 +199,7 @@ public class Segments extends CreateSendBase {
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -220,7 +220,7 @@ public class Segments extends CreateSendBase {
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
-     * @return The paged subscribers returned by the api call.
+     * @return The paged subscribers returned by the API call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
@@ -244,7 +244,7 @@ public class Segments extends CreateSendBase {
     /**
      * Deletes the specified segment.
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#deleting_a_segment" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#deleting-a-segment" target="_blank">
      * Deleting a segment</a>
      */
     public void delete() throws CreateSendException {
@@ -254,7 +254,7 @@ public class Segments extends CreateSendBase {
     /**
      * Deletes <em>all</em> rules from the specifed segment
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/segments/#deleting_segment_rules" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/segments/#deleting-segments-rules" target="_blank">
      * Deleting a segments rules</a>
      */
     public void deleteRules() throws CreateSendException {

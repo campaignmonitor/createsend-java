@@ -35,7 +35,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import java.util.UUID;
 
 /**
- * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/transactional/smartEmail/" target="_blank">
+ * Provides methods for accessing all <a href="https://www.campaignmonitor.com/api/transactional/" target="_blank">
  * Transactional Smart Email</a> resources in the Campaign Monitor API
  */
 public class SmartEmail extends CreateSendBase {

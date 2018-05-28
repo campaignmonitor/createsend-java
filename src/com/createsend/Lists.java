@@ -97,7 +97,7 @@ public class Lists extends CreateSendBase {
      * @param list The details of the new list
      * @return The ID of the newly created list
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_list" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#creating-a-list" target="_blank">
      * Creating a list</a>
      */
     public String create(String clientID, List list) throws CreateSendException {
@@ -109,7 +109,7 @@ public class Lists extends CreateSendBase {
      * Updates the basic list details for an existing subscriber list
      * @param list The new basic details for the list
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_a_list" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#updating-a-list" target="_blank">
      * Updating a list</a>
      */
     public void update(ListForUpdate list) throws CreateSendException {
@@ -119,7 +119,7 @@ public class Lists extends CreateSendBase {
     /**
      * Deletes the list with the specified ID
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_list" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleting-a-list" target="_blank">
      * Deleting a list</a>
      */
     public void delete() throws CreateSendException {
@@ -130,7 +130,7 @@ public class Lists extends CreateSendBase {
      * Gets the details of the list with the given ID
      * @return The details of the list with the given ID
      * @throws CreateSendException Raised when the API returns a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_details" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#list-details" target="_blank">
      * Getting list details</a>
      */
     public List details() throws CreateSendException {
@@ -141,7 +141,7 @@ public class Lists extends CreateSendBase {
      * Gets subscriber statistics for the list with the specified ID
      * @return Subscriber statistics for the list with the specified ID
      * @throws CreateSendException Raised when the API responds with HTTP status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_stats" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#list-stats" target="_blank">
      * Getting list stats</a>
      */
     public Statistics stats() throws CreateSendException {
@@ -152,7 +152,7 @@ public class Lists extends CreateSendBase {
      * Gets the custom fields available for the list with the specified ID
      * @return The custom fields available for the specified list
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_custom_fields" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#list-custom-fields" target="_blank">
      * Getting list custom fields</a>
      */
     public CustomField[] customFields() throws CreateSendException {
@@ -163,7 +163,7 @@ public class Lists extends CreateSendBase {
      * Gets the segments available in the list with the specified ID
      * @return The segments available in the specified list
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_segments" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#list-segments" target="_blank">
      * Getting list segments</a>
      */
     public Segment[] segments() throws CreateSendException {
@@ -174,7 +174,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of active subscribers who have subscribed to the list.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active() throws CreateSendException {
@@ -186,7 +186,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(boolean includeTrackingPreference) throws CreateSendException {
@@ -201,7 +201,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Integer page, Integer pageSize,
@@ -218,7 +218,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Integer page, Integer pageSize, String orderField,
@@ -237,7 +237,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
@@ -258,7 +258,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
@@ -281,7 +281,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of unconfirmed subscribers who have subscribed to the list.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed() throws CreateSendException {
@@ -293,7 +293,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed(boolean includeTrackingPreference) throws CreateSendException {
@@ -308,7 +308,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed(Integer page, Integer pageSize,
@@ -325,7 +325,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed(Integer page, Integer pageSize, String orderField,
@@ -344,7 +344,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed(Date subscribedFrom, Integer page, Integer pageSize,
@@ -365,7 +365,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unconfirmed-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed(Date subscribedFrom, Integer page, Integer pageSize,
@@ -388,7 +388,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed() throws CreateSendException {
@@ -400,7 +400,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(boolean includeTrackingPreference) throws CreateSendException {
@@ -416,7 +416,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(Integer page, Integer pageSize,
@@ -433,7 +433,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(Integer page, Integer pageSize,
@@ -451,7 +451,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(Date subscribedFrom, Integer page,
@@ -471,7 +471,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#unsubscribed-subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed(Date subscribedFrom, Integer page, Integer pageSize,
@@ -495,7 +495,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of subscribers who have been deleted from the list.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted() throws CreateSendException {
@@ -507,7 +507,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(boolean includeTrackingPreference) throws CreateSendException {
@@ -522,7 +522,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(Integer page, Integer pageSize, String orderField,
@@ -539,7 +539,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(Integer page, Integer pageSize, String orderField,
@@ -557,7 +557,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(Date subscribedFrom,Integer page, Integer pageSize,
@@ -577,7 +577,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleted-subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted(Date subscribedFrom, Integer page, Integer pageSize,
@@ -600,7 +600,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of bounced subscribers who have bounced out of the list.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced() throws CreateSendException {
@@ -612,7 +612,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(boolean includeTrackingPreference) throws CreateSendException {
@@ -627,7 +627,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(Integer page, Integer pageSize,
@@ -644,7 +644,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(Integer page, Integer pageSize, String orderField,
@@ -662,7 +662,7 @@ public class Lists extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(Date subscribedFrom, Integer page,
@@ -682,7 +682,7 @@ public class Lists extends CreateSendBase {
      * @param includeTrackingPreference To include subscriber consent to track value in the results.
      * @return The paged subscribers returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#bounced-subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced(Date subscribedFrom, Integer page, Integer pageSize,
@@ -706,7 +706,7 @@ public class Lists extends CreateSendBase {
      * @param customField The custom field options
      * @return The Key of the newly created custom field
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_custom_field" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#creating-custom-field" target="_blank">
      * Creating a custom field</a>
      */
     public String createCustomField(CustomFieldForCreate customField) throws CreateSendException {
@@ -719,7 +719,7 @@ public class Lists extends CreateSendBase {
      * @param customField The custom field options
      * @return The Key of the updated custom field
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_a_custom_field" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#updating-custom-field" target="_blank">
      * Creating a custom field</a>
      */
     public String updateCustomField(String fieldKey, CustomFieldForUpdate customField)
@@ -732,7 +732,7 @@ public class Lists extends CreateSendBase {
      * @param fieldKey The <em>Key</em> of the custom field to update. This must be surrounded by [].
      * @param options The new options to use for the field. 
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#updating_custom_field_options" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#updating-custom-field-options" target="_blank">
      * Updating custom field options</a>
      */
     public void updateCustomFieldOptions(String fieldKey, UpdateFieldOptions options)
@@ -744,7 +744,7 @@ public class Lists extends CreateSendBase {
      * Deletes the custom field with the specified key
      * @param fieldKey The <em>Key</em> of the custom field to delete. This must be surrounded by [].
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_custom_field" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleting-custom-field" target="_blank">
      * Deleting a custom field</a>
      */
     public void deleteCustomField(String fieldKey) throws CreateSendException {
@@ -755,7 +755,7 @@ public class Lists extends CreateSendBase {
      * Gets all webhooks which have been attached to events on the specified list
      * @return The webhooks which have been attached to events for the specified list
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#getting_list_webhooks" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#list-webhooks" target="_blank">
      * Getting list webhooks</a>
      */
     public Webhook[] webhooks() throws CreateSendException {
@@ -767,7 +767,7 @@ public class Lists extends CreateSendBase {
      * @param webhook The webhook details
      * @return The ID of the newly created webhook
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#creating_a_webhook" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#creating-a-webhook" target="_blank">
      * Creating a webhook</a>
      */
     public String createWebhook(Webhook webhook) throws CreateSendException {
@@ -778,7 +778,7 @@ public class Lists extends CreateSendBase {
      * Tests the specified webhook
      * @param webhookID The ID of the webhook
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400. I.e the test fails
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#testing_a_webhook" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#testing-a-webhook" target="_blank">
      * Testing a webhook</a>
      */
     public void testWebhook(String webhookID) throws CreateSendException {
@@ -790,7 +790,7 @@ public class Lists extends CreateSendBase {
      * Deletes the specified webhook
      * @param webhookID The ID of the webhook to delete
      * @throws CreateSendException Raised when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleting_a_webhook" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deleting-a-webhook" target="_blank">
      * Deleting a webhook</a>
      */
     public void deleteWebhook(String webhookID) throws CreateSendException {
@@ -801,7 +801,7 @@ public class Lists extends CreateSendBase {
      * Activates the specified webhook.
      * @param webhookID The ID of the webhook to activate
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#activating_a_webhook" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#activating-a-webhook" target="_blank">
      * Activating a webhook</a>
      */
     public void activateWebhook(String webhookID) throws CreateSendException {
@@ -812,7 +812,7 @@ public class Lists extends CreateSendBase {
      * Deactivates the specified webhook.
      * @param webhookID The ID of the webhook to deactivate
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/lists/#deactivating_a_webhook" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/lists/#deactivating-a-webhook" target="_blank">
      * Activating a webhook</a>
      */
     public void deactivateWebhook(String webhookID) throws CreateSendException {

@@ -56,6 +56,7 @@ import com.createsend.models.people.PersonToAdd;
 import com.createsend.models.segments.Rule;
 import com.createsend.models.segments.RuleGroup;
 import com.createsend.models.segments.Segment;
+import com.createsend.models.subscribers.ConsentToTrack;
 import com.createsend.models.subscribers.CustomField;
 import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SubscriberToAdd;

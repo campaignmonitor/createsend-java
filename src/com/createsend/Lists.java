@@ -178,7 +178,19 @@ public class Lists extends CreateSendBase {
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> active() throws CreateSendException {
-        return active(1, 1000, "email", "asc");
+        return active(1, 1000, "email", "asc", false);
+    }
+
+    /**
+     * Gets a paged collection of active subscribers who have subscribed to the list.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(boolean includeTrackingPreference) throws CreateSendException {
+        return active(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
@@ -192,9 +204,26 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return active("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> active(Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
+        return active("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of active subscribers who have subscribed to the list.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(Integer page, Integer pageSize, String orderField,
+        String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return active("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -211,17 +240,39 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
         return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
-                page, pageSize, orderField, orderDirection);
+                page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of active subscribers who have subscribed to the list
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who became active on or after this date.
+     *     This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#active_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
     
-    private PagedResult<Subscriber> active(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    private PagedResult<Subscriber> active(String subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "active.json");
     }
@@ -234,7 +285,19 @@ public class Lists extends CreateSendBase {
      * Getting active subscribers</a>
      */
     public PagedResult<Subscriber> unconfirmed() throws CreateSendException {
-        return unconfirmed(1, 1000, "email", "asc");
+        return unconfirmed(1, 1000, "email", "asc", false);
+    }
+
+    /**
+     * Gets a paged collection of unconfirmed subscribers who have subscribed to the list.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> unconfirmed(boolean includeTrackingPreference) throws CreateSendException {
+        return unconfirmed(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
@@ -248,9 +311,26 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> unconfirmed(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return unconfirmed("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> unconfirmed(Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
+        return unconfirmed("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of unconfirmed subscribers who have subscribed to the list.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> unconfirmed(Integer page, Integer pageSize, String orderField,
+        String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return unconfirmed("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -267,17 +347,39 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> unconfirmed(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> unconfirmed(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
         return unconfirmed(JsonProvider.ApiDateFormat.format(subscribedFrom),
-                page, pageSize, orderField, orderDirection);
+                page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of unconfirmed subscribers who have subscribed to the list
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who subscribed on or after this date.
+     *     This field is required
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unconfirmed_subscribers" target="_blank">
+     * Getting active subscribers</a>
+     */
+    public PagedResult<Subscriber> unconfirmed(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return unconfirmed(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
     
-    private PagedResult<Subscriber> unconfirmed(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    private PagedResult<Subscriber> unconfirmed(String subscribedFrom, Integer page,
+        Integer pageSize, String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "unconfirmed.json");
     }
@@ -290,8 +392,21 @@ public class Lists extends CreateSendBase {
      * Getting unsubscribed subscribers</a>
      */
     public PagedResult<Subscriber> unsubscribed() throws CreateSendException {
-        return unsubscribed(1, 1000, "email", "asc");
+        return unsubscribed(1, 1000, "email", "asc", false);
     }
+
+    /**
+     * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * Getting unsubscribed subscribers</a>
+     */
+    public PagedResult<Subscriber> unsubscribed(boolean includeTrackingPreference) throws CreateSendException {
+        return unsubscribed(1, 1000, "email", "asc", includeTrackingPreference);
+    }
+
 
     /**
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
@@ -304,9 +419,26 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
-    public PagedResult<Subscriber> unsubscribed(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return unsubscribed("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> unsubscribed(Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
+        return unsubscribed("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * Getting unsubscribed subscribers</a>
+     */
+    public PagedResult<Subscriber> unsubscribed(Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return unsubscribed("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -322,17 +454,39 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
      * Getting unsubscribed subscribers</a>
      */
-    public PagedResult<Subscriber> unsubscribed(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> unsubscribed(Date subscribedFrom, Integer page,
+        Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         return unsubscribed(JsonProvider.ApiDateFormat.format(subscribedFrom),
-                page, pageSize, orderField, orderDirection);
+                page, pageSize, orderField, orderDirection, false);
     }
 
-    private PagedResult<Subscriber> unsubscribed(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    /**
+     * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who unsubscribed on or after this date.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#unsubscribed_subscribers" target="_blank">
+     * Getting unsubscribed subscribers</a>
+     */
+    public PagedResult<Subscriber> unsubscribed(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return unsubscribed(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
+    }
+
+
+    private PagedResult<Subscriber> unsubscribed(String subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "unsubscribed.json");
     }
@@ -345,7 +499,19 @@ public class Lists extends CreateSendBase {
      * Getting deleted subscribers</a>
      */
     public PagedResult<Subscriber> deleted() throws CreateSendException {
-        return deleted(1, 1000, "email", "asc");
+        return deleted(1, 1000, "email", "asc", false);
+    }
+
+    /**
+     * Gets a paged collection of subscribers who have been deleted from the list.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * Getting deleted subscribers</a>
+     */
+    public PagedResult<Subscriber> deleted(boolean includeTrackingPreference) throws CreateSendException {
+        return deleted(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
@@ -359,9 +525,26 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
-    public PagedResult<Subscriber> deleted(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return deleted("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> deleted(Integer page, Integer pageSize, String orderField,
+        String orderDirection) throws CreateSendException {
+        return deleted("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of subscribers who have been deleted from the list.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * Getting deleted subscribers</a>
+     */
+    public PagedResult<Subscriber> deleted(Integer page, Integer pageSize, String orderField,
+        String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return deleted("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -377,17 +560,38 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
      * Getting deleted subscribers</a>
      */
-    public PagedResult<Subscriber> deleted(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> deleted(Date subscribedFrom,Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
         return deleted(JsonProvider.ApiDateFormat.format(subscribedFrom),
-                page, pageSize, orderField, orderDirection);
+                page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of subscribers who have been deleted from the list
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who were deleted on or after this date.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#deleted_subscribers" target="_blank">
+     * Getting deleted subscribers</a>
+     */
+    public PagedResult<Subscriber> deleted(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return deleted(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
     
-    private PagedResult<Subscriber> deleted(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    private PagedResult<Subscriber> deleted(String subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "deleted.json");
     }
@@ -400,7 +604,19 @@ public class Lists extends CreateSendBase {
      * Getting bounced subscribers</a>
      */
     public PagedResult<Subscriber> bounced() throws CreateSendException {
-        return bounced(1, 1000, "email", "asc");
+        return bounced(1, 1000, "email", "asc", false);
+    }
+
+    /**
+     * Gets a paged collection of bounced subscribers who have bounced out of the list.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * Getting bounced subscribers</a>
+     */
+    public PagedResult<Subscriber> bounced(boolean includeTrackingPreference) throws CreateSendException {
+        return bounced(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
@@ -414,9 +630,26 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
-    public PagedResult<Subscriber> bounced(
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
-        return bounced("", page, pageSize, orderField, orderDirection);
+    public PagedResult<Subscriber> bounced(Integer page, Integer pageSize,
+        String orderField, String orderDirection) throws CreateSendException {
+        return bounced("", page, pageSize, orderField, orderDirection, false);
+    }
+
+    /**
+     * Gets a paged collection of bounced subscribers who have bounced out of the list.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * Getting bounced subscribers</a>
+     */
+    public PagedResult<Subscriber> bounced(Integer page, Integer pageSize, String orderField,
+        String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return bounced("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
     /**
@@ -432,17 +665,38 @@ public class Lists extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
      * Getting bounced subscribers</a>
      */
-    public PagedResult<Subscriber> bounced(Date subscribedFrom,
-            Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    public PagedResult<Subscriber> bounced(Date subscribedFrom, Integer page,
+        Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
         return bounced(JsonProvider.ApiDateFormat.format(subscribedFrom),
-                page, pageSize, orderField, orderDirection);
+                page, pageSize, orderField, orderDirection, false);
     }
 
-    private PagedResult<Subscriber> bounced(String subscribedFrom,
-        Integer page, Integer pageSize, String orderField, String orderDirection) throws CreateSendException {
+    /**
+     * Gets a paged collection of bounced subscribers who have bounced out of the list
+     * since the provided date.
+     * @param subscribedFrom The API will only return subscribers who bounced out on or after this date.
+     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderField The field used to order the results by. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
+     * @param includeTrackingPreference To include subscriber consent to track value in the results.
+     * @return The paged subscribers returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/lists/#bounced_subscribers" target="_blank">
+     * Getting bounced subscribers</a>
+     */
+    public PagedResult<Subscriber> bounced(Date subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
+        return bounced(JsonProvider.ApiDateFormat.format(subscribedFrom),
+            page, pageSize, orderField, orderDirection, includeTrackingPreference);
+    }
+
+    private PagedResult<Subscriber> bounced(String subscribedFrom, Integer page, Integer pageSize,
+        String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
             queryString, "lists", listID, "bounced.json");
     }

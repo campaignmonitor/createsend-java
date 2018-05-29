@@ -21,6 +21,7 @@
  */
 package com.createsend.models.transactional.request;
 
+import com.createsend.models.subscribers.ConsentToTrack;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonUnwrapped;
 
@@ -35,13 +36,14 @@ public class SmartEmailRequest {
     private List<Attachment> attachments = new ArrayList<>();
     private Map<String, String> data = new HashMap<>();
     private boolean addRecipientsToList;
+    private ConsentToTrack consentToTrack;
 
     /**
      * Creates a new SmartEmailRequest with mandatory values.
      * @param smartEmailId The SmartEmailID of the email to send.
      * @param to The recipient of the email.
      */
-    public SmartEmailRequest(UUID smartEmailId, String to) {
+    public SmartEmailRequest(UUID smartEmailId, String to, ConsentToTrack consentToTrack) {
         if (smartEmailId == null) {
             throw new IllegalArgumentException("Must supply a Smart Email ID");
         }
@@ -50,8 +52,13 @@ public class SmartEmailRequest {
             throw new IllegalArgumentException("Must supply a TO address");
         }
 
+        if (consentToTrack == null) {
+            throw new IllegalArgumentException("Must supply a ConsentToTrack value");
+        }
+
         this.smartEmailId = smartEmailId;
         this.to.add(to);
+        this.consentToTrack = consentToTrack;
     }
 
     /**
@@ -145,5 +152,21 @@ public class SmartEmailRequest {
      */
     public boolean isAddRecipientsToList() {
         return addRecipientsToList;
+    }
+
+    /**
+     *
+     * @return the consent to track value of the recipients
+     */
+    public ConsentToTrack getConsentToTrack() {
+        return consentToTrack;
+    }
+
+    /**
+     *
+     * @param consentToTrack consent to track value of the recipients
+     */
+    public void setConsentToTrack(ConsentToTrack consentToTrack) {
+        this.consentToTrack = consentToTrack;
     }
 }

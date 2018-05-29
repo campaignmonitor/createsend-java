@@ -31,6 +31,7 @@ public class Subscriber {
     public String State; // TODO: Probably want to move this to an enum
     public CustomField[] CustomFields;
     public String ReadsEmailWith;
+    public ConsentToTrack ConsentToTrack;
     
     @Override
     public String toString() {

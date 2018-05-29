@@ -24,6 +24,7 @@ package com.createsend.samples;
 import com.createsend.ClassicEmail;
 import com.createsend.Messages;
 import com.createsend.SmartEmail;
+import com.createsend.models.subscribers.ConsentToTrack;
 import com.createsend.models.transactional.EmailContent;
 import com.createsend.models.transactional.request.Attachment;
 import com.createsend.models.transactional.request.ClassicEmailRequest;
@@ -105,7 +106,7 @@ public class TransactionalSample {
 
         ClassicEmail classicEmail = new ClassicEmail(auth);
 
-        ClassicEmailRequest classicEmailRequest = new ClassicEmailRequest(toAddress);
+        ClassicEmailRequest classicEmailRequest = new ClassicEmailRequest(toAddress, ConsentToTrack.UNCHANGED);
         classicEmailRequest.setFrom(fromAddress);
         classicEmailRequest.setReplyTo(replyToAddress);
         classicEmailRequest.setSubject(subject);
@@ -167,7 +168,7 @@ public class TransactionalSample {
         System.out.println("---- Send Smart Email ----");
 
         SmartEmail smartEmail = new SmartEmail(auth);
-        SmartEmailRequest smartEmailRequest = new SmartEmailRequest(smartEmailID, toAddress);
+        SmartEmailRequest smartEmailRequest = new SmartEmailRequest(smartEmailID, toAddress, ConsentToTrack.UNCHANGED);
         smartEmailRequest.addData("myvariable", "supplied via the wrapper sample runner");
 
         Attachment attachment = getAttachment();

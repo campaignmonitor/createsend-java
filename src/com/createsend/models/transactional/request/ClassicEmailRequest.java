@@ -21,6 +21,7 @@
  */
 package com.createsend.models.transactional.request;
 
+import com.createsend.models.subscribers.ConsentToTrack;
 import com.createsend.models.transactional.EmailContent;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class ClassicEmailRequest {
     /**
      * The ListID to add recipients to.
      */
-    private String addRecipientsToList;
+    private String addRecipientsToListID;
 
     /**
      * Should Css be automatically inlined.
@@ -101,12 +102,22 @@ public class ClassicEmailRequest {
      */
     private boolean trackClicks;
 
-    public ClassicEmailRequest(String to) {
+    /**
+     * The Consent to track value of the recipients
+     */
+    private ConsentToTrack consentToTrack;
+
+    public ClassicEmailRequest(String to, ConsentToTrack consentToTrack) {
         if (to == null || to.length() == 0) {
             throw new IllegalArgumentException("Must supply a TO address");
         }
 
+        if (consentToTrack == null) {
+            throw new IllegalArgumentException("Must supply a ConsentToTrack value");
+        }
+
         this.to.add(to);
+        this.consentToTrack = consentToTrack;
     }
 
     public void setSubject(String subject) {
@@ -169,12 +180,12 @@ public class ClassicEmailRequest {
         return attachments;
     }
 
-    public void setAddRecipientsToList(String addRecipientsToList) {
-        this.addRecipientsToList = addRecipientsToList;
+    public void setAddRecipientsToListID(String addRecipientsToListID) {
+        this.addRecipientsToListID = addRecipientsToListID;
     }
 
-    public String getAddRecipientsToList() {
-        return addRecipientsToList;
+    public String getAddRecipientsToListID() {
+        return addRecipientsToListID;
     }
 
     public String getFrom() {
@@ -199,5 +210,13 @@ public class ClassicEmailRequest {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public ConsentToTrack getConsentToTrack() {
+        return consentToTrack;
+    }
+
+    public void setConsentToTrack(ConsentToTrack consentToTrack) {
+        this.consentToTrack = consentToTrack;
     }
 }

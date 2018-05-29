@@ -75,7 +75,7 @@ public class Subscribers extends CreateSendBase {
      * @param subscriber The subscriber to add to the list
      * @return The email addresss of the newly added subscriber
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#adding_a_subscriber" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#adding-a-subscriber" target="_blank">
      * Adding a subscriber</a>
      */
     public String add(SubscriberToAdd subscriber) throws CreateSendException {
@@ -89,7 +89,7 @@ public class Subscribers extends CreateSendBase {
      * This will detail how many of the subscribers were new, already subscribed to the list
      * or duplicated in the submission     
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#importing_subscribers" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#importing-many-subscribers" target="_blank">
      * Importing subscribers</a>
      */
     public ImportResult addMany(SubscribersToAdd subscribers) throws CreateSendException {
@@ -102,13 +102,27 @@ public class Subscribers extends CreateSendBase {
      * @param emailAddress The email address to get the subscriber details for
      * @return The details of the subscriber
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#getting_subscriber_details" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#getting-subscribers-details" target="_blank">
      * Getting subscriber details</a>
      */
     public Subscriber details(String emailAddress) throws CreateSendException {
+        return details(emailAddress, false);
+    }
+
+    /**
+     * Gets the details for the subscriber with the given email address in the specified list
+     * @param emailAddress The email address to get the subscriber details for
+     * @param includeTrackingPreference To include subscriber consent to track value.
+     * @return The details of the subscriber
+     * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#getting-subscribers-details" target="_blank">
+     * Getting subscriber details</a>
+     */
+    public Subscriber details(String emailAddress, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
-        
+        queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
+
         return jerseyClient.get(Subscriber.class, queryString, "subscribers", listID + ".json");
     }
     
@@ -117,7 +131,7 @@ public class Subscribers extends CreateSendBase {
      * @param emailAddress The email address of the subscriber to get the history for
      * @return The complete history for the given subscriber
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#getting_subscriber_history" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#getting-subscribers-history" target="_blank">
      * Getting subscriber history</a>
      */
     public HistoryItem[] history(String emailAddress) throws CreateSendException {
@@ -131,7 +145,7 @@ public class Subscribers extends CreateSendBase {
      * Unsubscribes the given email address from the specified list
      * @param emailAddress The email address to unsubscibe
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#unsubscribing_a_subscriber" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#unsubscribing-a-subscriber" target="_blank">
      * Unsubscribing a subscriber</a>
      */
     public void unsubscribe(String emailAddress) throws CreateSendException {
@@ -143,7 +157,7 @@ public class Subscribers extends CreateSendBase {
      * Moves the given email address into the deleted list
      * @param emailAddress The email address to delete
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#deleting_a_subscriber" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#deleting-a-subscriber" target="_blank">
      * Deleting a subscriber</a>
      */
     public void delete(String emailAddress) throws CreateSendException {
@@ -159,7 +173,7 @@ public class Subscribers extends CreateSendBase {
      * @param newDetails The new details for the subscriber. Any details included here will be used in the updated. 
      *     Any details omitted will not be changed.  
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/subscribers/#updating_a_subscriber" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/subscribers/#updating-a-subscriber" target="_blank">
      * Updating a subscriber</a>
      */
     public void update(String originalEmailAddress, SubscriberToAdd newDetails) throws CreateSendException {

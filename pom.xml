@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.createsend</groupId>
   <artifactId>createsend-java</artifactId>
-  <version>5.1.4-SNAPSHOT</version>
+  <version>6.0.0-SNAPSHOT</version>
   <name>createsend-java</name>
   <description>A Java library which implements the complete functionality of the Campaign Monitor API.</description>
   <url>http://campaignmonitor.github.io/createsend-java/</url>

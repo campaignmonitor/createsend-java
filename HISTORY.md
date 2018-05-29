@@ -1,5 +1,13 @@
 # createsend-java history
 
+## v6.0.0 - 28 May 2018
+
+* Upgrades to Createsend API v3.2 which includes new breaking changes
+* Breaking: 'Consent to track' field is now mandatory for sending smart and classic transactional emails
+* Breaking: 'Consent to track' field is now mandatory when adding or updating subscribers
+* Optional 'Include tracking preference' field when retrieving lists of subscribers
+* Fix 'Add recipient to list ID' field when sending classic transactional emails
+
 ## v5.1.3 - 14 Jun 2017
 
 * Undo v5.1.2; instead configure JavaDoc generation to not fail on errors. Sonatype insists on JavaDoc :-P 

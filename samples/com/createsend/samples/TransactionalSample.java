@@ -24,6 +24,7 @@ package com.createsend.samples;
 import com.createsend.ClassicEmail;
 import com.createsend.Messages;
 import com.createsend.SmartEmail;
+import com.createsend.models.subscribers.ConsentToTrack;
 import com.createsend.models.transactional.EmailContent;
 import com.createsend.models.transactional.request.Attachment;
 import com.createsend.models.transactional.request.ClassicEmailRequest;

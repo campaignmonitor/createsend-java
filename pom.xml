@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.createsend</groupId>
-  <artifactId>createsend-java</artifactId>
-  <version>5.1.4-SNAPSHOT</version>
+  <artifactId>createsend-java-sukoa</artifactId>
+  <version>5.1.4</version>
   <name>createsend-java</name>
   <description>A Java library which implements the complete functionality of the Campaign Monitor API.</description>
   <url>http://campaignmonitor.github.io/createsend-java/</url>
@@ -14,7 +14,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <repositories />
+  <!--<repositories />-->
   <dependencies>
     <dependency>
       <groupId>com.sun.jersey</groupId>
@@ -64,31 +64,44 @@
     </dependency>
   </dependencies>
 
-  <scm>
-    <connection>scm:git:git@github.com:campaignmonitor/createsend-java.git</connection>
-    <developerConnection>scm:git:git@github.com:campaignmonitor/createsend-java.git</developerConnection>
-    <url>https://github.com/campaignmonitor/createsend-java.git</url>
-    <tag>HEAD</tag>
-  </scm>
+  <!--<scm>-->
+    <!--<connection>scm:git:git@github.com:campaignmonitor/createsend-java.git</connection>-->
+    <!--<developerConnection>scm:git:git@github.com:campaignmonitor/createsend-java.git</developerConnection>-->
+    <!--<url>https://github.com/campaignmonitor/createsend-java.git</url>-->
+    <!--<tag>HEAD</tag>-->
+  <!--</scm>-->
 
-  <developers>
-    <developer>
-      <id>jdennes</id>
-      <name>James Dennes</name>
-      <email>jdennes@gmail.com</email>
-    </developer>
-    <developer>
-      <id>tobio</id>
-      <name>Toby Brain</name>
-      <email>tobio85@gmail.com</email>
-    </developer>
-  </developers>
+  <!--<developers>-->
+    <!--<developer>-->
+      <!--<id>jdennes</id>-->
+      <!--<name>James Dennes</name>-->
+      <!--<email>jdennes@gmail.com</email>-->
+    <!--</developer>-->
+    <!--<developer>-->
+      <!--<id>tobio</id>-->
+      <!--<name>Toby Brain</name>-->
+      <!--<email>tobio85@gmail.com</email>-->
+    <!--</developer>-->
+  <!--</developers>-->
+
+  <!--<distributionManagement>-->
+    <!--<repository>-->
+      <!--<id>sonatype-nexus-staging</id>-->
+      <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+    <!--</repository>-->
+  <!--</distributionManagement>-->
 
   <distributionManagement>
     <repository>
-      <id>sonatype-nexus-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>nexus</id>
+      <name>sukoa releases</name>
+      <url>http://shared.local:8081/repository/maven-releases/</url>
     </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>sukoa snapshots</name>
+      <url>http://shared.local:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <build>

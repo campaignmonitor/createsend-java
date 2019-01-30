@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v6.0.1 - 30 January 2019
+
+* Changed API endpoint to use https by default
+
 ## v6.0.0 - 28 May 2018
 
 * Upgrades to Createsend API v3.2 which includes new breaking changes

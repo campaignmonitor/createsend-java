@@ -30,7 +30,6 @@ import com.createsend.models.transactional.request.Attachment;
 import com.createsend.models.transactional.request.ClassicEmailRequest;
 import com.createsend.models.transactional.request.SmartEmailRequest;
 import com.createsend.models.transactional.response.*;
-import com.createsend.util.ApiKeyAuthenticationDetails;
 import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
 

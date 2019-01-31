@@ -23,8 +23,6 @@ package com.createsend.models.transactional.response;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class MessageSent {

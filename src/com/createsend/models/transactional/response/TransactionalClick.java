@@ -38,7 +38,7 @@ public class TransactionalClick {
     @JsonProperty("Geolocation")
     private GeoLocation geoLocation;
 
-    @JsonProperty("URL")
+    @JsonProperty("Url")
     private String url;
 
     /**

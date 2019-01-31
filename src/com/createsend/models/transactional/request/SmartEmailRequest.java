@@ -23,7 +23,6 @@ package com.createsend.models.transactional.request;
 
 import com.createsend.models.subscribers.ConsentToTrack;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonUnwrapped;
 
 import java.util.*;
 

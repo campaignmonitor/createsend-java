@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v6.0.2 - 31 January 2019
+
+* Fixed JavaDoc generation
+
 ## v6.0.1 - 30 January 2019
 
 * Changed API endpoint to use https by default

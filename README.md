@@ -123,7 +123,6 @@ public class Tester {
         OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails(
             "your access token", "your refresh token");
         General general = new General(auth);
-        General general = new General(auth);
         ClientBasics[] clients = general.getClients();
 
         for (ClientBasics cl : clients) {

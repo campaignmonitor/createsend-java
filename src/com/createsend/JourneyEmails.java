@@ -2,6 +2,8 @@ package com.createsend;
 
 import com.createsend.models.PagedResult;
 import com.createsend.models.journeys.*;
+import com.createsend.util.AuthenticationDetails;
+import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
@@ -11,6 +13,11 @@ import java.util.Date;
 
 public class JourneyEmails extends CreateSendBase {
     private String journeyEmailID;
+
+    public JourneyEmails(AuthenticationDetails auth, String journeyEmailID) {
+        this.journeyEmailID = journeyEmailID;
+        this.jerseyClient = new JerseyClientImpl(auth);
+    }
 
     /**
      * Gets a paged list of recipients for the specified journey email
@@ -60,7 +67,7 @@ public class JourneyEmails extends CreateSendBase {
         queryString.add("date", fromDate);
 
         return jerseyClient.getPagedResult(page, pageSize, null, orderDirection, null,
-                "journeys", "emails", journeyEmailID, "recipients.json");
+                "journeys", "email", journeyEmailID, "recipients.json");
     }
 
     /**
@@ -111,7 +118,7 @@ public class JourneyEmails extends CreateSendBase {
         queryString.add("date", bouncesFrom);
 
         return jerseyClient.getPagedResult(page, pageSize, null, orderDirection, queryString,
-                "journeys", "emails", journeyEmailID, "bounces.json");
+                "journeys", "email", journeyEmailID, "bounces.json");
     }
 
     /**

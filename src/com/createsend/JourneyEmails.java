@@ -1,7 +1,11 @@
 package com.createsend;
 
 import com.createsend.models.PagedResult;
-import com.createsend.models.journeys.*;
+import com.createsend.models.journeys.JourneyEmailBounceDetail;
+import com.createsend.models.journeys.JourneyEmailClickDetail;
+import com.createsend.models.journeys.JourneyEmailOpenDetail;
+import com.createsend.models.journeys.JourneyEmailRecipient;
+import com.createsend.models.journeys.JourneyEmailUnsubscribeDetail;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
@@ -88,7 +92,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged bounces returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/campaigns/#campaign_bouncelist" target="_blank">
+     * @see <a href="http://www.campaignmonitor.com/api/journey/#journey_bouncelist" target="_blank">
      * Getting journey email bounces</a>
      */
     public PagedResult<JourneyEmailBounceDetail> bounces(

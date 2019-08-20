@@ -15,9 +15,9 @@ import java.util.List;
 
 public class JourneysSampleRunner {
     private static OAuthAuthenticationDetails auth = new OAuthAuthenticationDetails("your access token", "your refresh token");
-    private static String ClientID = "your client id";
-    private static String JourneyID = "your journey id";
-    private static String JourneyEmailID = "your journey email id";
+    private static final String ClientID = "your client id";
+    private static final String JourneyID = "your journey id";
+    private static final String JourneyEmailID = "your journey email id";
 
     public static void main(String[] args) {
         try {

@@ -34,6 +34,7 @@ import com.createsend.models.clients.SuppressionDetails;
 import com.createsend.models.clients.Template;
 import com.createsend.models.clients.CreditsTransferDetails;
 import com.createsend.models.clients.CreditsTransferResult;
+import com.createsend.models.journeys.JourneyDetail;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.lists.ListForEmail;
 import com.createsend.models.people.Person;
@@ -317,5 +318,16 @@ public class Clients extends CreateSendBase {
     	MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
     	jerseyClient.put("", queryString, "clients", clientID, "primarycontact.json");
+    }
+
+    /**
+     * returns a list of journeys associated with the client.
+     * @return all journeys associated with the client
+     * @throws CreateSendException
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_journeys" target="_blank">
+     * Getting journeys</a>
+     */
+    public JourneyDetail[] journeys() throws CreateSendException {
+        return jerseyClient.get(JourneyDetail[].class, "clients", clientID, "journeys.json");
     }
 }

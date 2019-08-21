@@ -101,17 +101,17 @@ public class JourneysSampleRunner {
 
         PagedResult<JourneyEmailClickDetail> firstPage = journeyEmails.clicks(1, 10, "ASC");
 
-        List<JourneyEmailClickDetail> emailOpens = new ArrayList<>(Arrays.asList(firstPage.Results));
+        List<JourneyEmailClickDetail> emailClicks = new ArrayList<>(Arrays.asList(firstPage.Results));
 
         if (firstPage.NumberOfPages > 1) {
             for (int pageNumber = 2; pageNumber <= firstPage.NumberOfPages; pageNumber++)
             {
                 PagedResult<JourneyEmailClickDetail> subsequentPage = journeyEmails.clicks(pageNumber, 10, "ASC");
-                emailOpens.addAll(Arrays.asList(subsequentPage.Results));
+                emailClicks.addAll(Arrays.asList(subsequentPage.Results));
             }
         }
 
-        for (JourneyEmailClickDetail result : emailOpens) {
+        for (JourneyEmailClickDetail result : emailClicks) {
             System.out.println(result.EmailAddress);
         }
     }
@@ -121,17 +121,17 @@ public class JourneysSampleRunner {
 
         PagedResult<JourneyEmailUnsubscribeDetail> firstPage = journeyEmails.unsubscribes(1, 10, "ASC");
 
-        List<JourneyEmailUnsubscribeDetail> emailOpens = new ArrayList<>(Arrays.asList(firstPage.Results));
+        List<JourneyEmailUnsubscribeDetail> emailUnsubscribes = new ArrayList<>(Arrays.asList(firstPage.Results));
 
         if (firstPage.NumberOfPages > 1) {
             for (int pageNumber = 2; pageNumber <= firstPage.NumberOfPages; pageNumber++)
             {
                 PagedResult<JourneyEmailUnsubscribeDetail> subsequentPage = journeyEmails.unsubscribes(pageNumber, 10, "ASC");
-                emailOpens.addAll(Arrays.asList(subsequentPage.Results));
+                emailUnsubscribes.addAll(Arrays.asList(subsequentPage.Results));
             }
         }
 
-        for (JourneyEmailUnsubscribeDetail result : emailOpens) {
+        for (JourneyEmailUnsubscribeDetail result : emailUnsubscribes) {
             System.out.println(result.EmailAddress);
         }
     }
@@ -141,17 +141,17 @@ public class JourneysSampleRunner {
 
         PagedResult<JourneyEmailBounceDetail> firstPage = journeyEmails.bounces(1, 10, "ASC");
 
-        List<JourneyEmailBounceDetail> emailOpens = new ArrayList<>(Arrays.asList(firstPage.Results));
+        List<JourneyEmailBounceDetail> emailBounces = new ArrayList<>(Arrays.asList(firstPage.Results));
 
         if (firstPage.NumberOfPages > 1) {
             for (int pageNumber = 2; pageNumber <= firstPage.NumberOfPages; pageNumber++)
             {
                 PagedResult<JourneyEmailBounceDetail> subsequentPage = journeyEmails.bounces(pageNumber, 10, "ASC");
-                emailOpens.addAll(Arrays.asList(subsequentPage.Results));
+                emailBounces.addAll(Arrays.asList(subsequentPage.Results));
             }
         }
 
-        for (JourneyEmailBounceDetail result : emailOpens) {
+        for (JourneyEmailBounceDetail result : emailBounces) {
             System.out.println(result.EmailAddress);
         }
     }

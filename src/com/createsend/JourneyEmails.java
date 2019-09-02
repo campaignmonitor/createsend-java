@@ -27,7 +27,7 @@ public class JourneyEmails extends CreateSendBase {
      * Gets a paged list of recipients for the specified journey email
      * @return The paged recipients returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_recipientlist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-recipients" target="_blank">
      * Getting journey email recipients</a>
      */
     public PagedResult<JourneyEmailRecipient> recipients() throws CreateSendException {
@@ -41,7 +41,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged recipients returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_recipientlist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-recipients" target="_blank">
      * Getting journey email recipients</a>
      */
     public PagedResult<JourneyEmailRecipient> recipients(
@@ -57,7 +57,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged recipients returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_recipientlist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-recipients" target="_blank">
      * Getting journey email recipients</a>
      */
     public PagedResult<JourneyEmailRecipient> recipients(
@@ -78,7 +78,7 @@ public class JourneyEmails extends CreateSendBase {
      * Gets a paged list of bounces for the specified journey email
      * @return The paged bounces returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journey/#journey_bouncelist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-bounces" target="_blank">
      * Getting journey email bounces</a>
      */
     public PagedResult<JourneyEmailBounceDetail> bounces() throws CreateSendException {
@@ -92,7 +92,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged bounces returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journey/#journey_bouncelist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-bounces" target="_blank">
      * Getting journey email bounces</a>
      */
     public PagedResult<JourneyEmailBounceDetail> bounces(
@@ -108,7 +108,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged bounces returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_bouncelist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-bounces" target="_blank">
      * Getting journey email bounces</a>
      */
     public PagedResult<JourneyEmailBounceDetail> bounces(
@@ -129,7 +129,7 @@ public class JourneyEmails extends CreateSendBase {
      * Gets a paged list of opens for the specified journey email
      * @return The paged opens returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_openslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-opens" target="_blank">
      * Getting journey email opens</a>
      */
     public PagedResult<JourneyEmailOpenDetail> opens() throws CreateSendException {
@@ -143,7 +143,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged opens returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_openslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-opens" target="_blank">
      * Getting journey email opens</a>
      */
     public PagedResult<JourneyEmailOpenDetail> opens(
@@ -159,7 +159,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged opens returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_openslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-opens" target="_blank">
      * Getting journey email opens</a>
      */
     public PagedResult<JourneyEmailOpenDetail> opens(
@@ -194,7 +194,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged clicks returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_clickslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-clicks" target="_blank">
      * Getting journey email clicks</a>
      */
     public PagedResult<JourneyEmailClickDetail> clicks(
@@ -210,7 +210,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged clicks returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_clickslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-clicks" target="_blank">
      * Getting journey email clicks</a>
      */
     public PagedResult<JourneyEmailClickDetail> clicks(
@@ -231,7 +231,7 @@ public class JourneyEmails extends CreateSendBase {
      * Gets a paged list of unsubscribes for the specified journey email
      * @return The paged unsubscribes returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_unsubscribeslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-unsubscribes" target="_blank">
      * Getting journey email unsubscribes</a>
      */
     public PagedResult<JourneyEmailUnsubscribeDetail> unsubscribes() throws CreateSendException {
@@ -245,7 +245,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged unsubscribes returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_unsubscribeslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-unsubscribes" target="_blank">
      * Getting journey email unsubscribes</a>
      */
     public PagedResult<JourneyEmailUnsubscribeDetail> unsubscribes(
@@ -261,7 +261,7 @@ public class JourneyEmails extends CreateSendBase {
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged unsubscribes returned by the api call.
      * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
-     * @see <a href="http://www.campaignmonitor.com/api/journeys/#journey_unsubscribeslist" target="_blank">
+     * @see <a href="https://www.campaignmonitor.com/api/journeys/#journey-email-unsubscribes" target="_blank">
      * Getting journey email unsubscribes</a>
      */
     public PagedResult<JourneyEmailUnsubscribeDetail> unsubscribes(

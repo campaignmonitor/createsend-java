@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v6.0.3 - 2 September 2019
+
+* Added support for [Journey API](https://www.campaignmonitor.com/api/journeys)
+
 ## v6.0.2 - 31 January 2019
 
 * Fixed JavaDoc generation

@@ -1,6 +1,6 @@
 package com.createsend.models.subscribers;
 
-import org.codehaus.jackson.annotate.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum ConsentToTrack {
   UNCHANGED("Unchanged"),

@@ -22,7 +22,7 @@
 package com.createsend.models.transactional.request;
 
 import com.createsend.models.subscribers.ConsentToTrack;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.*;
 

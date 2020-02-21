@@ -21,7 +21,7 @@
  */
 package com.createsend.models.transactional.response;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TransactionalStatistics {
     @JsonProperty("Sent")

@@ -1,8 +1,12 @@
 language: java
 
+dist: trusty
+
 script: gradle -i
 
 jdk:
   - oraclejdk7
+  - openjdk9
+  - openjdk8
   - openjdk7
   - openjdk6

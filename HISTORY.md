@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v6.1.1 - 21 February 2020
+
+* Fix Security Vulnerability  
+
 ## v6.1.0 - 2 September 2019
 
 * Inreased minor version to add support for [Journey API](https://www.campaignmonitor.com/api/journeys)

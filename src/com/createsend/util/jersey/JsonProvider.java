@@ -34,10 +34,10 @@ import java.util.Date;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * An extension of the Jersey JacksonJsonProvider used to set Jackson 
@@ -63,7 +63,7 @@ public class JsonProvider extends JacksonJsonProvider {
             MultivaluedMap<String, Object> httpHeaders,
             OutputStream entityStream) throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
-        mapper.setSerializationInclusion(Inclusion.NON_NULL);
+        mapper.setSerializationInclusion(Include.NON_NULL);
         
         super.writeTo(value, type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);
@@ -76,7 +76,7 @@ public class JsonProvider extends JacksonJsonProvider {
             throws IOException {
         ObjectMapper mapper = locateMapper(type, mediaType);
         mapper.setDateFormat(ApiDateFormat);
-        mapper.disable(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         return super.readFrom(type, genericType, annotations, mediaType, httpHeaders,
                 entityStream);

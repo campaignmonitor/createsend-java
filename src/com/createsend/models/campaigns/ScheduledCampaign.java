@@ -29,7 +29,8 @@ public class ScheduledCampaign extends DraftCampaign {
     
     @Override
     public String toString() {
-        return String.format("{ %s, DateScheduled: %s, ScheduledTimeZone: %s }", super.toString(), 
-                DateScheduled, ScheduledTimeZone);
+        return String.format(
+            "{ %s, DateScheduled: %s, ScheduledTimeZone: %s}",
+            super.toString(), DateScheduled, ScheduledTimeZone);
     }
 }

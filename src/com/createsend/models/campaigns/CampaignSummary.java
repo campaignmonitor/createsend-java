@@ -22,6 +22,7 @@
 package com.createsend.models.campaigns;
 
 public class CampaignSummary {
+    public String Name;
     public int Recipients;
     public int TotalOpened;
     public int Clicks;
@@ -39,7 +40,11 @@ public class CampaignSummary {
     @Override
     public String toString() {
         return String.format(
-            "{ Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, SpamComplaints: %s, Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s,  WebVersionURL: %s, WorldviewURL: %s }",
-            Recipients, TotalOpened, Clicks, Unsubscribed, SpamComplaints, Bounced, UniqueOpened, Forwards, Mentions, Likes, WebVersionURL, WorldviewURL);
+            "{ Name: %s, Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, SpamComplaints: %s, " +
+            "Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s, " +
+            "WebVersionURL: %s, WebVersionTextURL: %s, WorldviewURL: %s }",
+            Name, Recipients, TotalOpened, Clicks, Unsubscribed, SpamComplaints,
+            Bounced, UniqueOpened, Forwards, Mentions, Likes,
+            WebVersionURL, WebVersionTextURL, WorldviewURL);
     }
 }

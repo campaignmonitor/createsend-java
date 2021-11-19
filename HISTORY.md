@@ -1,5 +1,20 @@
 # createsend-java history
 
+## v7.0.0 - 19 November 2021
+
+* Upgrades to Createsend API v3.3 which includes new breaking changes
+* New client tags() returns the list of tags 
+* Client draftCampaigns() now return Tags
+* Client scheduledCampaigns() now returns Tags
+* Revamped client sentCampaigns() includes these improvements: 
+  * The method returns a PagedResult of SentCampaign.
+  * Entries can be fetched using the Page parameter.
+  * Up to 1000 entries are returned per method call. A different amount can be returned by setting the PageSize value.
+  * Campaigns can be sorted by their Sent Date using OrderDirection
+  * Campaigns can be filtered by Sent Date using sentFromDate and sentToDate in YYYY-MM-DD format
+  * Campaigns can be filtered by their tags.
+* Campaign summary() now returns Name
+
 ## v6.1.1 - 21 February 2020
 
 * Fix Security Vulnerability  

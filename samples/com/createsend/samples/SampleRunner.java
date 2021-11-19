@@ -21,10 +21,6 @@
  */
 package com.createsend.samples;
 
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Date;
-
 import com.createsend.Administrators;
 import com.createsend.Campaigns;
 import com.createsend.Clients;
@@ -34,6 +30,7 @@ import com.createsend.People;
 import com.createsend.Segments;
 import com.createsend.Subscribers;
 import com.createsend.Templates;
+import com.createsend.models.PagedResult;
 import com.createsend.models.administrators.Administrator;
 import com.createsend.models.campaigns.CampaignForCreation;
 import com.createsend.models.campaigns.CampaignForCreationFromTemplate;
@@ -41,6 +38,7 @@ import com.createsend.models.campaigns.EditableField;
 import com.createsend.models.campaigns.PreviewData;
 import com.createsend.models.campaigns.Repeater;
 import com.createsend.models.campaigns.RepeaterItem;
+import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.campaigns.TemplateContent;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
@@ -65,11 +63,17 @@ import com.createsend.models.templates.TemplateForCreate;
 import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.BadRequestException;
 import com.createsend.util.exceptions.CreateSendException;
-import com.createsend.samples.AssertException;
+
+import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 public class SampleRunner {
 
-	private static OAuthAuthenticationDetails auth = 
+	private static OAuthAuthenticationDetails auth =
 			new OAuthAuthenticationDetails("your access token", "your refresh token");
 
     /**
@@ -379,14 +383,14 @@ public class SampleRunner {
 		campaign.SegmentIDs = new String[0];
 		campaign.TemplateID = "Template ID";
 		campaign.TemplateContent = templateContent;
-		
+
 		campaignAPI.createFromTemplate(clientID, campaign);
     }
     
     private static void runCampaignMethods(String clientID) throws CreateSendException {
         Campaigns campaignAPI = new Campaigns(auth);
         Date resultsAfter = new Date();
-        
+
         CampaignForCreation newCampaign = new CampaignForCreation();
         newCampaign.FromEmail = "From Email";
         newCampaign.FromName = "Java Wrapper";
@@ -415,7 +419,7 @@ public class SampleRunner {
         Date scheduledDate = new Date();
         campaignAPI.send("Confirmation Email", scheduledDate);
 
-        System.out.printf("Result of get campaign summary: %s\n", 
+        System.out.printf("Result of get campaign summary: %s\n",
             campaignAPI.summary());
 
         System.out.printf("Result of get campaign bounces: %s\n", 
@@ -441,7 +445,7 @@ public class SampleRunner {
     
     private static void runClientMethods() throws AssertException, CreateSendException {
         Clients clientAPI = new Clients(auth);
-        
+
         Client newClient = new Client();
         newClient.CompanyName = "Client Company Name";
         newClient.Country = "Client Country";
@@ -529,19 +533,44 @@ public class SampleRunner {
         
     	System.out.printf("Result of client details: %s\n", details);
         clientAPI.delete();
-        
-        clientAPI.setClientID("Other Client ID");
-        System.out.printf("Result of get sent campaigns: %s\n", 
-                Arrays.deepToString(clientAPI.sentCampaigns()));
-        
-        System.out.printf("Result of get draft campaigns: %s\n", 
-                Arrays.deepToString(clientAPI.draftCampaigns()));
-        
-        System.out.printf("Result of get scheduled campaigns: %s\n", 
-                Arrays.deepToString(clientAPI.scheduledCampaigns()));
-        
-        System.out.printf("Result of get lists: %s\n", 
+
+        System.out.printf("Result of get lists: %s\n",
                 Arrays.deepToString(clientAPI.lists()));
+
+        System.out.printf("Result of get tags: %s\n",
+                Arrays.deepToString(clientAPI.tags()));
+
+        System.out.printf("Result of get draft campaigns: %s\n",
+                Arrays.deepToString(clientAPI.draftCampaigns()));
+
+        System.out.printf("Result of get scheduled campaigns: %s\n",
+                Arrays.deepToString(clientAPI.scheduledCampaigns()));
+
+        System.out.printf("Result of get paged sent campaigns: %s\n",
+                Arrays.deepToString(clientAPI.sentCampaigns().Results));
+
+        try {
+            String[] tags = {"tag1", "tag2"};
+            SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
+            Date sentFromDate = yyyyMMdd.parse("2000-01-01");
+            Date sentToDate = new Date();
+            PagedResult<SentCampaign> firstPage = clientAPI.sentCampaigns(sentFromDate, sentToDate, tags, 1, 10, "DESC");
+            java.util.List<SentCampaign> filteredSentCampaigns = new ArrayList<>(Arrays.asList(firstPage.Results));
+
+            if (firstPage.NumberOfPages > 1) {
+                for (int pageNumber = 2; pageNumber <= firstPage.NumberOfPages; pageNumber++)
+                {
+                    PagedResult<SentCampaign> subsequentPage = clientAPI.sentCampaigns(sentFromDate, sentToDate, tags, pageNumber, 10, "DESC");
+                    filteredSentCampaigns.addAll(Arrays.asList(subsequentPage.Results));
+                }
+            }
+
+            System.out.printf("Result of filtered sent campaigns: %s\n",
+                    Arrays.deepToString(filteredSentCampaigns.toArray()));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         System.out.printf("Result of get lists for email address: %s\n", 
                 Arrays.deepToString(clientAPI.listsForEmailAddress("example@example.com")));

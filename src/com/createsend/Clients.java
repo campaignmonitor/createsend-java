@@ -181,20 +181,12 @@ public class Clients extends CreateSendBase {
      * Getting sent campaigns</a>
      */
     public PagedResult<SentCampaign> sentCampaigns(
-            Date sentFromDate, Date sentToDate, String[] tags,
+            Date sentFromDate, Date sentToDate, String tags,
             Integer page, Integer pageSize, String orderDirection) throws CreateSendException {
-
-        String csvTags = "";
-        if (tags != null) {
-            for (int i = 0; i < tags.length; i++) {
-                csvTags += (i > 0 ? "," : "") + tags[i];
-            }
-        }
-
         return sentCampaigns(
                 sentFromDate != null ? JsonProvider.ApiDateFormat.format(sentFromDate) : null,
                 sentToDate != null ? JsonProvider.ApiDateFormat.format(sentToDate) : null,
-                csvTags,
+                tags,
                 page, pageSize, orderDirection);
     }
 

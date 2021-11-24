@@ -6,7 +6,7 @@
 * New client tags() returns the list of tags 
 * Client draftCampaigns() now return Tags
 * Client scheduledCampaigns() now returns Tags
-* Revamped client sentCampaigns() includes these improvements: 
+* Breaking: Revamped client sentCampaigns() includes these improvements: 
   * The method returns a PagedResult of SentCampaign.
   * Entries can be fetched using the Page parameter.
   * Up to 1000 entries are returned per method call. A different amount can be returned by setting the PageSize value.

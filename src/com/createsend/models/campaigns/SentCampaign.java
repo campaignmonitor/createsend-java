@@ -29,12 +29,12 @@ public class SentCampaign extends Campaign {
     public String WebVersionTextURL;
     public Date SentDate;
     public int TotalRecipients;
-    public String[] Tags;
+    public String Tags;
     
     @Override
     public String toString() {
         return String.format(
             "{ %s, SendDate: %s, WebVersionURL: %s, WebVersionTextURL: %s, TotalRecipients: %d, Tags: %s }",
-            super.toString(), SentDate, WebVersionURL, WebVersionTextURL, TotalRecipients, Arrays.toString(Tags));
+            super.toString(), SentDate, WebVersionURL, WebVersionTextURL, TotalRecipients, Tags);
     }
 }

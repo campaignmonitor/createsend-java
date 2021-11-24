@@ -113,7 +113,7 @@ This example of listing all your clients and their campaigns demonstrates basic 
 ```java
 import com.createsend.Clients;
 import com.createsend.General;
-import com.createsend.models.campaigns.SentCampaign;
+import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.clients.ClientBasics;
 import com.createsend.util.OAuthAuthenticationDetails;
 import com.createsend.util.exceptions.CreateSendException;
@@ -130,7 +130,7 @@ public class Tester {
             System.out.printf("Client: %s\n", cl.Name);
             Clients cls = new Clients(auth, cl.ClientID);
             System.out.printf("- Campaigns:\n");
-            for (SentCampaign cm : cls.sentCampaigns()) {
+            for (DraftCampaign cm : cls.draftCampaigns()) {
                 System.out.printf("  - %s\n", cm.Subject);
             }
         }

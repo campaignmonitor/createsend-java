@@ -195,7 +195,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of active subscribers who have subscribed to the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -211,7 +211,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of active subscribers who have subscribed to the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -231,7 +231,7 @@ public class Lists extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date. 
      *     This field is required
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -251,7 +251,7 @@ public class Lists extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date.
      *     This field is required
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -302,7 +302,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of unconfirmed subscribers who have subscribed to the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -318,7 +318,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of unconfirmed subscribers who have subscribed to the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -338,7 +338,7 @@ public class Lists extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who subscribed on or after this date. 
      *     This field is required
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -358,7 +358,7 @@ public class Lists extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who subscribed on or after this date.
      *     This field is required
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -410,7 +410,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -426,7 +426,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -445,7 +445,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list 
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who unsubscribed on or after this date. 
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -464,7 +464,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of unsubscribed subscribers who have unsubscribed from the list
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who unsubscribed on or after this date.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -516,7 +516,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of subscribers who have been deleted from the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -532,7 +532,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of subscribers who have been deleted from the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -551,7 +551,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of subscribers who have been deleted from the list 
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who were deleted on or after this date. 
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -570,7 +570,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of subscribers who have been deleted from the list
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who were deleted on or after this date.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -621,7 +621,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of bounced subscribers who have bounced out of the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -637,7 +637,7 @@ public class Lists extends CreateSendBase {
 
     /**
      * Gets a paged collection of bounced subscribers who have bounced out of the list.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -656,7 +656,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of bounced subscribers who have bounced out of the list 
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who bounced out on or after this date. 
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -675,7 +675,7 @@ public class Lists extends CreateSendBase {
      * Gets a paged collection of bounced subscribers who have bounced out of the list
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who bounced out on or after this date.
-     * @param page the page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.

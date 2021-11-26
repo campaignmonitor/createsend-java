@@ -550,7 +550,7 @@ public class SampleRunner {
                 Arrays.deepToString(clientAPI.sentCampaigns().Results));
 
         try {
-            String[] tags = "tag1, tag2";
+            String tags = "tag1, tag2";
             SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
             Date sentFromDate = yyyyMMdd.parse("2000-01-01");
             Date sentToDate = new Date();

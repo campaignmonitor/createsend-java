@@ -91,13 +91,6 @@ public class SampleRunner {
             runTemplateMethods(clientID);
             runPeopleMethods(clientID);
             runAdminMethods();
-
-            String segmentID = "Segment ID";
-            //testActiveSegmentSubscribers(segmentID);
-
-            String listID = "List ID";
-            //testListSubscribers(listID);
-
         } catch (BadRequestException e) {
             e.printStackTrace();
             
@@ -330,6 +323,8 @@ public class SampleRunner {
                 listAPI.active(subscribersFrom, null, null, null, null));
         System.out.printf("Result of list unsubscribed: %s\n",
                 listAPI.unsubscribed(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list unconfirmed: %s\n",
+                listAPI.unconfirmed(subscribersFrom, null, null, null, null));
         System.out.printf("Result of list bounced: %s\n",
                 listAPI.bounced(subscribersFrom, null, null, null, null));
         System.out.printf("Result of list deleted: %s\n",

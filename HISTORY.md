@@ -2,7 +2,7 @@
 
 ## v7.0.0 - 14 December 2021
 
-* Upgrades to Createsend API v3.3 which includes new breaking changes
+* Upgrades to Createsend API v3.3 which includes many breaking changes
 * New client tags() returns the list of tags 
 * Client draftCampaigns() now return Tags
 * Client scheduledCampaigns() now returns Tags
@@ -14,7 +14,7 @@
   * Campaigns can be filtered by Sent Date using sentFromDate and sentToDate in YYYY-MM-DD format
   * Campaigns can be filtered by their tags.
 * Campaign summary() now returns Name
-* Following endpoints now return ListJoinedDate for each subscriber.  Also, Date has been renamed to StateChangedDate:
+* Breaking: Following endpoints now return ListJoinedDate for each subscriber.  Also, Date has been renamed to StateChangedDate:
   * List active()
   * List bounce()
   * List unsubscribe()

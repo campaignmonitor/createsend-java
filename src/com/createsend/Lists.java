@@ -269,7 +269,7 @@ public class Lists extends CreateSendBase {
     private PagedResult<SubscriberWithJoinedDate> active(String subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", subscribedFrom);
+        queryString.add("stateChangedDate", subscribedFrom);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
@@ -376,7 +376,7 @@ public class Lists extends CreateSendBase {
     private PagedResult<SubscriberWithJoinedDate> unconfirmed(String subscribedFrom, Integer page,
         Integer pageSize, String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", subscribedFrom);
+        queryString.add("stateChangedDate", subscribedFrom);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
@@ -483,7 +483,7 @@ public class Lists extends CreateSendBase {
     private PagedResult<SubscriberWithJoinedDate> unsubscribed(String subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", subscribedFrom);
+        queryString.add("stateChangedDate", subscribedFrom);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
@@ -588,7 +588,7 @@ public class Lists extends CreateSendBase {
     private PagedResult<SubscriberWithJoinedDate> deleted(String subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", subscribedFrom);
+        queryString.add("stateChangedDate", subscribedFrom);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,
@@ -693,7 +693,7 @@ public class Lists extends CreateSendBase {
     private PagedResult<SubscriberWithJoinedDate> bounced(String subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
-        queryString.add("date", subscribedFrom);
+        queryString.add("stateChangedDate", subscribedFrom);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
         return jerseyClient.getPagedResult(page, pageSize, orderField, orderDirection,

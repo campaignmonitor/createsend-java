@@ -27,7 +27,7 @@ public class SubscriberWithJoinedDate {
     public String ListID;
     public String EmailAddress;
     public String Name;
-    public Date StateChangedDate;
+    public Date Date;
     public Date ListJoinedDate;
     public String State; // TODO: Probably want to move this to an enum
     public CustomField[] CustomFields;
@@ -36,7 +36,7 @@ public class SubscriberWithJoinedDate {
 
     @Override
     public String toString() {
-        return String.format("{ ListID: %s, EmailAddress: %s, Name: %s, StateChangedDate: %s, ListJoinedDate: %s, State: %s }",
-                ListID, EmailAddress, Name, StateChangedDate, ListJoinedDate, State);
+        return String.format("{ ListID: %s, EmailAddress: %s, Name: %s, Date: %s, ListJoinedDate: %s, State: %s }",
+                ListID, EmailAddress, Name, Date, ListJoinedDate, State);
     }
 }

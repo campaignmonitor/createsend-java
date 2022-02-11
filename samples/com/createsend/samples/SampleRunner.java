@@ -79,7 +79,7 @@ public class SampleRunner {
     /**
      * @param args
      */
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
         try {
             String clientID = "Client ID";
             runGeneralMethods();
@@ -312,6 +312,32 @@ public class SampleRunner {
         listAPI.deleteWebhook(webhook.WebhookID);
         
         listAPI.delete();
+    }
+
+    private static void testListSubscribers(String listId) throws CreateSendException {
+        Lists listAPI = new Lists(auth, listId);
+
+        Date subscribersFrom = new Date();
+
+        System.out.printf("Result of list active: %s\n",
+                listAPI.active(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list unsubscribed: %s\n",
+                listAPI.unsubscribed(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list unconfirmed: %s\n",
+                listAPI.unconfirmed(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list bounced: %s\n",
+                listAPI.bounced(subscribersFrom, null, null, null, null));
+        System.out.printf("Result of list deleted: %s\n",
+                listAPI.deleted(subscribersFrom, null, null, null, null));
+    }
+
+    private static void testActiveSegmentSubscribers(String segmentID) throws CreateSendException {
+        Segments segmentsAPI = new Segments(auth, segmentID);
+
+        Date subscribersFrom = new Date();
+
+        System.out.printf("Result of segment active: %s\n",
+                segmentsAPI.active(subscribersFrom, null, null, null, null));
     }
 
     private static void testCampaignCreationFromTemplate(

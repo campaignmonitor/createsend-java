@@ -1,6 +1,6 @@
 # createsend-java history
 
-## v7.0.0 - 19 November 2021
+## v7.0.0 - 14 December 2021
 
 * Upgrades to Createsend API v3.3 which includes new breaking changes
 * New client tags() returns the list of tags 
@@ -14,6 +14,14 @@
   * Campaigns can be filtered by Sent Date using sentFromDate and sentToDate in YYYY-MM-DD format
   * Campaigns can be filtered by their tags.
 * Campaign summary() now returns Name
+* Adding support for returning ListJoinedDate for each subscriber. 
+  * List active()
+  * List bounce()
+  * List unsubscribe()
+  * List unconfirmed()
+  * List deleted()
+  * Segment active()
+  * Subscriber details()
 
 ## v6.1.1 - 21 February 2020
 

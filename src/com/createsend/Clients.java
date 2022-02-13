@@ -21,8 +21,6 @@
  */
 package com.createsend;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.createsend.models.PagedResult;
 import com.createsend.models.campaigns.DraftCampaign;
 import com.createsend.models.campaigns.ScheduledCampaign;
@@ -30,10 +28,11 @@ import com.createsend.models.campaigns.SentCampaign;
 import com.createsend.models.clients.AllClientDetails;
 import com.createsend.models.clients.BillingDetails;
 import com.createsend.models.clients.Client;
-import com.createsend.models.clients.SuppressionDetails;
-import com.createsend.models.clients.Template;
 import com.createsend.models.clients.CreditsTransferDetails;
 import com.createsend.models.clients.CreditsTransferResult;
+import com.createsend.models.clients.SuppressionDetails;
+import com.createsend.models.clients.Tag;
+import com.createsend.models.clients.Template;
 import com.createsend.models.journeys.JourneyDetail;
 import com.createsend.models.lists.ListBasics;
 import com.createsend.models.lists.ListForEmail;
@@ -44,7 +43,11 @@ import com.createsend.models.subscribers.SuppressedSubscriber;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
+import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import javax.ws.rs.core.MultivaluedMap;
+import java.util.Date;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/clients/" target="_blank">
@@ -116,16 +119,87 @@ public class Clients extends CreateSendBase {
     public AllClientDetails details() throws CreateSendException {
         return jerseyClient.get(AllClientDetails.class, "clients", clientID + ".json");
     }
-   
+
     /**
-     * Gets all campaigns sent by the current client
-     * @return All campaigns which have been sent by the current client
+     * Gets all tags of the current client
+     * @return All client tags
      * @throws CreateSendException Thrown when the API responds with HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_tags" target="_blank">
+     * Getting tags</a>
+     */
+    public Tag[] tags() throws CreateSendException {
+        return jerseyClient.get(Tag[].class, "clients", clientID, "tags.json");
+    }
+
+    /**
+     * Gets a paged list of campaigns sent by the current client
+     * @return The paged campaigns returned by the api call.
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
      * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_campaigns" target="_blank">
      * Getting sent campaigns</a>
      */
-    public SentCampaign[] sentCampaigns() throws CreateSendException {
-        return jerseyClient.get(SentCampaign[].class, "clients", clientID, "campaigns.json");
+    public PagedResult<SentCampaign> sentCampaigns() throws CreateSendException {
+        return sentCampaigns(1, 1000, "desc");
+    }
+
+    /**
+     * Gets a paged list of campaigns sent by the current client
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
+     * @param orderDirection The direction to order results by. Use <code>null</code> for the default.
+     * @return The paged campaigns returned by the api call
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_campaigns" target="_blank">
+     * Getting sent campaigns</a>
+     */
+    public PagedResult<SentCampaign> sentCampaigns(
+            Integer page, Integer pageSize, String orderDirection) throws CreateSendException {
+        return sentCampaigns("", "", null, page, pageSize, orderDirection);
+    }
+
+    /**
+     * Gets a paged list of campaigns sent by the current client
+     * @param sentFromDate Campaigns sent on or after the <code>sentFromDate/code> value specified will be returned.
+     *                     Must be in the format YYYY-MM-DD. If not provided, results will go back to the beginning of the client’s history.
+     *                     Use <code>null</code> for the default
+     * @param sentToDate Campaigns sent on or before the <code>sentToDate/code> value specified will be returned.
+     *                   Must be in the format YYYY-MM-DD. If not provided, results will include the most recent sent campaigns.
+     *                   Use <code>null</code> for the default
+     * @param tags An array of tags to filter sent campaigns.
+     *             Sent campaigns with all the tags specified will be returned.
+     *             Use <code>null</code> for the default
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
+     * @param pageSize The number of records to get on the current page.
+     *                 The value can be between 1 and 1000.
+     *                 Use <code>null</code> for the default.
+     * @param orderDirection The direction to order results by.
+     *                       The value can be ASC or DESC
+     *                       Use <code>null</code> for the default (DESC)
+     * @return The paged campaigns returned by the api call
+     * @throws CreateSendException Thrown when the API responds with a HTTP Status >= 400
+     * @see <a href="http://www.campaignmonitor.com/api/clients/#getting_client_campaigns" target="_blank">
+     * Getting sent campaigns</a>
+     */
+    public PagedResult<SentCampaign> sentCampaigns(
+            Date sentFromDate, Date sentToDate, String tags,
+            Integer page, Integer pageSize, String orderDirection) throws CreateSendException {
+        return sentCampaigns(
+                sentFromDate != null ? JsonProvider.ApiDateFormat.format(sentFromDate) : null,
+                sentToDate != null ? JsonProvider.ApiDateFormat.format(sentToDate) : null,
+                tags,
+                page, pageSize, orderDirection);
+    }
+
+    private PagedResult<SentCampaign> sentCampaigns(
+            String sentFromDate, String sentToDate, String tags,
+            Integer page, Integer pageSize, String orderDirection) throws CreateSendException {
+        MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
+        queryString.add("sentFromDate", sentFromDate);
+        queryString.add("sentToDate", sentToDate);
+        queryString.add("tags", tags);
+
+        return jerseyClient.getPagedResult(page, pageSize, null, orderDirection, queryString,
+                "clients", clientID, "campaigns.json");
     }
    
     /**
@@ -190,7 +264,7 @@ public class Clients extends CreateSendBase {
    
     /**
      * Gets a paged collection of subscribers who are suppressed from the current clients lists.
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.

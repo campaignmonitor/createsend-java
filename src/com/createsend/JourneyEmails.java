@@ -36,7 +36,7 @@ public class JourneyEmails extends CreateSendBase {
 
     /**
      * Gets a paged list of recipients for the specified journey email
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged recipients returned by the api call.
@@ -52,7 +52,7 @@ public class JourneyEmails extends CreateSendBase {
     /**
      * Gets a paged list of recipients for the specified journey email
      * @param fromDate The date to start getting bounce results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged recipients returned by the api call.
@@ -87,7 +87,7 @@ public class JourneyEmails extends CreateSendBase {
 
     /**
      * Gets a paged list of bounces for the specified journey email
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged bounces returned by the api call.
@@ -103,7 +103,7 @@ public class JourneyEmails extends CreateSendBase {
     /**
      * Gets a paged list of bounces for the specified journey email
      * @param bouncesFrom The date to start getting bounce results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged bounces returned by the api call.
@@ -138,7 +138,7 @@ public class JourneyEmails extends CreateSendBase {
 
     /**
      * Gets a paged list of opens for the specified journey email
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged opens returned by the api call.
@@ -154,7 +154,7 @@ public class JourneyEmails extends CreateSendBase {
     /**
      * Gets a paged list of opens for the specified journey email
      * @param opensFrom The date to start getting open results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged opens returned by the api call.
@@ -189,7 +189,7 @@ public class JourneyEmails extends CreateSendBase {
 
     /**
      * Gets a paged list of clicks for the specified journey email
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged clicks returned by the api call.
@@ -205,7 +205,7 @@ public class JourneyEmails extends CreateSendBase {
     /**
      * Gets a paged list of clicks for the specified journey email
      * @param clicksFrom The date to start getting click results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged clicks returned by the api call.
@@ -240,7 +240,7 @@ public class JourneyEmails extends CreateSendBase {
 
     /**
      * Gets a paged list of unsubscribes for the specified journey email
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged unsubscribes returned by the api call.
@@ -256,7 +256,7 @@ public class JourneyEmails extends CreateSendBase {
     /**
      * Gets a paged list of unsubscribes for the specified journey email
      * @param unsubscribesFrom The date to start getting unsubscribe results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
      * @return The paged unsubscribes returned by the api call.

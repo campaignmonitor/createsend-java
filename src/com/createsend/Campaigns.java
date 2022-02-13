@@ -189,7 +189,7 @@ public class Campaigns extends CreateSendBase {
     
     /**
      * Gets a paged list of recipients for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -217,7 +217,7 @@ public class Campaigns extends CreateSendBase {
 
     /**
      * Gets a paged list of bounces for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -234,7 +234,7 @@ public class Campaigns extends CreateSendBase {
     /**
      * Gets a paged list of bounces for the specified campaign
      * @param bouncesFrom The date to start getting bounce results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -271,7 +271,7 @@ public class Campaigns extends CreateSendBase {
     
     /**
      * Gets a paged list of opens for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -288,7 +288,7 @@ public class Campaigns extends CreateSendBase {
     /**
      * Gets a paged list of opens for the specified campaign
      * @param opensFrom The date to start getting open results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -325,7 +325,7 @@ public class Campaigns extends CreateSendBase {
 
     /**
      * Gets a paged list of clicks for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -342,7 +342,7 @@ public class Campaigns extends CreateSendBase {
     /**
      * Gets a paged list of clicks for the specified campaign
      * @param clicksFrom The date to start getting click results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -379,7 +379,7 @@ public class Campaigns extends CreateSendBase {
 
     /**
      * Gets a paged list of unsubscribes for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -396,7 +396,7 @@ public class Campaigns extends CreateSendBase {
     /**
      * Gets a paged list of unsubscribes for the specified campaign
      * @param unsubscribesFrom The date to start getting unsubscribe results from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -433,7 +433,7 @@ public class Campaigns extends CreateSendBase {
 
     /**
      * Gets a paged list of spam complaints for the specified campaign
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -450,7 +450,7 @@ public class Campaigns extends CreateSendBase {
     /**
      * Gets a paged list of spam complaints for the specified campaign
      * @param spamComplaintsFrom The date to start getting spam complaints from. This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.

@@ -21,19 +21,21 @@
  */
 package com.createsend;
 
-import java.util.Date;
-
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.createsend.models.PagedResult;
-import com.createsend.models.segments.*;
-import com.createsend.models.subscribers.Subscriber;
+import com.createsend.models.segments.ClauseResults;
+import com.createsend.models.segments.RuleCreationFailureDetails;
+import com.createsend.models.segments.RuleGroup;
+import com.createsend.models.segments.Segment;
+import com.createsend.models.subscribers.SubscriberWithJoinedDate;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.jersey.JsonProvider;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import javax.ws.rs.core.MultivaluedMap;
+import java.util.Date;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/segments/" target="_blank">
@@ -141,7 +143,7 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active() throws CreateSendException {
+    public PagedResult<SubscriberWithJoinedDate> active() throws CreateSendException {
     	return active(1, 1000, "email", "asc", false);
     }
 
@@ -153,13 +155,13 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(boolean includeTrackingPreference) throws CreateSendException {
+    public PagedResult<SubscriberWithJoinedDate> active(boolean includeTrackingPreference) throws CreateSendException {
         return active(1, 1000, "email", "asc", includeTrackingPreference);
     }
 
     /**
      * Gets a paged collection of active subscribers within the specified segment.
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -168,14 +170,14 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Integer page, Integer pageSize,
+    public PagedResult<SubscriberWithJoinedDate> active(Integer page, Integer pageSize,
         String orderField, String orderDirection) throws CreateSendException {
     	return active("", page, pageSize, orderField, orderDirection, false);
     }
 
     /**
      * Gets a paged collection of active subscribers within the specified segment.
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -185,7 +187,7 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Integer page, Integer pageSize, String orderField,
+    public PagedResult<SubscriberWithJoinedDate> active(Integer page, Integer pageSize, String orderField,
         String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         return active("", page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
@@ -195,7 +197,7 @@ public class Segments extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date. 
      *     This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -204,7 +206,7 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+    public PagedResult<SubscriberWithJoinedDate> active(Date subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection) throws CreateSendException {
     	return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
     			page, pageSize, orderField, orderDirection, false);
@@ -215,7 +217,7 @@ public class Segments extends CreateSendBase {
      * since the provided date.
      * @param subscribedFrom The API will only return subscribers who became active on or after this date.
      *     This field is required
-     * @param page The page number or results to get. Use <code>null</code> for the default (page=1)
+     * @param page The page number of results to get. Use <code>null</code> for the default (page=1)
      * @param pageSize The number of records to get on the current page. Use <code>null</code> for the default.
      * @param orderField The field used to order the results by. Use <code>null</code> for the default.
      * @param orderDirection The direction to order the results by. Use <code>null</code> for the default.
@@ -225,13 +227,13 @@ public class Segments extends CreateSendBase {
      * @see <a href="http://www.campaignmonitor.com/api/segments/#getting-active-subscribers" target="_blank">
      * Getting active subscribers</a>
      */
-    public PagedResult<Subscriber> active(Date subscribedFrom, Integer page, Integer pageSize,
+    public PagedResult<SubscriberWithJoinedDate> active(Date subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         return active(JsonProvider.ApiDateFormat.format(subscribedFrom),
             page, pageSize, orderField, orderDirection, includeTrackingPreference);
     }
 
-    private PagedResult<Subscriber> active(String subscribedFrom, Integer page, Integer pageSize,
+    private PagedResult<SubscriberWithJoinedDate> active(String subscribedFrom, Integer page, Integer pageSize,
         String orderField, String orderDirection, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl(); 
         queryString.add("date", subscribedFrom);

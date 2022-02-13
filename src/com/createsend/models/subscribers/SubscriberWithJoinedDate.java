@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 Toby Brain
+ * Copyright (c) 2021 Campaign Monitor
  * 
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -19,32 +19,24 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package com.createsend.models.campaigns;
+package com.createsend.models.subscribers;
 
-public class CampaignSummary {
+import java.util.Date;
+
+public class SubscriberWithJoinedDate {
+    public String ListID;
+    public String EmailAddress;
     public String Name;
-    public int Recipients;
-    public int TotalOpened;
-    public int Clicks;
-    public int Unsubscribed;
-    public int SpamComplaints;
-    public int Bounced;
-    public int UniqueOpened;
-    public int Forwards;
-    public int Mentions;
-    public int Likes;
-    public String WebVersionURL;
-    public String WebVersionTextURL;
-    public String WorldviewURL;
+    public Date Date;
+    public Date ListJoinedDate;
+    public String State; // TODO: Probably want to move this to an enum
+    public CustomField[] CustomFields;
+    public String ReadsEmailWith;
+    public ConsentToTrack ConsentToTrack;
 
     @Override
     public String toString() {
-        return String.format(
-            "{ Name: %s, Recipients: %s, TotalOpened: %s, Clicks: %s, Unsubscribed: %s, SpamComplaints: %s, " +
-            "Bounced: %s, UniqueOpened: %s, ForwardToAFriends: %s, TwitterTweets: %s, FacebookLikes: %s, " +
-            "WebVersionURL: %s, WebVersionTextURL: %s, WorldviewURL: %s }",
-            Name, Recipients, TotalOpened, Clicks, Unsubscribed, SpamComplaints,
-            Bounced, UniqueOpened, Forwards, Mentions, Likes,
-            WebVersionURL, WebVersionTextURL, WorldviewURL);
+        return String.format("{ ListID: %s, EmailAddress: %s, Name: %s, Date: %s, ListJoinedDate: %s, State: %s }",
+                ListID, EmailAddress, Name, Date, ListJoinedDate, State);
     }
 }

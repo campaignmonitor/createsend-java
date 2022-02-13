@@ -21,15 +21,19 @@
  */
 package com.createsend.models.campaigns;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class DraftCampaign extends Campaign {
     public Date DateCreated;
     public String PreviewURL;
     public String PreviewTextURL;
+    public String[] Tags;
     
     @Override
     public String toString() {
-        return String.format("{ %s, DateCreated: %s, PreviewURL: %s }", super.toString(), DateCreated, PreviewURL);
+        return String.format(
+            "{ %s, DateCreated: %s, PreviewURL: %s, PreviewTextURL: %s, Tags: %s }",
+            super.toString(), DateCreated, PreviewURL, PreviewTextURL, Arrays.toString(Tags));
     }
 }

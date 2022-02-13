@@ -21,19 +21,19 @@
  */
 package com.createsend;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import com.createsend.models.subscribers.EmailToUnsubscribe;
 import com.createsend.models.subscribers.HistoryItem;
 import com.createsend.models.subscribers.ImportResult;
-import com.createsend.models.subscribers.Subscriber;
 import com.createsend.models.subscribers.SubscriberToAdd;
+import com.createsend.models.subscribers.SubscriberWithJoinedDate;
 import com.createsend.models.subscribers.SubscribersToAdd;
 import com.createsend.util.AuthenticationDetails;
 import com.createsend.util.ErrorDeserialiser;
 import com.createsend.util.JerseyClientImpl;
 import com.createsend.util.exceptions.CreateSendException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * Provides methods for accessing all <a href="http://www.campaignmonitor.com/api/subscribers/" target="_blank">
@@ -105,7 +105,7 @@ public class Subscribers extends CreateSendBase {
      * @see <a href="https://www.campaignmonitor.com/api/subscribers/#getting-subscribers-details" target="_blank">
      * Getting subscriber details</a>
      */
-    public Subscriber details(String emailAddress) throws CreateSendException {
+    public SubscriberWithJoinedDate details(String emailAddress) throws CreateSendException {
         return details(emailAddress, false);
     }
 
@@ -118,12 +118,12 @@ public class Subscribers extends CreateSendBase {
      * @see <a href="https://www.campaignmonitor.com/api/subscribers/#getting-subscribers-details" target="_blank">
      * Getting subscriber details</a>
      */
-    public Subscriber details(String emailAddress, boolean includeTrackingPreference) throws CreateSendException {
+    public SubscriberWithJoinedDate details(String emailAddress, boolean includeTrackingPreference) throws CreateSendException {
         MultivaluedMap<String, String> queryString = new MultivaluedMapImpl();
         queryString.add("email", emailAddress);
         queryString.add("includetrackingpreference", String.valueOf(includeTrackingPreference));
 
-        return jerseyClient.get(Subscriber.class, queryString, "subscribers", listID + ".json");
+        return jerseyClient.get(SubscriberWithJoinedDate.class, queryString, "subscribers", listID + ".json");
     }
     
     /**

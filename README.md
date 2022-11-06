@@ -142,7 +142,7 @@ See the [samples](https://github.com/campaignmonitor/createsend-java/blob/master
 
 ## Documentation
 
-Full javadoc for this library is available [here](http://campaignmonitor.github.com/createsend-java/doc/).
+Full javadoc for this library is available [here](https://campaignmonitor.github.io/createsend-java/doc/).
 
 ## Developing
 

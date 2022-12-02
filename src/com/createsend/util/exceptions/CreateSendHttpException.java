@@ -30,29 +30,45 @@ import com.sun.jersey.api.client.ClientResponse.Status;
 public class CreateSendHttpException extends CreateSendException {
     private static final long serialVersionUID = 6026680795882633621L;
 
-    private ClientResponse.Status httpStatusCode;
+    private int httpStatusCode;
     private int apiErrorCode;
     private String apiErrorMessage;
 
-    public CreateSendHttpException(Status httpStatusCode) {
+    public CreateSendHttpException(int httpStatusCode) {
         super("The API call failed due to an unexpected HTTP error: " + httpStatusCode);
         this.httpStatusCode = httpStatusCode;
         this.apiErrorMessage = "";
     }
 
+    public CreateSendHttpException(String message, int httpStatusCode) {
+        super(message);
+        this.httpStatusCode = httpStatusCode;
+        this.apiErrorMessage = apiErrorMessage;
+    }
+
     public CreateSendHttpException(String message, int httpStatusCode, int apiErrorCode, String apiErrorMessage) {
         super(message);
         
-        this.httpStatusCode = Status.fromStatusCode(httpStatusCode);
+        this.httpStatusCode = httpStatusCode;
         this.apiErrorCode = apiErrorCode;
         this.apiErrorMessage = apiErrorMessage;
     }
     
     /**
+     * @return The HTTP Status code as an integer from the failed request
+     */
+    public int getStatusCode() {
+        return httpStatusCode;
+    }
+
+    /**
+     * This method will only interpret well know HTTP Status Codes. Status codes such as 429 may
+     * not be correctly interpreted, in which case you can use {@link #getStatusCode}
+     *
      * @return The HTTP Status code from the failed request
      */
     public Status getHttpStatusCode() {
-        return httpStatusCode;
+        return Status.fromStatusCode(httpStatusCode);
     }
     
     /**

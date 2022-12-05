@@ -22,7 +22,7 @@
 package com.createsend.util.exceptions;
 
 /**
- * An exception raised when the Campaign Monitor API responds with a 400 Bad Request
+ * An exception raised when the Campaign Monitor API responds with a 429 Too Many Requests
  */
 public class RateLimitingException extends CreateSendHttpException {
     private static final long serialVersionUID = -2724621705342365927L;

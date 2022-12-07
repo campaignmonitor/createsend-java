@@ -1,5 +1,9 @@
 # createsend-java history
 
+## v7.0.1 - 2 December 2022
+
+* Added support for rate limiting errors
+
 ## v7.0.0 - 14 December 2021
 
 * Upgrades to Createsend API v3.3 which includes new breaking changes

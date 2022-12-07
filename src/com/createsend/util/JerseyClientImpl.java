@@ -35,6 +35,7 @@ import com.createsend.util.exceptions.CreateSendException;
 import com.createsend.util.exceptions.CreateSendHttpException;
 import com.createsend.util.exceptions.ExpiredOAuthTokenException;
 import com.createsend.util.exceptions.NotFoundException;
+import com.createsend.util.exceptions.RateLimitingException;
 import com.createsend.util.exceptions.ServerErrorException;
 import com.createsend.util.exceptions.UnauthorisedException;
 import com.createsend.util.jersey.AuthorisedResourceFactory;
@@ -42,6 +43,7 @@ import com.createsend.util.jersey.JsonProvider;
 import com.createsend.util.jersey.ResourceFactory;
 import com.createsend.util.jersey.UnauthorisedResourceFactory;
 import com.createsend.util.jersey.UserAgentFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -80,6 +82,7 @@ public class JerseyClientImpl implements JerseyClient {
     }
 
     private ErrorDeserialiser<String> defaultDeserialiser = new ErrorDeserialiser<String>(){};
+    private ObjectMapper mapper = new ObjectMapper();
     private ResourceFactory authorisedResourceFactory;
     private AuthenticationDetails authDetails;
 
@@ -407,9 +410,22 @@ public class JerseyClientImpl implements JerseyClient {
         ErrorDeserialiser<T> deserialiser) {
         ClientResponse response = ue.getResponse();
         ApiErrorResponse<T> apiResponse = null;
-        
+
+        int statusCode = response.getStatus();
         Status responseStatus = response.getClientResponseStatus();
-        if(responseStatus == Status.BAD_REQUEST || 
+
+        // There are some HTTP Responses which Jersey does not handle correctly: both the HTTP
+        // Status Code and response payloads.
+        if (responseStatus == null) {
+            try {
+                // Use Jackson directly to deserialise the reponse payload
+                apiResponse = mapper.readValue(response.getEntityInputStream(), ApiErrorResponse.class);
+            } catch (Throwable t) { }
+
+            return handleUnknownStatusError(statusCode, apiResponse);
+        }
+
+        if(responseStatus == Status.BAD_REQUEST ||
            responseStatus == Status.NOT_FOUND ||
            responseStatus == Status.UNAUTHORIZED ||
            responseStatus == Status.INTERNAL_SERVER_ERROR) {
@@ -419,16 +435,30 @@ public class JerseyClientImpl implements JerseyClient {
         }
 
         if (apiResponse == null) {
-            return handleUnknownError(responseStatus);
+            return handleUnknownError(statusCode);
         } else if (apiResponse.error != null && apiResponse.error.length() > 0) {
             return handleOAuthErrorResponse(responseStatus, apiResponse);
         } else {
-        	return handleAPIErrorResponse(responseStatus, apiResponse);
+            return handleAPIErrorResponse(responseStatus, apiResponse);
         }
     }
 
-    private <T> CreateSendException handleUnknownError(Status responseStatus) {
-        return new CreateSendHttpException(responseStatus);
+    private <T> CreateSendException handleUnknownStatusError(int httpStatusCode, ApiErrorResponse<T> apiResponse) {
+        boolean hasMessage = apiResponse != null && apiResponse.Message != null;
+
+        // Jersey does not yet handle HTTP Status Codes of 429:Too Many Requests
+        if (httpStatusCode == 429) {
+            return new RateLimitingException(httpStatusCode, hasMessage ? apiResponse.Message : null);
+        }
+
+        if (hasMessage) {
+            return new CreateSendHttpException(apiResponse.Message, httpStatusCode);
+        }
+        return new CreateSendHttpException(httpStatusCode);
+    }
+
+    private <T> CreateSendException handleUnknownError(int httpStatusCode) {
+        return new CreateSendHttpException(httpStatusCode);
     }
     
     private <T> CreateSendException handleAPIErrorResponse(
@@ -445,7 +475,7 @@ public class JerseyClientImpl implements JerseyClient {
 	        		return new ExpiredOAuthTokenException(apiResponse.Code, apiResponse.Message);
 	            return new UnauthorisedException(apiResponse.Code, apiResponse.Message);
 	        default:
-	            return new CreateSendHttpException(responseStatus);
+	            return new CreateSendHttpException(responseStatus.getStatusCode());
 	    }
     }
 

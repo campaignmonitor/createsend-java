@@ -14,12 +14,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <repositories />
+  <repositories/>
   <dependencies>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-json</artifactId>
-      <version>1.17.1</version>
+      <version>1.19.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -1,5 +1,15 @@
 # createsend-java history
 
+## v8.0.0 - 4 March 2022
+
+* Migrated from deprecated gradle plugin 'Maven' to 'Maven-publish'
+* Set sourceComptability to Java 1.9
+* Updated sourceComptability syntax
+* Replaced gradle compile dependency with 'implementation'
+* Replaced all instances of deprecated ``$buildDir`` with ``layout.buildDirectory``
+* Replaced ``uploadArchives`` with new ``publishing`` method
+* Updated ``writePom``
+
 ## v7.0.1 - 2 December 2022
 
 * Added support for rate limiting errors

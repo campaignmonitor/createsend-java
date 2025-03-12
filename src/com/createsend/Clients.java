@@ -159,10 +159,10 @@ public class Clients extends CreateSendBase {
 
     /**
      * Gets a paged list of campaigns sent by the current client
-     * @param sentFromDate Campaigns sent on or after the <code>sentFromDate/code> value specified will be returned.
+     * @param sentFromDate Campaigns sent on or after the <code>sentFromDate</code> value specified will be returned.
      *                     Must be in the format YYYY-MM-DD. If not provided, results will go back to the beginning of the client’s history.
      *                     Use <code>null</code> for the default
-     * @param sentToDate Campaigns sent on or before the <code>sentToDate/code> value specified will be returned.
+     * @param sentToDate Campaigns sent on or before the <code>sentToDate</code> value specified will be returned.
      *                   Must be in the format YYYY-MM-DD. If not provided, results will include the most recent sent campaigns.
      *                   Use <code>null</code> for the default
      * @param tags An array of tags to filter sent campaigns.
